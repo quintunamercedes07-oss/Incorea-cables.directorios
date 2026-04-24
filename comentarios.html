@@ -11,7 +11,7 @@
         <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
         <div id="titulo-container">
         <h1 class="titulo-animado-brillo">CENTRAL DE MEJORAS</h1>
-        <p>Gesti&oacute;n Operativa en Tiempo Real</p>
+        <p>GestiÃ³n&oacute;n Operativa en Tiempo Real</p>
         </div>
         </div>
 <div id="nav">
@@ -34,9 +34,9 @@
             <thead>
                 <tr>
                     <th>AREA / ORIGEN</th>
-                    <th>DETALLE TÉCNICO</th>
+                    <th>DETALLE TÃ‰CNICO</th>
                     <th>ESTADO</th>
-                    <th>ACCIÓN</th>
+                    <th>ACCIÃ“N</th>
                 </tr>
             </thead>
             <tbody id="tabla-body">
@@ -46,7 +46,7 @@
 </div>
 
     <script>
-    // ESTA FUNCIÓN DIBUJA LA TABLA
+    // ESTA FUNCIÃ“N DIBUJA LA TABLA
     function cargarComentariosDinamicos() {
         const datos = localStorage.getItem('datosIncorea');
         let lista = JSON.parse(datos) || [];
@@ -87,11 +87,11 @@
         });
     }
 
-    // ESTA FUNCIÓN BORRA TODO
+    // ESTA FUNCIÃ“N BORRA TODO
     function borrarHistorial() {
-        if (confirm('¿Deseas eliminar todos los registros?')) {
+        if (confirm('Â¿Deseas eliminar todos los registros?')) {
             localStorage.removeItem('datosIncorea');
-            cargarComentariosDinamicos(); // Recarga la tabla vacía
+            cargarComentariosDinamicos(); // Recarga la tabla vacÃ­a
         }
     }
 
