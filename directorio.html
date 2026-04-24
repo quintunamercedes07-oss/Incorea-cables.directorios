@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>INCOREA CABLES-Directorio</title>
+<link href="estilos.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="wrapper">
+<div id="header">
+     <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
+     <div id="titulo-container">
+     <h1 class="titulo-animado-brillo">TUS DIRECTORIOS QUE NECESITAS</h1>
+     <p>Estamos para ayudarte</p>
+     </div>
+     </div>
+ <div id="nav">
+    <a href="index.html">INICIO</a>
+    <a href="directorio.html">DIRECTORIO</a>
+    <a href="servicios.html">SERVICIOS</a>
+    <a href="sugerencias.html">SUGERENCIAS</a>
+	<a href="comentarios.html">COMENTARIO</a>
+    </div>
+<div id="hero-slider" class="hero-dinamico">
+<div class="servicios-grid">
+<div class="servicio-card-pro" id="card-s1">
+        <h4>Directorio 2026</h4>
+        <p>Visualización de metas y eficiencia de producción por área.</p>
+        <button id="btn-s1" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQBIMkIlwwmSS6m2tLrkLS-iAcOJWA6NPVSlQkVQpkdC4fg?e=I18Ke9')" class="btn-brillante">ABRIR DIRECTORIO</button>
+      </div>
+<div class="servicio-card-pro" id="card-s2">
+        <h4>Global Proy XLSM</h4>
+        <p>Control de asistencia y turnos del personal de planta.</p>
+        <button id="btn-s2" onclick="abrirHoja('https://1drv.ms/x/c/EB3A3138E7EEE618/IQDF5nzWf8k1SZiDLnBOBgKvAXuaJGNO1RPO02KdENlalYk?e=OGNHhe')" class="btn-brillante">ABRIR DIRECTORIO</button>
+      </div>
+<div class="servicio-card-pro" id="card-s3">
+        <h4>REPORTES GENERALES</h4>
+        <p>Resumen detallado de incidencias y producción semanal.</p>
+        <button id="btn-s3" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQCPbT-MkLrPTbCvImqmqh9vAX8_RrH1Abe-WUkMYA31NKk?e=vRQSYb')" class="btn-brillante">ABRIR DIRECTORIO</button>
+      </div>
+<div class="servicio-card-pro" id="card-s4">
+        <h4>MAS</h4>
+        <p>Asistencia, turnos y contactos actualizados del equipo operativo.</p>
+        <button id="btn-s4" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQAJyqXWowLwSZOaAAuRIVQjAWyqBIu3r1jC3qZjPBDZGmk?e=1TnCiP')" class="btn-brillante">ABRIR DIRECTORIO</button>
+      </div>
+		<div class="servicio-card-pro" id="card-s5">
+        <h4>OTROS</h4>
+        <p>Documentación adicional y guías de procesos internos.</p>
+        <button id="btn-s5" onclick="abrirHoja('TU_LINK_AQUI')" class="btn-brillante">ABRIR DIRECTORIO</button>
+        </div>
+<div class="servicio-card-pro" id="card-s6">
+        <h4>MAS MAS</h4>
+        <p>Registros históricos y bases de datos complementarias.</p>
+        <button id="btn-s6" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQAJyqXWowLwSZOaAAuRIVQjAWyqBIu3r1jC3qZjPBDZGmk?e=1TnCiP')" class="btn-brillante">ABRIR DIRECTORIO</button>
+      </div>
+        <div class="servicio-card-pro">
+        <h4>MAS MAS
+	    </h4>
+        <p>Asistencia, turnos y contactos actualizados del equipo operativo.</p>
+        <button onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577WowLwSZOaAAuRIVQjAWyqBIu3r1jC3qZjPBDZGmk?e=1TnCiP')" class="btn-brillante">ABRIR DIRECTORIO</button>
+        </div>
+	    </div>
+        </div>
+<div id="panel-hoja" class="panel-edicion">
+        <div class="barra-superior">
+        <button onclick="cerrarHoja()" class="btn-volver-dinamico"> VOLVER AL LISTADO DE DIRECTORIOS
+	    </button>
+        <div class="indicador-vivo"> MODO EDICIÓN ACTIVO</div>
+        </div>
+        <iframe src="" id="iframe-documento" class="iframe-full"></iframe>
+        </div>
+        </div>
+<div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
+        <p>INCOREA-CABLES</p>
+        </div>
+        </div>
+<script>
+  window.onload = function() {
+    const params = new URLSearchParams(window.location.search);
+    const seccion = params.get('abrir'); 
+    if (seccion) {
+        const tarjeta = document.getElementById('card-' + seccion);
+        if (tarjeta) {
+            tarjeta.classList.add('resaltar-tarjeta'); 
+            tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+};
+</script>
+<script>
+function abrirHoja(url) {
+    document.getElementById('iframe-documento').src = url;
+    document.getElementById('panel-hoja').style.display = 'block';
+    document.body.style.overflow = 'hidden'; 
+}
+function cerrarHoja() {
+    document.getElementById('panel-hoja').style.display = 'none';
+    document.getElementById('iframe-documento').src = '';
+    document.body.style.overflow = 'auto';
+}
+function abrirHoja(url) {
+    window.open(url, '_blank');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,388 @@
+/* ============================================================
+   1. REGLAS BASE Y RESET
+   ============================================================ */
+body, html { 
+    margin: 0; padding: 0; 
+    font-family: Arial, sans-serif !important; 
+    background-color: #1a252f !important; 
+    color: #ecf0f1; 
+    scroll-behavior: smooth; 
+}
+
+/* ============================================================
+   2. ESTRUCTURA (HEADER, NAV, FOOTER)
+   ============================================================ */
+#header { 
+    background-color: #1a252f !important; 
+    padding: 20px 5%;
+    border-bottom: 4px solid #1abc9c; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    height: 120px;
+    overflow: hidden;
+}
+
+#logo-container, .logo-indi { 
+    display: flex; 
+    align-items: center; 
+    animation: latidoSutilLogo 5s ease-in-out infinite; 
+}
+
+#logo-imagen { 
+    height: 90px; 
+    width: auto; 
+    filter: drop-shadow(0 0 5px rgba(26, 188, 156, 0.2)); 
+}
+
+.logo-indi { height: 50px; }
+
+#titulo-container { 
+    text-align: right; 
+    line-height: 1.1;
+    animation: slideInRight 1.5s ease-out forwards; 
+}
+
+#titulo-container h1 { 
+    margin: 0; 
+    font-size: 32px; 
+    color: #ffffff !important; 
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    animation: respiracionLetras 4s ease-in-out infinite; 
+    display: inline-block; 
+}
+
+#titulo-container p { 
+    margin: 0; 
+    font-size: 16px; 
+    color: #1abc9c !important; 
+    font-weight: bold;
+    letter-spacing: 2px;
+    opacity: 0.9;
+}
+
+#nav { 
+    background: #2c3e50; 
+    display: flex; 
+    justify-content: center; 
+}
+
+#nav a { 
+    color: #bdc3c7 !important; 
+    padding: 18px 30px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    font-size: 14px;
+    transition: 0.4s; 
+}
+
+#nav a:hover { 
+    background: #1abc9c !important; 
+    color: white !important; 
+}
+
+#footer {
+    clear: both; 
+    padding: 40px; 
+    text-align: center; 
+    background: #0e161d; 
+    border-top: 4px solid #1abc9c;
+}
+
+/* ============================================================
+   3. HERO Y ELEMENTOS DINÁMICOS
+   ============================================================ */
+.hero-dinamico {
+    padding: 60px 5%;
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center;
+}
+
+.hero-overlay h2 {
+    font-size: 48px; 
+    color: #ffffff; 
+    font-weight: 900; 
+    text-transform: uppercase;
+    display: inline-block; 
+    animation: brilloLatido 3s ease-in-out infinite, flotar 4s ease-in-out infinite;
+}
+
+.hero-overlay p {
+    font-size: 18px; 
+    color: #1abc9c; 
+    margin: 10px 0 30px 0; 
+    font-weight: 600;
+    display: block;
+    animation: flotar 5s ease-in-out infinite;
+}
+
+.img-hero-pequena {
+    width: 100%; 
+    max-width: 600px; 
+    height: 300px;
+    object-fit: cover; 
+    border-radius: 20px; 
+    border: 3px solid #1abc9c;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.5); 
+    margin-bottom: 30px;
+}
+
+.btn-brillante { 
+    background: #1abc9c; 
+    color: white !important; 
+    padding: 14px 28px; 
+    border-radius: 50px; 
+    text-decoration: none; 
+    font-weight: bold; 
+    text-transform: uppercase; 
+    font-size: 13px; 
+    border: none; 
+    cursor: pointer;
+}
+
+/* ============================================================
+   4. SECCIÓN DE TARJETAS (DIRECTORIO / SERVICIOS)
+   ============================================================ */
+.servicios-grid { 
+    display: flex; 
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 30px; 
+    padding: 50px 5%; 
+}
+
+.servicio-card-pro { 
+    background-color: #2c3e50 !important; 
+    border: 2px solid #34495e; 
+    border-radius: 20px; 
+    width: calc(33.33% - 25px); 
+    min-width: 300px;
+    padding: 40px 30px; 
+    text-align: center; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.4); 
+    min-height: 450px; 
+    box-sizing: border-box;
+}
+
+.servicio-card-pro h4 {
+    font-size: 2.2rem;
+    margin: 0 0 20px 0;
+    font-weight: 900;
+    text-transform: none;
+    letter-spacing: 1px;
+    background: linear-gradient(90deg, #ffffff, #1abc9c, #ffffff);
+    background-size: 200% auto;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: brilloTexto 5s linear infinite;
+}
+
+.servicio-card-pro:hover {
+    transform: translateY(-10px); 
+    border-color: #1abc9c !important; 
+    box-shadow: 0 15px 35px rgba(0,0,0,0.5), 0 0 25px rgba(26, 188, 156, 0.5); 
+}
+/* TITULOS DE DIRECTORIOS: VERDE SÓLIDO, GRUESO Y LIMPIO */
+.servicio-card-pro h4 {
+    font-family: 'Segoe UI', Arial, sans-serif !important;
+    font-size: 1.9rem;
+    font-weight: 900;           /* Negrita bien marcada */
+    color: #1abc9c !important;  /* Verde turquesa de la empresa */
+    text-transform: none;       /* Letra natural */
+    margin: 0 0 15px 0;
+    letter-spacing: 0.5px;
+    background: none;           /* Limpiamos degradados anteriores */
+    -webkit-text-fill-color: initial;
+    transition: all 0.3s ease;
+}
+
+/* EFECTO SUAVE AL PASAR EL MOUSE */
+.servicio-card-pro:hover h4 {
+    color: #16a085 !important;  /* Un tono de verde más profundo */
+    transform: scale(1.03);      /* Crece apenas un poco */
+}
+/* Resaltado específico para cuando vienes de la bandeja */
+.resaltar-tarjeta {
+    border: 3px solid #1abc9c !important;
+    box-shadow: 0 0 20px #1abc9c !important;
+    transform: scale(1.05);
+    transition: all 0.5s ease;
+    animation: pulso-brillo 2s infinite;
+}
+
+/* ============================================================
+   5. BANDEJA DE COMENTARIOS Y TABLAS
+   ============================================================ */
+.comentarios-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #34495e;
+    padding-bottom: 15px;
+}
+
+.comentarios-header h2 {
+    margin: 0;
+    color: #1abc9c;
+    letter-spacing: 2px;
+    font-size: 24px;
+}
+
+.tabla-wrapper {
+    background: #2c3e50;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.tabla-gestion {
+    width: 100%;
+    border-collapse: collapse;
+    color: #ecf0f1;
+}
+
+.tabla-gestion th {
+    background: #34495e;
+    color: #1abc9c;
+    padding: 18px;
+    text-align: left;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.tabla-gestion td {
+    padding: 20px 18px;
+    border-bottom: 1px solid #3d566e;
+    vertical-align: middle;
+}
+
+.fila-dinamica {
+    transition: background 0.3s ease;
+    cursor: pointer;
+    animation: entradaFila 0.5s ease forwards;
+}
+
+.fila-dinamica:hover {
+    background: rgba(26, 188, 156, 0.1);
+}
+
+.btn-borrar {
+    background: transparent;
+    color: #e74c3c;
+    border: 2px solid #e74c3c;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-borrar:hover {
+    background: #e74c3c;
+    color: white;
+}
+
+.badge {
+    padding: 6px 15px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.recibido { background: #f1c40f; color: #000; }
+.visto { background: #2ecc71; color: #fff; } /* He añadido .visto para que funcione el estado */
+
+/* ============================================================
+   6. PANELES DE EDICIÓN E IFRAMES
+   ============================================================ */
+.panel-edicion {
+    display: none; 
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(14, 22, 29, 0.98); 
+    z-index: 9999;
+}
+
+.barra-superior {
+    height: 60px;
+    padding: 0 25px;
+    background: #1a252f;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    border-bottom: 2px solid #1abc9c;
+}
+
+.iframe-full {
+    width: 100%;
+    height: calc(100% - 60px);
+    border: none;
+    background: white;
+}
+
+.btn-volver-dinamico {
+    background: #e74c3c;
+    color: white !important;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 12px;
+}
+
+.btn-volver-dinamico:hover { background: #c0392b; transform: scale(1.05); }
+
+/* ============================================================
+   7. ANIMACIONES (KEYS)
+   ============================================================ */
+@keyframes latidoSutilLogo {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 5px rgba(26, 188, 156, 0.2)); }
+    50% { transform: scale(1.03); filter: drop-shadow(0 0 15px rgba(26, 188, 156, 0.5)); }
+}
+
+@keyframes slideInRight {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes respiracionLetras {
+    0%, 100% { transform: scale(1); text-shadow: 0 0 0px rgba(26, 188, 156, 0); }
+    50% { transform: scale(1.02); text-shadow: 0 0 15px rgba(26, 188, 156, 0.6); color: #ffffff; }
+}
+
+@keyframes brilloLatido {
+    0%, 100% { color: #ffffff; text-shadow: none; }
+    50% { color: #1abc9c; text-shadow: 0 0 15px rgba(26, 188, 156, 0.7); }
+}
+
+@keyframes flotar {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
+
+@keyframes brilloTexto {
+    to { background-position: 200% center; }
+}
+
+@keyframes pulso-brillo {
+    0%, 100% { box-shadow: 0 0 10px #1abc9c; }
+    50% { box-shadow: 0 0 30px #1abc9c; }
+}
+
+@keyframes entradaFila {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+}

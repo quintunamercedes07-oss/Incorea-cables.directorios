@@ -1,0 +1,88 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<title>INCOREA CABLES-sugerencias</title>
+<link href="estilos.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div id="wrapper">
+<div id="header">
+     <div id="logo-container">
+     <img src="logo de la empresa.png" id="logo-imagen" alt="Logo">
+     </div>
+     <div id="titulo-container">
+     <h1 class="titulo-animado-brillo">MEJORA TUS DIRECTORIOS</h1>
+     <p>Estamos para ayudarte</p>
+     </div>
+  </div>
+<div id="nav">
+     <a href="index.html">INICIO</a>
+    <a href="directorio.html">DIRECTORIO</a>
+    <a href="servicios.html">SERVICIOS</a>
+    <a href="sugerencias.html">SUGERENCIAS</a>
+	<a href="comentarios.html">COMENTARIO</a>
+  </div>
+<div id="main-container" style="padding: 40px 5%; overflow: hidden;">
+     <div id="content" style="width:55%; float:left; padding:20px; text-align: left;">
+     <h2 class="titulo-seccion" style="color: #1abc9c;">SUGERENCIAS Y MEJORAS</h2>
+     <p style="margin-bottom: 20px;">¿Cómo podemos mejorar nuestros directorios? Déjanos tus comentarios aquí.</p>
+     <form action="#" method="post" id="form-contacto">
+     <label style="font-weight: bold; color: #1abc9c;">Nombre del Usuario / Área:</label><br>
+     <input type="text" name="nombre" class="input-estilo" placeholder="Ej: Operaciones - Planta 1" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white;">
+     <br><br>
+     <label style="font-weight: bold; color: #1abc9c;">Directorio a Evaluar:</label><br>
+<select name="directorio" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white;">
+     <option value="s1">S1 - Directorios 2026</option>
+     <option value="s2">S2 - Global Proy xlsm</option>
+     <option value="s3">S3 - Reportes Diarios</option>
+	 <option value="s4">S4 - MAS</option>
+	 <option value="s5">S5 - OTROS</option>
+	 <option value="s6">S6 - MAS MAS</option>
+</select>
+     <label style="font-weight: bold; color: #1abc9c;">Comentarios o Mejoras Detectadas:</label><br>
+<textarea name="mensaje" class="input-estilo" placeholder="Describe qué mejorarías en la hoja de cálculo..." style="width: 100%; height:150px; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white; resize: none;"></textarea>
+     <br><br>
+     <input type="submit" value="REGISTRAR COMENTARIO" class="btn-brillante" style="border: none; cursor: pointer; width: 100%;">
+     </form>
+     </div>
+     <div id="sidebar" style="width:35%; float:right; padding:20px; background: #2c3e50; border-radius: 20px; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
+     <h3 class="titulo-sidebar" style="color: #1abc9c; margin-top: 0;">CONTROL INTERNO</h3>
+     <p style="font-size: 13px; color: #bdc3c7;">Este espacio es para optimizar la eficiencia de nuestros sistemas operativos.</p>
+     <div style="margin: 20px 0; border-left: 3px solid #1abc9c; padding-left: 15px;">
+     <strong style="color: #ffffff;">Propósito:</strong><br>
+     <span style="font-size: 13px; color: #bdc3c7;">Recopilar feedback técnico para actualizar las macros y funciones de las hojas de cálculo.</span>
+     </div>
+<div style="margin: 20px 0; border-left: 3px solid #1abc9c; padding-left: 15px;">
+     <strong style="color: #ffffff;">Frecuencia de Actualización:</strong><br>
+     <span style="font-size: 13px; color: #bdc3c7;">Las sugerencias se revisan cada viernes al cierre de turno.</span>
+     </div>
+     <hr style="border: 0; border-top: 1px solid #34495e; margin: 20px 0;">
+<div style="text-align: center;">          
+     <p style="font-size: 11px; color: #1abc9c; font-style: italic;">"Calidad y precisión en cada registro operativo"</p>
+     </div>
+     </div>
+     </div>
+<script>
+document.getElementById('form-contacto').onsubmit = function(e) {
+     e.preventDefault();
+     const nuevoComentario = {
+     usuario: this.nombre.value,
+     area: this.directorio.options[this.directorio.selectedIndex].text,
+     mensaje: this.mensaje.value,
+     estado: 'RECIBIDO'
+    };
+    console.log("Intentando guardar:", nuevoComentario);
+    let lista = JSON.parse(localStorage.getItem('datosIncorea')) || [];
+    lista.push(nuevoComentario);
+    localStorage.setItem('datosIncorea', JSON.stringify(lista));
+alert('¡Guardado! Ahora revisa la bandeja de entrada.');
+    this.reset();
+    };
+</script>
+    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
+    <p>INCOREA-CABLES</p>
+    </div>
+</div>
+</body>
+</html>
