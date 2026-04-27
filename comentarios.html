@@ -8,78 +8,80 @@
 <body>
 <div id="wrapper">
 <div id="header">
-<div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
-<div id="titulo-container">
-<h1 class="titulo-animado-brillo">CENTRAL DE MEJORAS</h1>
-<p>Gestión&oacute;n Operativa en Tiempo Real</p>
-</div>
-</div>
+        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
+        <div id="titulo-container">
+        <h1 class="titulo-animado-brillo">CENTRAL DE MEJORAS</h1>
+        <p>Gesti&oacute;n Operativa en Tiempo Real</p>
+        </div>
+        </div>
 <div id="nav">
-<a href="index.html">INICIO</a>
-<a href="directorio.html">DIRECTORIO</a>
-<a href="servicios.html">SERVICIOS</a>
-<a href="sugerencias.html">SUGERENCIAS</a>
-<a href="comentarios.html">COMENTARIO</a>
-</div>
+    <a href="index.html">INICIO</a>
+    <a href="directorio.html">DIRECTORIO</a>
+    <a href="servicios.html">SERVICIOS</a>
+    <a href="sugerencias.html">SUGERENCIAS</a>
+	<a href="comentarios.html">COMENTARIO</a>
+    </div>
 <div id="comentarios-container" style="padding: 40px 5%;">
-<div class="comentarios-header">
-<h2>BANDEJA DE COMENTARIOS</h2>
-<button onclick="borrarHistorial()" class="btn-borrar">
-<span class="icon"></span> BORRAR HISTORIAL
-</button>
-</div>
+    <div class="comentarios-header">
+    <h2>BANDEJA DE COMENTARIOS</h2>
+    <button onclick="borrarHistorial()" class="btn-borrar">
+    <span class="icon"></span> BORRAR HISTORIAL
+    </button>
+    </div>
 <div class="tabla-wrapper">
-<table class="tabla-gestion">
-<thead>
-<tr>
-<th>NOMBRE / ÁREA</th>
-<th>DETALLE TÉCNICO</th>
-<th>ESTADO</th>
-<th>ACCIÓN</th>
-</tr>
-</thead>
-<tbody id="tabla-body">
-</tbody>
-</table>
-</div>
-</div>
+    <table class="tabla-gestion">
+	<thead>
+    <tr>
+    <th>AREA / ORIGEN</th>
+    <th>DETALLE TÉCNICO</th>
+    <th>ESTADO</th>
+    <th>ACCIÓN</th>
+    </tr>
+    </thead>
+    <tbody id="tabla-body">
+    </tbody>
+    </table>
+    </div>
+    </div>
 <script>
-function cargarComentariosDinamicos() {
-const datos = localStorage.getItem('datosIncorea');
-let lista = JSON.parse(datos) || [];
-const cuerpoTabla = document.getElementById('tabla-body');        
-if (!cuerpoTabla) return;
-cuerpoTabla.innerHTML = '';
-if (lista.length === 0) {
-cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 50px; color: #bdc3c7;">No hay registros nuevos.</td></tr>';
-return;
-}
-lista.forEach((item, index) => {
-let fila = document.createElement('tr');
-fila.className = 'fila-dinamica';
-fila.onclick = () => {
-lista[index].estado = 'VISTO'; 
-localStorage.setItem('datosIncorea', JSON.stringify(lista));
-const idBusqueda = item.area.split(' ')[0].toLowerCase(); 
-window.location.href = 'directorio.html?abrir=' + idBusqueda;
-};
-const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
-fila.innerHTML = `
-<td><strong style="color: #1abc9c;">${item.area}</strong><br><small>${item.usuario}</small></td>
-<td style="font-style: italic; color: #bdc3c7;">"${item.mensaje}"</td>
-<td><span class="badge ${claseBadge}">${item.estado}</span></td>
-<td><span style="color: #1abc9c; font-weight: bold;">&#10148; ABRIR</span></td>
-`;
-cuerpoTabla.appendChild(fila);
-});
-}
-function borrarHistorial() {
-if (confirm('¿Deseas eliminar todos los registros?')) {
-localStorage.removeItem('datosIncorea');
-cargarComentariosDinamicos(); 
-}
-}
-window.onload = cargarComentariosDinamicos; 
+    function cargarComentariosDinamicos() {
+    const datos = localStorage.getItem('datosIncorea');
+    let lista = JSON.parse(datos) || [];
+    const cuerpoTabla = document.getElementById('tabla-body');    
+    if (!cuerpoTabla) return;
+    cuerpoTabla.innerHTML = '';
+    if (lista.length === 0) {
+    cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 50px; color: #bdc3c7;">No hay registros nuevos.</td></tr>';
+    return;    
+    }
+    lista.forEach((item, index) => {
+    let fila = document.createElement('tr');
+    fila.className = 'fila-dinamica';
+    fila.onclick = () => {
+    lista[index].estado = 'VISTO'; 
+    localStorage.setItem('datosIncorea', JSON.stringify(lista));
+    const idBusqueda = item.area.split(' ')[0].toLowerCase(); 
+    window.location.href = 'directorio.html?abrir=' + idBusqueda;
+    };
+    const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
+    fila.innerHTML = `
+    <td><strong style="color: #1abc9c;">${item.area}</strong><br><small>${item.usuario}</small></td>
+    <td style="font-style: italic; color: #bdc3c7;">"${item.mensaje}"</td>
+    <td><span class="badge ${claseBadge}">${item.estado}</span></td>
+    <td><span style="color: #1abc9c; font-weight: bold;">&#10148; ABRIR</span></td>
+    `;
+    cuerpoTabla.appendChild(fila);
+    });
+    }
+    function borrarHistorial() {
+    if (confirm('¿Deseas eliminar todos los registros?')) {
+    localStorage.removeItem('datosIncorea');
+    cargarComentariosDinamicos(); 
+    }
+    }
+    window.onload = cargarComentariosDinamicos; 
 </script>
 </body>
+</html>
+</html>
 </html>
