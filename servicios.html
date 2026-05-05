@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>INCOREA CABLES-servicios</title>
+<title>INCOREA CABLES-Servicios</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
     /* ==========================================
-       PANEL DE ADMINISTRACIÓN (TUS ESTILOS EXACTOS)
+       PANEL DE ADMINISTRACIÓN COMPACTO (TUS ESTILOS)
        ========================================== */
     .admin-seccion {
         background: rgba(30, 41, 59, 0.4);
@@ -47,43 +47,44 @@
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
     }
 
-    /* ESTILOS DE LA LISTA INTERACTIVA PARA ELIMINAR */
+    /* ESTILOS DE LA VISTA ADMINISTRATIVA GLOBAL */
     .panel-carpetas-admin {
-        margin-top: 20px;
-        padding: 15px;
+        margin-top: 25px;
+        padding: 20px;
         background: rgba(15, 23, 42, 0.6);
-        border-radius: 8px;
+        border-radius: 10px;
         border: 1px solid rgba(26, 188, 156, 0.2);
     }
     .item-carpeta-lista {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: rgba(28, 43, 58, 0.8);
-        padding: 10px 15px;
-        margin-bottom: 8px;
-        border-radius: 6px;
-        border-left: 3px solid #1abc9c;
-        font-family: sans-serif;
+        background: rgba(28, 43, 58, 0.9);
+        padding: 12px 20px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border-left: 4px solid #1abc9c;
+        font-family: 'Segoe UI', sans-serif;
     }
     .item-archivo-lista {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: rgba(17, 29, 40, 0.6);
-        padding: 8px 12px;
-        margin: 5px 0 5px 25px;
-        border-radius: 4px;
-        font-size: 13px;
-        font-family: sans-serif;
+        background: rgba(17, 29, 40, 0.7);
+        padding: 10px 15px;
+        margin: 6px 0 6px 30px;
+        border-radius: 6px;
+        font-size: 14px;
+        font-family: 'Segoe UI', sans-serif;
         color: #ecf0f1;
+        border: 1px solid rgba(255,255,255,0.03);
     }
     .btn-eliminar-rojo {
         background: transparent;
         color: #e74c3c;
         border: 1px solid rgba(231, 76, 60, 0.5);
-        padding: 4px 10px;
-        border-radius: 4px;
+        padding: 6px 12px;
+        border-radius: 5px;
         cursor: pointer;
         font-size: 11px;
         font-weight: bold;
@@ -114,34 +115,14 @@
     </div>
     
     <div id="hero-slider" class="hero-dinamico">
-        <div class="hero-overlay">
-            <h2>LOS SERVICIOS QUE NECESITAS</h2>
-            <p>TECNOLOGÍA Y CALIDAD EN CADA METRO</p>
-            <div class="servicios-grid">
-                <div class="servicio-card-pro">
-                    <div class="icono-flotante">S1</div>
-                    <h4>DISEÑO ESTRATÉGICO</h4>
-                    <p>Creamos interfaces modernas y funcionales adaptadas a tu marca personal o empresarial.</p>
-                    <div class="barra-adorno"></div>
-                </div>
-                <div class="servicio-card-pro">
-                    <div class="icono-flotante">S2</div>
-                    <h4>MARKETING DIGITAL</h4>          
-                    <p>Posicionamos tu sitio en los primeros lugares de búsqueda para atraer más clientes.</p>
-                    <div class="barra-adorno"></div>
-                </div>
-                <div class="servicio-card-pro">
-                    <div class="icono-flotante">S3</div>
-                    <h4>SOPORTE TÉCNICO</h4>
-                    <p>Asistencia personalizada 24/7 para que tu plataforma nunca deje de funcionar.</p>
-                    <div class="barra-adorno"></div>
-                </div>
-            </div> 
+        <div class="hero-overlay" style="padding: 40px 0;">
+            <h2 style="text-align: center; color: white;">LOS SERVICIOS QUE NECESITAS</h2>
+            <p style="text-align: center; color: #1abc9c;">TECNOLOGÍA Y CALIDAD EN CADA METRO</p>
         </div>
     </div>
     
-    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
-        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 14px; opacity: 0.9;">PANEL DE CONTROL GENERAL (EDITAR DESDE OTRO DISPOSITIVO)</h4>
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
+        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 16px; opacity: 0.9;">PANEL DE CONTROL GENERAL (EDITABLE EN TIEMPO REAL)</h4>
         
         <div class="admin-seccion">
             <h5>1. AGREGAR NUEVA CARPETA</h5>
@@ -165,9 +146,9 @@
         </div>
 
         <div class="panel-carpetas-admin">
-            <h5 style="color: #1abc9c; margin-bottom: 15px; font-family: sans-serif; font-size: 13px; font-weight: bold;">Estructura de Datos en la Nube (Administrar / Eliminar)</h5>
+            <h5 style="color: #1abc9c; margin-bottom: 15px; font-family: sans-serif; font-size: 13px; font-weight: bold;">Estructura de Carpetas Activa en el Directorio</h5>
             <div id="vista-previa-firebase" style="color: white; font-family: sans-serif;">
-                Conectando con la base de datos...
+                Cargando datos compartidos de la nube...
             </div>
         </div>
     </div>
@@ -179,7 +160,7 @@
 
 <script>
 const CLAVE_ADMIN = "12345";
-const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
+const FIREBASE_URL = "https://incorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
 
 let estructuraCarpetas = [];
 
@@ -187,7 +168,6 @@ window.onload = function() {
     cargarDatosFirebase();
 };
 
-// Cargar información remota
 function cargarDatosFirebase() {
     fetch(FIREBASE_URL)
         .then(res => res.json())
@@ -202,7 +182,6 @@ function cargarDatosFirebase() {
         });
 }
 
-// Sincronizar cambios en Firebase
 function guardarEnFirebase() {
     return fetch(FIREBASE_URL, {
         method: 'PUT',
@@ -211,7 +190,6 @@ function guardarEnFirebase() {
     });
 }
 
-// 1. CREAR NUEVA CARPETA EN LA NUBE
 function crearCarpetaNueva() {
     const nombreCarpeta = document.getElementById('nueva-carpeta-nombre').value.trim();
     if (!nombreCarpeta) {
@@ -231,14 +209,13 @@ function crearCarpetaNueva() {
             .then(() => {
                 document.getElementById('nueva-carpeta-nombre').value = "";
                 cargarDatosFirebase();
-                alert("Carpeta creada globalmente con éxito.");
+                alert("Carpeta creada con éxito. Ya es visible en el Directorio.");
             });
     } else {
         alert("Clave incorrecta.");
     }
 }
 
-// 2. GUARDAR DOCUMENTO DENTRO DE UNA CARPETA EN LA NUBE
 function guardarDocumentoEnCarpeta() {
     const carpetaSeleccionada = document.getElementById('select-carpeta-destino').value;
     const nombre = document.getElementById('nombre-doc').value.trim();
@@ -261,7 +238,7 @@ function guardarDocumentoEnCarpeta() {
                     document.getElementById('desc-doc').value = "";
                     document.getElementById('link-doc').value = "";
                     cargarDatosFirebase();
-                    alert("Documento guardado globalmente con éxito.");
+                    alert("Documento guardado con éxito. Ya es visible en el Directorio.");
                 });
         }
     } else {
@@ -269,7 +246,6 @@ function guardarDocumentoEnCarpeta() {
     }
 }
 
-// Actualiza los Selectores Dropdown
 function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
     select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
@@ -280,14 +256,13 @@ function actualizarSelectorCarpetas() {
     });
 }
 
-// Renderiza la lista para poder eliminar elementos desde aquí
 function renderizarVistaEliminar() {
     const contenedor = document.getElementById('vista-previa-firebase');
     contenedor.innerHTML = "";
 
     const limpiada = estructuraCarpetas.filter(Boolean);
     if (limpiada.length === 0) {
-        contenedor.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size:13px;">No hay carpetas creadas en Firebase. Usa el formulario de arriba.</div>';
+        contenedor.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size:13px;">No hay carpetas activas. Crea una carpeta usando los campos de arriba.</div>';
         return;
     }
 
@@ -302,7 +277,8 @@ function renderizarVistaEliminar() {
                 </div>`;
 
         if (carpeta.archivos && carpeta.archivos.length > 0) {
-            carpeta.archivos.forEach((file, idxFile) => {
+            const archivosLimpios = carpeta.archivos.filter(Boolean);
+            archivosLimpios.forEach((file, idxFile) => {
                 htmlCarpeta += `
                     <div class="item-archivo-lista">
                         <span>📄 ${file.nombre}</span>
@@ -310,7 +286,7 @@ function renderizarVistaEliminar() {
                     </div>`;
             });
         } else {
-            htmlCarpeta += `<div style="margin-left: 25px; color:#7f8c8d; font-size:12px; font-style:italic;">Vacía</div>`;
+            htmlCarpeta += `<div style="margin-left: 30px; color:#7f8c8d; font-size:12px; font-style:italic;">Esta carpeta no tiene archivos todavía.</div>`;
         }
 
         htmlCarpeta += `</div>`;
@@ -318,15 +294,14 @@ function renderizarVistaEliminar() {
     });
 }
 
-// Eliminar un archivo
 function eliminarArchivo(idxCarpeta, idxFile) {
     const password = prompt("Clave de Administrador:");
     if (password === CLAVE_ADMIN) {
-        if (confirm("¿Estás seguro de eliminar este archivo?")) {
+        if (confirm("¿Seguro que deseas eliminar este archivo del Directorio?")) {
             estructuraCarpetas[idxCarpeta].archivos.splice(idxFile, 1);
             guardarEnFirebase().then(() => {
                 cargarDatosFirebase();
-                alert("Archivo eliminado con éxito.");
+                alert("Archivo removido globalmente.");
             });
         }
     } else {
@@ -334,15 +309,14 @@ function eliminarArchivo(idxCarpeta, idxFile) {
     }
 }
 
-// Eliminar carpeta entera
 function eliminarCarpetaEntera(idxCarpeta) {
     const password = prompt("Clave de Administrador:");
     if (password === CLAVE_ADMIN) {
-        if (confirm("¿Seguro que deseas borrar toda esta carpeta con sus archivos? Esto afectará a todos los dispositivos.")) {
+        if (confirm("¿Estás absolutamente seguro? Eliminarás esta carpeta y todo su contenido del Directorio en todos los dispositivos.")) {
             estructuraCarpetas.splice(idxCarpeta, 1);
             guardarEnFirebase().then(() => {
                 cargarDatosFirebase();
-                alert("Carpeta borrada del sistema.");
+                alert("Carpeta eliminada globalmente.");
             });
         }
     } else {
