@@ -2,149 +2,81 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-    <title>INCOREA CABLES-Directorio</title>
+    <title>INCOREA CABLES - Directorio</title>
     <link href="estilos.css" rel="stylesheet" type="text/css">
-    
-    <style>
-        /* ESTILOS ESPECÍFICOS PARA EL DIRECTORIO */
-        .contenedor-carpetas {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .carpeta-header {
-            background-color: #0d1b2a;
-            color: #ffffff;
-            padding: 15px;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 5px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .carpeta-contenido {
-            display: none;
-            padding: 15px;
-            background-color: #f8f9fa;
-            border: 1px solid #ddd;
-            border-top: none;
-            border-radius: 0 0 5px 5px;
-        }
-        .carpeta-abierta .carpeta-contenido {
-            display: block;
-        }
-        .tarjeta-horizontal {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #ffffff;
-            border: 1px solid #e0e0e0;
-            padding: 15px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-        }
-        .col-info {
-            font-size: 16px;
-        }
-        .col-descripcion {
-            font-size: 14px;
-            color: #666;
-        }
-        .btn-abrir-moderno {
-            background-color: #ff6b00;
-            color: white;
-            padding: 10px 15px;
-            text-decoration: none;
-            font-weight: bold;
-            border-radius: 4px;
-            display: inline-block;
-        }
-        .seccion-admin {
-            margin-top: 50px;
-            padding: 20px;
-            background-color: #ffffff;
-            border: 1px dashed #0d1b2a;
-            border-radius: 5px;
-        }
-        .grupo-input {
-            margin-bottom: 15px;
-        }
-        .grupo-input label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        .grupo-input input, .grupo-input select {
-            width: 100%;
-            padding: 8px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .btn-accion {
-            background-color: #0d1b2a;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            border-radius: 4px;
-            width: 100%;
-        }
-    </style>
 </head>
 <body>
 
-    <div style="background-color: #0d1b2a; padding: 15px; text-align: center;">
-        <a href="directorio.html" style="color: white; margin-right: 20px; text-decoration: none; font-weight: bold;">DIRECTORIO</a>
-        <a href="comentarios.html" style="color: white; text-decoration: none; font-weight: bold;">SUGERENCIAS</a>
-    </div>
-
-    <h1 style="text-align: center; margin-top: 30px; color: #0d1b2a;">DIRECTORIO DE CABLES INCOREA</h1>
-
-    <div class="contenedor-carpetas" id="contenedor-carpetas">
-        <p style="text-align: center; color: gray;">Cargando carpetas desde la base de datos...</p>
-    </div>
-
-    <div class="seccion-admin">
-        <h2 style="color: #0d1b2a; margin-top: 0;">Administrar Carpetas y Archivos</h2>
-        
-        <div style="margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
-            <h3>Crear Carpeta Nueva</h3>
-            <div class="grupo-input">
-                <label for="input-nueva-carpeta">Nombre de la Carpeta:</label>
-                <input type="text" id="input-nueva-carpeta" placeholder="Ej: 1. CABLES DE COBRE">
+    <div class="header-global" style="background: #111e25; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #00b494;">
+        <div class="logo-container" style="display: flex; align-items: center;">
+            <div style="font-size: 28px; font-weight: bold; color: #00b494; font-family: sans-serif;">
+                Incorea <span style="color: #888;">CABLES</span>
             </div>
-            <button class="btn-accion" onclick="crearNuevaCarpeta()">Crear Carpeta</button>
+        </div>
+        <div style="color: #ffffff; font-size: 20px; font-weight: bold; font-family: sans-serif; letter-spacing: 1px;">
+            CALIDAD QUE CONECTA TUS PROYECTOS
+        </div>
+    </div>
+
+    <div class="nav-bar" style="background: #162a35; padding: 12px; text-align: center;">
+        <a href="inicio.html" style="color: #a3b8cc; margin: 0 15px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">INICIO</a>
+        <a href="directorio.html" style="color: #00b494; margin: 0 15px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px; border-bottom: 2px solid #00b494; padding-bottom: 5px;">DIRECTORIO</a>
+        <a href="servicios.html" style="color: #a3b8cc; margin: 0 15px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">SERVICIOS</a>
+        <a href="sugerencias.html" style="color: #a3b8cc; margin: 0 15px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">SUGERENCIAS</a>
+        <a href="comentario.html" style="color: #a3b8cc; margin: 0 15px; text-decoration: none; font-weight: bold; font-family: sans-serif; font-size: 14px;">COMENTARIO</a>
+    </div>
+
+    <div style="background: #111e25; color: #ffffff; min-height: 100vh; padding: 40px 10%; font-family: sans-serif;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1f3a47; padding-bottom: 15px; margin-bottom: 30px;">
+            <h1 style="font-size: 32px; font-weight: 800; margin: 0; letter-spacing: 1px;">ESTRUCTURA DE ARCHIVOS</h1>
+            <span style="color: #00b494; font-weight: bold; font-size: 14px; letter-spacing: 1px;">SELECCIONA UNA CARPETA DE LOS DOCUMENTOS</span>
         </div>
 
-        <div>
-            <h3>Subir Archivo/Documento</h3>
-            <div class="grupo-input">
-                <label for="select-categoria">Seleccionar Carpeta Destino:</label>
-                <select id="select-categoria">
-                    <option value="">Cargando carpetas...</option>
-                </select>
+        <div id="contenedor-carpetas" style="margin-bottom: 50px;">
+            <p style="text-align: center; color: #8899a6; font-size: 16px;">Cargando carpetas desde la base de datos...</p>
+        </div>
+
+        <div style="background: #162a35; border: 1px solid #1f3a47; border-radius: 8px; padding: 25px;">
+            <h3 style="text-align: center; color: #ffffff; margin-top: 0; margin-bottom: 25px; font-size: 16px; letter-spacing: 1px; border-bottom: 1px solid #1f3a47; padding-bottom: 15px;">PANEL DE CONTROL (ADMINISTRADOR)</h3>
+            
+            <div style="margin-bottom: 30px;">
+                <h4 style="color: #00b494; margin-top: 0; margin-bottom: 10px; font-size: 14px;">1. AGREGAR NUEVA CARPETA</h4>
+                <div style="display: flex; gap: 15px;">
+                    <input type="text" id="input-nueva-carpeta" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; padding: 12px; background: #111e25; border: 1px solid #1f3a47; color: white; border-radius: 4px; outline: none;">
+                    <button onclick="crearNuevaCarpeta()" style="background: #00b494; color: #111e25; border: none; padding: 0 25px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s;">CREAR CARPETA</button>
+                </div>
             </div>
-            <div class="grupo-input">
-                <label for="input-nombre-doc">Nombre del Documento:</label>
-                <input type="text" id="input-nombre-doc" placeholder="Ej: Ficha Técnica Cobre.pdf">
+
+            <div>
+                <h4 style="color: #00b494; margin-top: 0; margin-bottom: 10px; font-size: 14px;">2. SUBIR DOCUMENTO A CARPETA</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+                    <div>
+                        <select id="select-categoria" style="width: 100%; padding: 12px; background: #111e25; border: 1px solid #1f3a47; color: white; border-radius: 4px; outline: none;">
+                            <option value="">Seleccionar Carpeta</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="text" id="input-nombre-doc" placeholder="Nombre del documento" style="width: 100%; padding: 12px; background: #111e25; border: 1px solid #1f3a47; color: white; border-radius: 4px; box-sizing: border-box; outline: none;">
+                    </div>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                    <div>
+                        <input type="text" id="input-desc-doc" placeholder="Descripción corta" style="width: 100%; padding: 12px; background: #111e25; border: 1px solid #1f3a47; color: white; border-radius: 4px; box-sizing: border-box; outline: none;">
+                    </div>
+                    <div>
+                        <input type="text" id="input-url-doc" placeholder="Link de Drive o OneDrive" style="width: 100%; padding: 12px; background: #111e25; border: 1px solid #1f3a47; color: white; border-radius: 4px; box-sizing: border-box; outline: none;">
+                    </div>
+                </div>
+                <button onclick="subirNuevoArchivo()" style="width: 100%; background: #00b494; color: #111e25; border: none; padding: 15px; font-weight: bold; border-radius: 4px; cursor: pointer; font-size: 15px;">GUARDAR DOCUMENTO</button>
             </div>
-            <div class="grupo-input">
-                <label for="input-url-doc">Enlace del Documento (URL):</label>
-                <input type="text" id="input-url-doc" placeholder="Ej: https://drive.google.com/...">
-            </div>
-            <button class="btn-accion" style="background-color: #ff6b00;" onclick="subirNuevoArchivo()">Guardar Archivo en la Carpeta</button>
+
         </div>
     </div>
 
     <script>
         const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios.json";
 
-        // Obtener datos desde Firebase
         async function obtenerCarpetasDeFirebase() {
             try {
                 const respuesta = await fetch(FIREBASE_URL);
@@ -161,7 +93,6 @@
             }
         }
 
-        // Crear una carpeta en Firebase
         async function guardarCarpetaEnFirebase(nuevaCarpeta) {
             try {
                 await fetch(FIREBASE_URL, {
@@ -171,11 +102,10 @@
                 });
                 renderizarCarpetas();
             } catch (error) {
-                alert("Error al guardar la carpeta.");
+                alert("Error al conectar con la base de datos.");
             }
         }
 
-        // Guardar archivo dentro de una carpeta en Firebase
         async function guardarArchivoEnFirebase(carpetaId, archivosActualizados) {
             try {
                 const urlCarpeta = `https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios/${carpetaId}/archivos.json`;
@@ -186,11 +116,10 @@
                 });
                 renderizarCarpetas();
             } catch (error) {
-                alert("Error al subir el archivo.");
+                alert("Error al guardar el archivo.");
             }
         }
 
-        // Dibujar las carpetas en la pantalla
         async function renderizarCarpetas() {
             const contenedor = document.getElementById('contenedor-carpetas');
             if (!contenedor) return;
@@ -199,7 +128,7 @@
             contenedor.innerHTML = '';
 
             if (sistemaCarpetas.length === 0) {
-                contenedor.innerHTML = '<p style="text-align:center; color:gray;">No hay carpetas creadas. Crea una abajo.</p>';
+                contenedor.innerHTML = '<p style="text-align:center; color:#8899a6;">No hay carpetas creadas. ¡Crea la primera abajo!</p>';
                 actualizarSelectorCarpetas([]);
                 return;
             }
@@ -208,25 +137,49 @@
 
             sistemaCarpetas.forEach((carpeta) => {
                 let grupo = document.createElement('div');
+                grupo.style.marginBottom = '15px';
                 
                 let carpetaDiv = document.createElement('div');
-                carpetaDiv.className = 'carpeta-header';
-                carpetaDiv.innerHTML = `<span>📁 ${carpeta.nombre}</span> <span>▼</span>`;
+                carpetaDiv.style.background = '#162a35';
+                carpetaDiv.style.border = '1px solid #1f3a47';
+                carpetaDiv.style.padding = '18px 25px';
+                carpetaDiv.style.cursor = 'pointer';
+                carpetaDiv.style.borderRadius = '5px';
+                carpetaDiv.style.display = 'flex';
+                carpetaDiv.style.justifyContent = 'space-between';
+                carpetaDiv.style.alignItems = 'center';
+                carpetaDiv.style.fontWeight = 'bold';
+                carpetaDiv.innerHTML = `<span style="font-size: 16px; letter-spacing: 0.5px;">📁 ${carpeta.nombre}</span> <span style="color: #00b494;">▶</span>`;
                 
                 let contenidoDiv = document.createElement('div');
-                contenidoDiv.className = 'carpeta-contenido';
+                contenidoDiv.style.display = 'none';
+                contenidoDiv.style.padding = '20px';
+                contenidoDiv.style.background = '#111e25';
+                contenidoDiv.style.border = '1px solid #1f3a47';
+                contenidoDiv.style.borderTop = 'none';
+                contenidoDiv.style.borderRadius = '0 0 5px 5px';
 
                 if (carpeta.archivos.length === 0) {
-                    contenidoDiv.innerHTML = '<p style="color: gray; margin: 0;">Carpeta vacía.</p>';
+                    contenidoDiv.innerHTML = '<p style="color: #8899a6; margin: 0; font-size: 14px;">Esta carpeta no contiene archivos todavía.</p>';
                 } else {
                     carpeta.archivos.forEach(doc => {
                         let tarjeta = document.createElement('div');
-                        tarjeta.className = 'tarjeta-horizontal';
+                        tarjeta.style.display = 'flex';
+                        tarjeta.style.justifyContent = 'space-between';
+                        tarjeta.style.alignItems = 'center';
+                        tarjeta.style.background = '#162a35';
+                        tarjeta.style.border = '1px solid #1f3a47';
+                        tarjeta.style.padding = '15px 20px';
+                        tarjeta.style.marginBottom = '10px';
+                        tarjeta.style.borderRadius = '4px';
+                        
                         tarjeta.innerHTML = `
-                            <div class="col-info">📄 <strong>${doc.nombre}</strong></div>
-                            <div class="col-descripcion">Archivo cargado en el sistema</div>
                             <div>
-                                <a href="${doc.url}" target="_blank" class="btn-abrir-moderno">ABRIR</a>
+                                <div style="font-weight: bold; font-size: 15px; margin-bottom: 4px;">📄 ${doc.nombre}</div>
+                                <div style="color: #8899a6; font-size: 13px;">${doc.descripcion || 'Documento técnico oficial'}</div>
+                            </div>
+                            <div>
+                                <a href="${doc.url}" target="_blank" style="background: #00b494; color: #111e25; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 4px; font-size: 13px; display: inline-block;">ABRIR ARCHIVO</a>
                             </div>
                         `;
                         contenidoDiv.appendChild(tarjeta);
@@ -237,18 +190,19 @@
                 grupo.appendChild(contenidoDiv);
 
                 carpetaDiv.addEventListener('click', () => {
-                    grupo.classList.toggle('carpeta-abierta');
+                    const estaAbierta = contenidoDiv.style.display === 'block';
+                    contenidoDiv.style.display = estaAbierta ? 'none' : 'block';
+                    carpetaDiv.querySelector('span:last-child').innerHTML = estaAbierta ? '▶' : '▼';
                 });
 
                 contenedor.appendChild(grupo);
             });
         }
 
-        // Llenar el selector del formulario
         function actualizarSelectorCarpetas(sistemaCarpetas) {
             const select = document.getElementById('select-categoria');
             if (!select) return;
-            select.innerHTML = '<option value="">-- Selecciona Carpeta Destino --</option>';
+            select.innerHTML = '<option value="">Seleccionar Carpeta</option>';
             sistemaCarpetas.forEach(carpeta => {
                 let option = document.createElement('option');
                 option.value = carpeta.id;
@@ -257,25 +211,25 @@
             });
         }
 
-        // Función del botón Crear Carpeta
         async function crearNuevaCarpeta() {
             const input = document.getElementById('input-nueva-carpeta');
             const nombre = input.value.trim();
-            if (!nombre) return alert("Escribe un nombre.");
+            if (!nombre) return alert("Escribe un nombre para la carpeta.");
 
             const nuevaCarpeta = { nombre: nombre, archivos: [] };
             input.value = '';
             await guardarCarpetaEnFirebase(nuevaCarpeta);
         }
 
-        // Función del botón Subir Archivo
         async function subirNuevoArchivo() {
             const select = document.getElementById('select-categoria');
             const inputNombre = document.getElementById('input-nombre-doc');
+            const inputDesc = document.getElementById('input-desc-doc');
             const inputUrl = document.getElementById('input-url-doc');
 
             const carpetaId = select.value;
             const nombreDoc = inputNombre.value.trim();
+            const descDoc = inputDesc.value.trim() || 'Documento técnico';
             let urlDoc = inputUrl.value.trim();
 
             if (!carpetaId) return alert("Selecciona una carpeta.");
@@ -291,8 +245,9 @@
 
             if (!carpeta) return;
 
-            const nuevosArchivos = [...carpeta.archivos, { nombre: nombreDoc, url: urlDoc }];
+            const nuevosArchivos = [...carpeta.archivos, { nombre: nombreDoc, descripcion: descDoc, url: urlDoc }];
             inputNombre.value = '';
+            inputDesc.value = '';
             inputUrl.value = '';
             
             await guardarArchivoEnFirebase(carpetaId, nuevosArchivos);
