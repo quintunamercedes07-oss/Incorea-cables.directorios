@@ -1,443 +1,320 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>INCOREA CABLES-Directorio</title>
-<link href="estilos.css" rel="stylesheet" type="text/css">
-<style>
-    /* CONTENEDOR DE CARPETAS (MÁS ANCHO Y AMPLIO) */
-    .contenedor-carpetas {
-        display: flex;
-        flex-direction: column;
-        gap: 20px; /* Más espacio entre carpetas */
-        margin-top: 30px;
-        font-family: 'Segoe UI', Roboto, sans-serif;
-    }
-
-    /* DISEÑO DE LA CABECERA DE LA CARPETA (MÁS GRANDE Y ROBUSTA) */
-    .carpeta-header {
-        background: rgba(28, 43, 58, 0.9);
-        border: 2px solid rgba(26, 188, 156, 0.4); /* Borde un poco más grueso */
-        border-radius: 10px;
-        padding: 22px 30px; /* Más acolchado para hacerla más grande */
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        user-select: none;
-    }
-    .carpeta-header:hover {
-        background: rgba(34, 53, 72, 0.95);
-        border-color: #1abc9c;
-        box-shadow: 0 6px 20px rgba(26, 188, 156, 0.15);
-    }
-    .carpeta-titulo {
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        color: #ffffff;
-        font-size: 22px; /* Título notablemente más grande */
-        font-weight: 800; /* Más negrita */
-    }
-    .carpeta-icono-estado {
-        color: #1abc9c;
-        font-size: 18px; /* Icono indicador más grande */
-        transition: transform 0.3s ease;
-    }
-
-    /* CONTENEDOR DE TARJETAS DENTRO DE LA CARPETA */
-    .carpeta-contenido {
-        max-height: 0;
-        overflow: hidden;
-        transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
-        display: flex;
-        flex-direction: column;
-        gap: 12px;
-        padding-left: 20px;
-        border-left: 3px dashed rgba(26, 188, 156, 0.3);
-        margin-left: 12px;
-    }
-
-    /* Clase activa para abrir la carpeta mediante JS */
-    .carpeta-abierta .carpeta-contenido {
-        max-height: 1500px; /* Más margen para albergar contenido grande */
-        margin-top: 15px;
-        margin-bottom: 20px;
-    }
-    .carpeta-abierta .carpeta-icono-estado {
-        transform: rotate(90deg);
-    }
-
-    /* TARJETA INDIVIDUAL DE DOCUMENTO (MÁS AMPLIA) */
-    .tarjeta-horizontal {
-        background: rgba(17, 29, 40, 0.75);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255, 255, 255, 0.08);
-        border-radius: 12px;
-        padding: 18px 25px; /* Más espacio interno */
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        transition: all 0.3s ease;
-    }
-    .tarjeta-horizontal:hover {
-        border-color: rgba(26, 188, 156, 0.5);
-        background: rgba(22, 37, 51, 0.85);
-        transform: translateX(5px);
-    }
-
-    .col-info {
-        width: 25%;
-        min-width: 180px;
-    }
-    .col-descripcion {
-        flex: 1;
-        padding: 0 25px;
-        color: #ecf0f1; /* Texto de descripción un poco más claro para mejor lectura */
-        font-size: 15px; /* Texto de descripción más grande */
-        line-height: 1.5;
-    }
-    .col-acciones {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        width: 20%;
-        justify-content: flex-end;
-        min-width: 200px;
-    }
-
-    /* BOTONES DE LA CARPETA (MÁS GRANDES Y ACCESIBLES) */
-    .btn-abrir-moderno {
-        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
-        color: white;
-        border: none;
-        padding: 10px 22px; /* Botones de acción principales más grandes */
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 700;
-        font-size: 12px;
-        letter-spacing: 0.5px;
-        transition: all 0.3s ease;
-    }
-    .btn-abrir-moderno:hover {
-        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
-        transform: scale(1.04);
-    }
-    .btn-eliminar-moderno {
-        background: transparent;
-        color: #e74c3c;
-        border: 1px solid rgba(231, 76, 60, 0.4);
-        padding: 9px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: bold;
-        transition: all 0.2s ease;
-    }
-    .btn-eliminar-moderno:hover {
-        background: #e74c3c;
-        color: white;
-        border-color: #e74c3c;
-    }
-    .btn-eliminar-carpeta {
-        background: transparent;
-        color: #e74c3c;
-        border: none;
-        cursor: pointer;
-        font-size: 13px; /* Eliminar carpeta ligeramente más grande */
-        font-weight: bold;
-        padding: 5px 12px;
-        opacity: 0.5;
-        transition: opacity 0.2s;
-    }
-    .btn-eliminar-carpeta:hover {
-        opacity: 1;
-    }
-
-    /* ==========================================
-       PANEL DE ADMINISTRACIÓN (MÁS PEQUEÑO Y COMPACTO)
-       ========================================== */
-    .admin-seccion {
-        background: rgba(30, 41, 59, 0.4);
-        border: 1px dashed rgba(255, 255, 255, 0.1);
-        border-radius: 8px;
-        padding: 12px 15px; /* Margen interno reducido */
-        margin-bottom: 12px;
-    }
-    .admin-seccion h5 {
-        color: #1abc9c;
-        margin-top: 0;
-        margin-bottom: 8px;
-        font-size: 12px; /* Título de sección más chico */
-        font-weight: 700;
-        letter-spacing: 0.5px;
-    }
-    /* Estilo de inputs reducidos */
-    .input-admin-compacto {
-        padding: 8px 12px !important;
-        border-radius: 5px !important;
-        border: 1px solid rgba(255, 255, 255, 0.06) !important;
-        background: #1c2b3a !important;
-        color: white !important;
-        font-size: 12px !important; /* Letra más chica */
-        outline: none;
-    }
-    /* Botones de acción reducidos */
-    .btn-admin-compacto {
-        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
-        color: white;
-        border: none;
-        padding: 8px 15px !important; /* Botón más bajo y corto */
-        border-radius: 5px !important;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 11px !important; /* Letra más pequeña */
-        transition: all 0.3s ease;
-    }
-    .btn-admin-compacto:hover {
-        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
-    }
-
-    /* VISOR DE SEGURIDAD */
-    #panel-visor-protegido {
-        display: none;
-        position: fixed;
-        top: 0; left: 0; width: 100%; height: 100%;
-        background: #0e161d;
-        z-index: 10000;
-    }
-    .barra-visor {
-        height: 50px;
-        background: #1a252f;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 20px;
-        border-bottom: 3px solid #1abc9c;
-    }
-    .btn-cerrar {
-        background: #e74c3c;
-        color: white;
-        border: none;
-        padding: 8px 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    .iframe-seguro {
-        width: 100%;
-        height: calc(100% - 50px);
-        border: none;
-    }
-
-    /* EFECTO DE BRILLO EXTREMO */
-    @keyframes superBrilloNeon {
-        0% {
-            border-color: #1abc9c;
-            box-shadow: 0 0 15px rgba(26, 188, 156, 0.2), inset 0 0 10px rgba(26, 188, 156, 0.05);
-            transform: translateY(-1px);
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>INCOREA CABLES - Directorio</title>
+    <link href="styles.css" rel="stylesheet" type="text/css">
+    
+    <style>
+        /* Estilos básicos para que se vea ordenado y moderno */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
         }
-        50% {
-            border-color: #17d3ad;
-            box-shadow: 0 0 35px #1abc9c, inset 0 0 20px rgba(26, 188, 156, 0.4);
-            transform: translateY(-4px);
+        .contenedor-carpetas {
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
-        100% {
-            border-color: #1abc9c;
-            box-shadow: 0 0 15px rgba(26, 188, 156, 0.2), inset 0 0 10px rgba(26, 188, 156, 0.05);
-            transform: translateY(-1px);
+        .carpeta-header {
+            background-color: #002f6c;
+            color: white;
+            padding: 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
         }
-    }
-    .tarjeta-brillante {
-        animation: superBrilloNeon 1.8s infinite ease-in-out !important;
-        border-width: 1.5px !important;
-        background: rgba(26, 188, 156, 0.08) !important;
-    }
-</style>
+        .carpeta-contenido {
+            background-color: white;
+            border: 1px solid #ccc;
+            border-top: none;
+            padding: 15px;
+            border-radius: 0 0 6px 6px;
+            display: none;
+        }
+        .carpeta-abierta .carpeta-contenido {
+            display: block;
+        }
+        .tarjeta-horizontal {
+            background: #f9f9f9;
+            border: 1px solid #eee;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 4px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .btn-abrir-moderno {
+            background-color: #ff6600;
+            color: white;
+            padding: 8px 12px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .seccion-admin {
+            max-width: 800px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px dashed #002f6c;
+        }
+        .grupo-input {
+            margin-bottom: 15px;
+        }
+        .grupo-input label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .grupo-input input, .grupo-input select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn-accion {
+            background-color: #002f6c;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+        .btn-accion:hover {
+            background-color: #001a3e;
+        }
+    </style>
 </head>
 <body>
-<div id="wrapper">
-    <div id="header">
-        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
-        <div id="titulo-container">
-            <h1>Calidad que conecta tus proyectos</h1>
-            <p>Estamos para ayudarte</p>
-        </div>
+
+    <h2 style="text-align: center; color: #002f6c;">📁 DIRECTORIO DE CABLES INCOREA</h2>
+
+    <div class="contenedor-carpetas">
+        <p style="text-align:center; color:gray;">Cargando carpetas desde internet...</p>
     </div>
 
-    <div id="nav">
-        <a href="index.html">INICIO</a>
-        <a href="directorio.html">DIRECTORIO</a>
-        <a href="servicios.html">SERVICIOS</a>
-        <a href="sugerencias.html">SUGERENCIAS</a>
-        <a href="comentarios.html">COMENTARIO</a>
-    </div>
+    <hr style="max-width: 800px; margin: 40px auto; border: 1px solid #ccc;">
 
-    <div id="comentarios-container" style="padding: 60px 5%;">
-        <div class="comentarios-header" style="border-bottom: 2px solid #1c2b3a; padding-bottom: 20px; margin-bottom: 30px;">
-            <h2 style="color: #ffffff; letter-spacing: 1.5px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 32px;">ESTRUCTURA DE ARCHIVOS</h2>
-            <p style="color: #1abc9c; margin-top: 5px; font-weight: 600; letter-spacing: 0.8px; font-size: 15px;">SELECCIONA UNA CARPETA DE LOS DOCUMENTOS</p>
-        </div>
-
-        <div id="contenedor-carpetas-dinamico" class="contenedor-carpetas">
-            </div>
-    </div>
-
-    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px; margin: 20px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
-        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 14px; opacity: 0.9;">PANEL DE CONTROL (ADMINISTRADOR)</h4>
+    <div class="seccion-admin">
+        <h3 style="color: #002f6c; margin-top: 0;">🛠️ PANEL DE CONTROL (AGREGAR CONTENIDO)</h3>
         
-        <div class="admin-seccion">
-            <h5>1. AGREGAR NUEVA CARPETA</h5>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; min-width: 200px;">
-                <button onclick="crearCarpetaNueva()" class="btn-admin-compacto"> CREAR CARPETA</button>
+        <div style="margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee;">
+            <h4>1. Crear Nueva Carpeta</h4>
+            <div class="grupo-input">
+                <label>Nombre de la Carpeta:</label>
+                <input type="text" id="input-nueva-carpeta" placeholder="Ej: 1. CABLES DE COBRE">
             </div>
+            <button class="btn-accion" onclick="crearNuevaCarpeta()">Crear Carpeta</button>
         </div>
 
-        <div class="admin-seccion">
-            <h5>2. SUBIR DOCUMENTO A CARPETA</h5>
-            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <select id="select-carpeta-destino" class="input-admin-compacto" style="min-width: 180px; cursor: pointer;">
-                    <option value=""> Seleccionar Carpeta </option>
+        <div>
+            <h4>2. Agregar Archivo o Link a una Carpeta</h4>
+            <div class="grupo-input">
+                <label>Selecciona la Carpeta Destino:</label>
+                <select id="select-categoria">
+                    <option value="">Cargando carpetas...</option>
                 </select>
-                <input type="text" id="nombre-doc" class="input-admin-compacto" placeholder="Nombre del documento" style="flex: 1; min-width: 140px;">
-                <input type="text" id="desc-doc" class="input-admin-compacto" placeholder="Descripción corta" style="flex: 1; min-width: 140px;">
-                <input type="text" id="link-doc" class="input-admin-compacto" placeholder="Link de Drive o OneDrive" style="flex: 1; min-width: 140px;">
-                <button onclick="guardarDocumentoEnCarpeta()" class="btn-admin-compacto">GUARDAR DOCUMENTO</button>
             </div>
+            <div class="grupo-input">
+                <label>Nombre del Documento / Archivo:</label>
+                <input type="text" id="input-nombre-doc" placeholder="Ej: Ficha Técnica Catálogo.pdf">
+            </div>
+            <div class="grupo-input">
+                <label>Enlace / Link del Archivo (URL de Drive, Dropbox, etc.):</label>
+                <input type="text" id="input-url-doc" placeholder="Ej: https://drive.google.com/file/d/...">
+            </div>
+            <button class="btn-accion" style="background-color: #ff6600;" onclick="subirNuevoArchivo()">Subir Archivo a la Carpeta</button>
         </div>
     </div>
 
-    <div id="panel-visor-protegido">
-        <div class="barra-visor">
-            <span style="color: #1abc9c; font-weight: bold; font-family: sans-serif;">MODO LECTURA PROTEGIDO</span>
-            <button onclick="cerrarVisor()" class="btn-cerrar">CERRAR</button>
-        </div>
-        <iframe src="" id="visor-iframe" class="iframe-seguro"></iframe>
-    </div>
+    <script>
+        // URL de tu base de datos de Firebase
+        const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios.json";
 
-    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
-        <p>INCOREA-CABLES</p>
-    </div>
-</div>
+        // 1. Obtener las carpetas desde el internet
+        async function obtenerCarpetasDeFirebase() {
+            try {
+                const respuesta = await fetch(FIREBASE_URL);
+                const datos = await respuesta.json();
+                
+                if (!datos) return [];
+                
+                // Convertimos el objeto raro de Firebase en una lista limpia
+                return Object.keys(datos).map(id => ({
+                    id: id,
+                    nombre: datos[id].nombre,
+                    archivos: datos[id].archivos || []
+                }));
+            } catch (error) {
+                console.error("Error al conectar con Firebase:", error);
+                return [];
+            }
+        }
 
-<script>
-    // URL de tu base de datos de Firebase (la misma de directorio.html)
-    const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios.json";
+        // 2. Guardar carpeta nueva en internet
+        async function guardarCarpetaEnFirebase(nuevaCarpeta) {
+            try {
+                await fetch(FIREBASE_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(nuevaCarpeta)
+                });
+                renderizarCarpetas();
+            } catch (error) {
+                alert("Error al guardar la carpeta en la base de datos.");
+            }
+        }
 
-    let sistemaCarpetas = [];
+        // 3. Guardar un nuevo link dentro de la carpeta seleccionada
+        async function guardarArchivoEnFirebase(carpetaId, archivosActualizados) {
+            try {
+                const urlCarpeta = `https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios/${carpetaId}/archivos.json`;
+                await fetch(urlCarpeta, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(archivosActualizados)
+                });
+                renderizarCarpetas();
+            } catch (error) {
+                alert("Error al subir el link.");
+            }
+        }
 
-    // 1. OBTENER LAS CARPETAS DESDE FIREBASE EN TIEMPO REAL
-    async function cargarCarpetasDesdeFirebase() {
-        const selectCarpetas = document.getElementById('select-carpetas');
-        if (!selectCarpetas) return;
+        // 4. Pintar las carpetas y archivos en la pantalla
+        async function renderizarCarpetas() {
+            const contenedor = document.querySelector('.contenedor-carpetas');
+            if (!contenedor) return;
 
-        selectCarpetas.innerHTML = '<option value="">Cargando carpetas...</option>';
+            const sistemaCarpetas = await obtenerCarpetasDeFirebase();
+            contenedor.innerHTML = '';
 
-        try {
-            const respuesta = await fetch(FIREBASE_URL);
-            const datos = await respuesta.json();
-
-            if (!datos) {
-                selectCarpetas.innerHTML = '<option value="">-- No hay carpetas en internet --</option>';
+            if (sistemaCarpetas.length === 0) {
+                contenedor.innerHTML = '<p style="text-align:center; color:gray;">No hay carpetas creadas. Usa el panel de abajo para crear una.</p>';
+                actualizarSelectorCarpetas([]);
                 return;
             }
 
-            // Convertimos el formato de Firebase a un array que entienda tu formulario
-            sistemaCarpetas = Object.keys(datos).map(id => ({
-                id: id,
-                nombre: datos[id].nombre,
-                archivos: datos[id].archivos || []
-            }));
+            // Actualizar la lista desplegable del formulario
+            actualizarSelectorCarpetas(sistemaCarpetas);
 
-            // Llenar el menú desplegable de carpetas
-            selectCarpetas.innerHTML = '<option value="">-- Selecciona una Carpeta --</option>';
-            sistemaCarpetas.forEach((carpeta, index) => {
-                let option = document.createElement('option');
-                option.value = index; // Usamos el índice para encontrarla fácil después
-                option.text = carpeta.nombre;
-                selectCarpetas.appendChild(option);
+            // Generar visualmente cada carpeta
+            sistemaCarpetas.forEach((carpeta) => {
+                let grupoCarpetas = document.createElement('div');
+                
+                let carpetaDiv = document.createElement('div');
+                carpetaDiv.className = 'carpeta-header';
+                carpetaDiv.innerHTML = `
+                    <span>📁 ${carpeta.nombre}</span>
+                    <span>▼</span>
+                `;
+                
+                let contenidoDiv = document.createElement('div');
+                contenidoDiv.className = 'carpeta-contenido';
+
+                if (carpeta.archivos.length === 0) {
+                    contenidoDiv.innerHTML = '<p style="color: gray; margin: 0;">Esta carpeta no tiene archivos todavía.</p>';
+                } else {
+                    carpeta.archivos.forEach(doc => {
+                        let tarjeta = document.createElement('div');
+                        tarjeta.className = 'tarjeta-horizontal';
+                        tarjeta.innerHTML = `
+                            <div>📄 <strong>${doc.nombre}</strong></div>
+                            <div>
+                                <a href="${doc.url}" target="_blank" class="btn-abrir-moderno">ABRIR ARCHIVO</a>
+                            </div>
+                        `;
+                        contenidoDiv.appendChild(tarjeta);
+                    });
+                }
+
+                grupoCarpetas.appendChild(carpetaDiv);
+                grupoCarpetas.appendChild(contenidoDiv);
+
+                // Evento para abrir/cerrar carpeta al hacer clic
+                carpetaDiv.addEventListener('click', () => {
+                    grupoCarpetas.classList.toggle('carpeta-abierta');
+                });
+
+                contenedor.appendChild(grupoCarpetas);
             });
-
-        } catch (error) {
-            console.error("Error al cargar desde Firebase:", error);
-            selectCarpetas.innerHTML = '<option value="">-- Error al conectar con internet --</option>';
-        }
-    }
-
-    // 2. CARGAR LOS DOCUMENTOS CUANDO EL USUARIO SELECCIONE UNA CARPETA
-    function cargarDocumentosDeCarpeta() {
-        const selectCarpetas = document.getElementById('select-carpetas');
-        const selectDocs = document.getElementById('select-directorios');
-        const indexCarpeta = selectCarpetas.value;
-
-        selectDocs.innerHTML = "";
-
-        if (indexCarpeta === "") {
-            selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
-            selectDocs.disabled = true;
-            return;
         }
 
-        const carpetaSeleccionada = sistemaCarpetas[indexCarpeta];
-
-        if (!carpetaSeleccionada.archivos || carpetaSeleccionada.archivos.length === 0) {
-            selectDocs.innerHTML = '<option value="">Esta carpeta no contiene archivos</option>';
-            selectDocs.disabled = true;
-            return;
+        // Actualizar el menú de selección de carpetas
+        function actualizarSelectorCarpetas(sistemaCarpetas) {
+            const select = document.getElementById('select-categoria');
+            if (!select) return;
+            select.innerHTML = '<option value="">-- Selecciona Carpeta Destino --</option>';
+            sistemaCarpetas.forEach(carpeta => {
+                let option = document.createElement('option');
+                option.value = carpeta.id;
+                option.textContent = carpeta.nombre;
+                select.appendChild(option);
+            });
         }
 
-        selectDocs.disabled = false;
-        selectDocs.innerHTML = '<option value="">-- Selecciona el archivo --</option>';
-        
-        carpetaSeleccionada.archivos.forEach((doc) => {
-            let option = document.createElement('option');
-            option.value = doc.nombre;
-            option.text = doc.nombre;
-            selectDocs.appendChild(option);
-        });
-    }
+        // BOTÓN: Crear carpeta
+        async function crearNuevaCarpeta() {
+            const inputNombre = document.getElementById('input-nueva-carpeta');
+            const nombre = inputNombre.value.trim();
+            if (!nombre) return alert("Por favor escribe un nombre para la carpeta.");
 
-    // 3. ENVIAR EL FORMULARIO (Se guarda localmente para pruebas o puedes mandarlo a otra base de datos)
-    const form = document.getElementById('form-contacto');
-    if (form) {
-        form.onsubmit = function(e) {
-            e.preventDefault();
-            const selectCarpetas = document.getElementById('select-carpetas');
-            const selectDocs = document.getElementById('select-directorios');
-            const nombreUsuario = this.nombre.value.trim();
-            const mensaje = this.mensaje.value.trim();
-
-            if (selectCarpetas.selectedIndex === 0) return alert("Por favor, selecciona una carpeta.");
-            if (selectDocs.disabled || selectDocs.value === "") return alert("Por favor, selecciona un documento.");
-            if (!nombreUsuario || !mensaje) return alert("Por favor, completa tu nombre y la sugerencia.");
-
-            const nombreCarpeta = selectCarpetas.options[selectCarpetas.selectedIndex].text;
-            const nombreDocumento = selectDocs.value;
-            const rutaCompleta = `[${nombreCarpeta}] ${nombreDocumento}`;
-
-            const nuevoComentario = {
-                usuario: nombreUsuario,
-                area: rutaCompleta,
-                mensaje: mensaje,
-                estado: 'RECIBIDO'
+            const nuevaCarpeta = {
+                nombre: nombre,
+                archivos: []
             };
 
-            let listaComentarios = JSON.parse(localStorage.getItem('datosIncorea')) || [];
-            listaComentarios.push(nuevoComentario);
-            localStorage.setItem('datosIncorea', JSON.stringify(listaComentarios));
+            inputNombre.value = '';
+            await guardarCarpetaEnFirebase(nuevaCarpeta);
+        }
 
-            alert('¡Sugerencia registrada con éxito!');
-            this.reset();
-            selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
-            selectDocs.disabled = true;
-        };
-    }
+        // BOTÓN: Subir link de archivo
+        async function subirNuevoArchivo() {
+            const select = document.getElementById('select-categoria');
+            const inputNombreDoc = document.getElementById('input-nombre-doc');
+            const inputUrlDoc = document.getElementById('input-url-doc');
 
-    // Ejecutar la carga al abrir la página
-    window.onload = cargarCarpetasDesdeFirebase;
-</script>
+            const carpetaId = select.value;
+            const nombreDoc = inputNombreDoc.value.trim();
+            let urlDoc = inputUrlDoc.value.trim();
+
+            if (!carpetaId) return alert("Debes seleccionar una carpeta de la lista.");
+            if (!nombreDoc) return alert("Escribe el nombre del documento.");
+            if (!urlDoc) return alert("Pega un enlace o link válido.");
+
+            // Asegurar que el link empiece con http si no lo tiene
+            if (!urlDoc.startsWith('http://') && !urlDoc.startsWith('https://')) {
+                urlDoc = 'https://' + urlDoc;
+            }
+
+            const sistemaCarpetas = await obtenerCarpetasDeFirebase();
+            const carpetaSeleccionada = sistemaCarpetas.find(c => c.id === carpetaId);
+
+            if (!carpetaSeleccionada) return;
+
+            // Agregamos el archivo a la lista que ya existía
+            const nuevosArchivos = [...carpetaSeleccionada.archivos, { nombre: nombreDoc, url: urlDoc }];
+
+            inputNombreDoc.value = '';
+            inputUrlDoc.value = '';
+            
+            await guardarArchivoEnFirebase(carpetaId, nuevosArchivos);
+        }
+
+        // Cargar todo al abrir la página
+        window.onload = renderizarCarpetas;
+    </script>
 </body>
 </html>
