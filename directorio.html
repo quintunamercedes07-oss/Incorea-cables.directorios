@@ -4,8 +4,42 @@
     <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
     <title>INCOREA CABLES - Directorio</title>
     <link href="estilos.css" rel="stylesheet" type="text/css">
+    
+    <style>
+        /* Estilos específicos para la visualización del Excel incrustado */
+        #visor-excel-container {
+            display: none;
+            position: fixed;
+            top: 5%;
+            left: 5%;
+            width: 90%;
+            height: 90%;
+            background: #111e25;
+            border: 2px solid #00b494;
+            border-radius: 8px;
+            z-index: 9999;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.8);
+            padding: 10px;
+        }
+        #visor-excel-container iframe {
+            width: 100%;
+            height: calc(100% - 40px);
+            border: none;
+        }
+        .btn-cerrar-excel {
+            background: #ff3b30;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
-<body>
+<body style="background: #111e25; margin: 0; padding: 0; font-family: sans-serif;">
 
     <div class="header-global" style="background: #111e25; padding: 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 3px solid #00b494;">
         <div class="logo-container" style="display: flex; align-items: center;">
@@ -29,7 +63,10 @@
     <div style="background: #111e25; color: #ffffff; min-height: 100vh; padding: 40px 10%; font-family: sans-serif;">
         
         <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #1f3a47; padding-bottom: 15px; margin-bottom: 30px;">
-            <h1 style="font-size: 32px; font-weight: 800; margin: 0; letter-spacing: 1px;">ESTRUCTURA DE ARCHIVOS</h1>
+            <h1 style="font-size: 32px; font-weight: 800; margin: 0; letter-spacing: 1px; color: #ffffff;">ESTRUCTURA DE ARCHIVOS</h1>
+            
+            <button onclick="abrirExcelEnPantalla()" style="background: #00b494; color: #111e25; border: none; padding: 10px 15px; font-weight: bold; border-radius: 4px; cursor: pointer;">VER EXCEL NADA</button>
+            
             <span style="color: #00b494; font-weight: bold; font-size: 14px; letter-spacing: 1px;">SELECCIONA UNA CARPETA DE LOS DOCUMENTOS</span>
         </div>
 
@@ -44,7 +81,7 @@
                 <h4 style="color: #00b494; margin-top: 0; margin-bottom: 10px; font-size: 14px;">1. AGREGAR NUEVA CARPETA</h4>
                 <div style="display: flex; gap: 15px;">
                     <input type="text" id="input-nueva-carpeta" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; padding: 12px; background: #111e25; border: 1px solid #1f3a47; color: white; border-radius: 4px; outline: none;">
-                    <button onclick="crearNuevaCarpeta()" style="background: #00b494; color: #111e25; border: none; padding: 0 25px; font-weight: bold; border-radius: 4px; cursor: pointer; transition: 0.2s;">CREAR CARPETA</button>
+                    <button onclick="crearNuevaCarpeta()" style="background: #00b494; color: #111e25; border: none; padding: 0 25px; font-weight: bold; border-radius: 4px; cursor: pointer;">CREAR CARPETA</button>
                 </div>
             </div>
 
@@ -74,9 +111,32 @@
         </div>
     </div>
 
+    <div id="visor-excel-container">
+        <button class="btn-cerrar-excel" onclick="cerrarExcelEnPantalla()">CERRAR EXCEL</button>
+        <iframe id="iframe-excel" src=""></iframe>
+    </div>
+
     <script>
         const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios.json";
 
+        // Funciones para el Visor del Excel NADA.xlsx
+        function abrirExcelEnPantalla() {
+            // URL de tu Excel subido en GitHub Pages
+            const urlExcelDirecto = "https://quintunamercedes07-oss.github.io/Directorios-de-cables-de-Incorea/NADA.xlsx";
+            
+            // Usamos el visor oficial de Microsoft Office Online para abrirlo sin descargar
+            const urlVisor = "https://view.officeapps.live.com/op/embed.aspx?src=" + encodeURIComponent(urlExcelDirecto);
+            
+            document.getElementById('iframe-excel').src = urlVisor;
+            document.getElementById('visor-excel-container').style.display = 'block';
+        }
+
+        function cerrarExcelEnPantalla() {
+            document.getElementById('visor-excel-container').style.display = 'none';
+            document.getElementById('iframe-excel').src = "";
+        }
+
+        // Obtener datos desde Firebase
         async function obtenerCarpetasDeFirebase() {
             try {
                 const respuesta = await fetch(FIREBASE_URL);
@@ -93,6 +153,7 @@
             }
         }
 
+        // Crear una carpeta en Firebase
         async function guardarCarpetaEnFirebase(nuevaCarpeta) {
             try {
                 await fetch(FIREBASE_URL, {
@@ -106,6 +167,7 @@
             }
         }
 
+        // Guardar archivo en Firebase
         async function guardarArchivoEnFirebase(carpetaId, archivosActualizados) {
             try {
                 const urlCarpeta = `https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios/${carpetaId}/archivos.json`;
@@ -120,6 +182,7 @@
             }
         }
 
+        // Pintar las carpetas en el diseño original
         async function renderizarCarpetas() {
             const contenedor = document.getElementById('contenedor-carpetas');
             if (!contenedor) return;
@@ -149,7 +212,7 @@
                 carpetaDiv.style.justifyContent = 'space-between';
                 carpetaDiv.style.alignItems = 'center';
                 carpetaDiv.style.fontWeight = 'bold';
-                carpetaDiv.innerHTML = `<span style="font-size: 16px; letter-spacing: 0.5px;">📁 ${carpeta.nombre}</span> <span style="color: #00b494;">▶</span>`;
+                carpetaDiv.innerHTML = `<span style="font-size: 16px; letter-spacing: 0.5px; color: #ffffff;">📁 ${carpeta.nombre}</span> <span style="color: #00b494;">▶</span>`;
                 
                 let contenidoDiv = document.createElement('div');
                 contenidoDiv.style.display = 'none';
@@ -175,8 +238,8 @@
                         
                         tarjeta.innerHTML = `
                             <div>
-                                <div style="font-weight: bold; font-size: 15px; margin-bottom: 4px;">📄 ${doc.nombre}</div>
-                                <div style="color: #8899a6; font-size: 13px;">${doc.descripcion || 'Documento técnico oficial'}</div>
+                                <div style="font-weight: bold; font-size: 15px; margin-bottom: 4px; color: #ffffff;">📄 ${doc.nombre}</div>
+                                <div style="color: #8899a6; font-size: 13px;">${doc.descripcion || 'Documento técnico'}</div>
                             </div>
                             <div>
                                 <a href="${doc.url}" target="_blank" style="background: #00b494; color: #111e25; padding: 10px 20px; text-decoration: none; font-weight: bold; border-radius: 4px; font-size: 13px; display: inline-block;">ABRIR ARCHIVO</a>
