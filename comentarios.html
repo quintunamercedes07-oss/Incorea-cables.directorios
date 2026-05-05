@@ -123,7 +123,9 @@
                     </tr>
                 </thead>
                 <tbody id="tabla-body">
-                    <tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">Conectando al servidor...</td></tr>
+                    <tr>
+                        <td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">Cargando registros desde el servidor remoto...</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -131,153 +133,120 @@
 
     <script>
         const CLAVE_ADMIN_COMENTARIOS = "12345";
-        const FIREBASE_COMENTARIOS_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea.json";
+        const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea.json";
 
-        window.onload = function() {
-            cargarComentariosDinamicos();
-        };
+        // Objeto global para almacenar los comentarios estructurados por su ID de Firebase
+        let comentariosGlobales = {};
 
-        // Cargar datos en tiempo real desde Firebase
-        async function cargarComentariosDinamicos() {
+        // CARGAR COMENTARIOS DESDE FIREBASE
+        function cargarComentariosDinamicos() {
             const cuerpoTabla = document.getElementById('tabla-body');    
             if (!cuerpoTabla) return;
 
-            try {
-                const respuesta = await fetch(FIREBASE_COMENTARIOS_URL);
-                const datos = await respuesta.json();
-                
-                let lista = [];
-                if (datos) {
-                    // Convertimos el objeto de Firebase en un array e inyectamos la clave única para poder operar
-                    lista = Object.keys(datos).map(key => ({
-                        idFirebase: key,
-                        ...datos[key]
-                    }));
-                }
-
-                // Guardar copia local en localStorage para compatibilidad
-                localStorage.setItem('datosIncorea', JSON.stringify(lista));
-                
-                cuerpoTabla.innerHTML = '';
-                
-                if (lista.length === 0) {
-                    cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
-                    return;    
-                }
-                
-                lista.forEach((item) => {
-                    let fila = document.createElement('tr');
-                    fila.className = 'fila-dinamica';
+            fetch(FIREBASE_URL)
+                .then(response => response.json())
+                .then(data => {
+                    cuerpoTabla.innerHTML = '';
                     
-                    const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
-                    
-                    // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir con precisión
-                    let archivoBuscado = item.area;
-                    if (item.area.includes(']')) {
-                        archivoBuscado = item.area.split(']')[1].trim();
+                    // Si no hay datos (null), mostrar que la bandeja está vacía
+                    if (!data) {
+                        cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
+                        return;    
                     }
 
-                    fila.innerHTML = `
-                        <td>
-                            <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
-                            <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
-                        </td>
-                        <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
-                        <td><span class="badge ${claseBadge}">${item.estado}</span></td>
-                        <td style="text-align: center;">
-                            <button onclick="marcarYRedirigir('${item.idFirebase}', '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
-                                 VER TARJETA
-                            </button>
-                        </td>
-                    `;
-                    cuerpoTabla.appendChild(fila);
-                });
+                    comentariosGlobales = data;
 
-            } catch (error) {
-                console.error("Error al conectar con la base de datos:", error);
-                cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #e74c3c; font-style: italic; font-size: 14px;">Error de conexión con el servidor. Cargando datos locales...</td></tr>';
-                
-                // Carga de respaldo local si no hay internet
-                const datosLocales = localStorage.getItem('datosIncorea');
-                let lista = JSON.parse(datosLocales) || [];
-                if (lista.length > 0) {
-                    cuerpoTabla.innerHTML = '';
-                    lista.forEach((item, index) => {
+                    // Convertir el objeto de Firebase en una lista y procesarla
+                    Object.keys(data).forEach((idFirebase) => {
+                        const item = data[idFirebase];
                         let fila = document.createElement('tr');
                         fila.className = 'fila-dinamica';
+                        
                         const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
+                        
+                        // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir
                         let archivoBuscado = item.area;
-                        if (item.area.includes(']')) {
+                        if (item.area && item.area.includes(']')) {
                             archivoBuscado = item.area.split(']')[1].trim();
                         }
+
                         fila.innerHTML = `
                             <td>
-                                <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
-                                <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
+                                <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area || 'Sin Área'}</strong><br>
+                                <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario || 'Anónimo'}</small>
                             </td>
-                            <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
-                            <td><span class="badge ${claseBadge}">${item.estado}</span></td>
+                            <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje || ''}"</td>
+                            <td><span class="badge ${claseBadge}">${item.estado || 'RECIBIDO'}</span></td>
                             <td style="text-align: center;">
-                                <button onclick="marcarYRedirigirLocal(${index}, '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
+                                <button onclick="marcarYRedirigir('${idFirebase}', '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
                                      VER TARJETA
                                 </button>
                             </td>
                         `;
                         cuerpoTabla.appendChild(fila);
                     });
-                }
-            }
-        }
-
-        // Marcar estado como VISTO directamente en la Base de Datos Firebase
-        async function marcarYRedirigir(idFirebase, documentoCodificado) {
-            try {
-                const urlUpdate = `https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea/${idFirebase}/estado.json`;
-                
-                // Actualizamos solo el parámetro estado a 'VISTO' en la base de datos
-                await fetch(urlUpdate, {
-                    method: 'PUT',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify('VISTO')
+                })
+                .catch(error => {
+                    console.error("Error al conectar con Firebase:", error);
+                    cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #e74c3c; font-style: italic; font-size: 14px;">Error de conexión con el servidor. Por favor, verifica tu conexión a internet.</td></tr>';
                 });
-
-            } catch (error) {
-                console.error("Error al actualizar estado en el servidor:", error);
-            }
-            
-            // Redirigir a directorio pasando el nombre específico del archivo para resaltar
-            window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
         }
 
-        // Marcar local de respaldo (solo si falla el internet)
-        function marcarYRedirigirLocal(index, documentoCodificado) {
-            const datos = localStorage.getItem('datosIncorea');
-            let lista = JSON.parse(datos) || [];
-            lista[index].estado = 'VISTO'; 
-            localStorage.setItem('datosIncorea', JSON.stringify(lista));
-            window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
+        // MARCAR REGISTRO COMO VISTO EN FIREBASE Y LUEGO REDIRIGIR
+        function marcarYRedirigir(idFirebase, documentoCodificado) {
+            const urlUpdate = `https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea/${idFirebase}.json`;
+
+            // Enviar actualización de estado ("VISTO") a Firebase
+            fetch(urlUpdate, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ estado: "VISTO" })
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Redirigir a directorio pasando el nombre específico del archivo para resaltar
+                    window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
+                } else {
+                    alert("Error al actualizar el estado de la sugerencia.");
+                }
+            })
+            .catch(error => {
+                console.error("Error en la petición PATCH:", error);
+                // Si falla la red, redirigimos de todas formas
+                window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
+            });
         }
 
-        // Vaciar la tabla completa en Firebase
-        async function borrarHistorial() {
+        // ELIMINAR TODO EL HISTORIAL DE COMENTARIOS EN FIREBASE
+        function borrarHistorial() {
             const password = prompt("Ingresa la clave de administrador para limpiar la bandeja:");
             if (password === CLAVE_ADMIN_COMENTARIOS) {
-                if (confirm('¿Confirmas que deseas vaciar todos los registros del sistema?')) {
-                    try {
-                        await fetch(FIREBASE_COMENTARIOS_URL, {
-                            method: 'DELETE'
-                        });
-                        localStorage.removeItem('datosIncorea');
-                        alert("Bandeja vaciada correctamente.");
-                        cargarComentariosDinamicos(); 
-                    } catch (error) {
-                        alert("Error al conectar con la base de datos para borrar.");
-                    }
+                if (confirm('¿Confirmas que deseas vaciar todos los registros del sistema? Esto eliminará permanentemente los datos en Firebase.')) {
+                    
+                    fetch(FIREBASE_URL, {
+                        method: "DELETE"
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            alert("Bandeja vaciada correctamente en el servidor.");
+                            cargarComentariosDinamicos(); 
+                        } else {
+                            alert("No se pudo vaciar la bandeja en el servidor.");
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error al borrar registros:", error);
+                        alert("Error de conexión al intentar vaciar la bandeja.");
+                    });
                 }
             } else {
                 alert("Clave incorrecta. Acción cancelada.");
             }
         }
+        
+        window.onload = cargarComentariosDinamicos; 
     </script>
 
     <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
