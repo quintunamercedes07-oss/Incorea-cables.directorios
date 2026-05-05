@@ -4,103 +4,589 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>INCOREA CABLES-Directorio</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
+<style>
+    /* CONTENEDOR DE CARPETAS (MÁS ANCHO Y AMPLIO) */
+    .contenedor-carpetas {
+        display: flex;
+        flex-direction: column;
+        gap: 20px; /* Más espacio entre carpetas */
+        margin-top: 30px;
+        font-family: 'Segoe UI', Roboto, sans-serif;
+    }
+
+    /* DISEÑO DE LA CABECERA DE LA CARPETA (MÁS GRANDE Y ROBUSTA) */
+    .carpeta-header {
+        background: rgba(28, 43, 58, 0.9);
+        border: 2px solid rgba(26, 188, 156, 0.4); /* Borde un poco más grueso */
+        border-radius: 10px;
+        padding: 22px 30px; /* Más acolchado para hacerla más grande */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        user-select: none;
+    }
+    .carpeta-header:hover {
+        background: rgba(34, 53, 72, 0.95);
+        border-color: #1abc9c;
+        box-shadow: 0 6px 20px rgba(26, 188, 156, 0.15);
+    }
+    .carpeta-titulo {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #ffffff;
+        font-size: 22px; /* Título notablemente más grande */
+        font-weight: 800; /* Más negrita */
+    }
+    .carpeta-icono-estado {
+        color: #1abc9c;
+        font-size: 18px; /* Icono indicador más grande */
+        transition: transform 0.3s ease;
+    }
+
+    /* CONTENEDOR DE TARJETAS DENTRO DE LA CARPETA */
+    .carpeta-contenido {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        padding-left: 20px;
+        border-left: 3px dashed rgba(26, 188, 156, 0.3);
+        margin-left: 12px;
+    }
+
+    /* Clase activa para abrir la carpeta mediante JS */
+    .carpeta-abierta .carpeta-contenido {
+        max-height: 1500px; /* Más margen para albergar contenido grande */
+        margin-top: 15px;
+        margin-bottom: 20px;
+    }
+    .carpeta-abierta .carpeta-icono-estado {
+        transform: rotate(90deg);
+    }
+
+    /* TARJETA INDIVIDUAL DE DOCUMENTO (MÁS AMPLIA) */
+    .tarjeta-horizontal {
+        background: rgba(17, 29, 40, 0.75);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 12px;
+        padding: 18px 25px; /* Más espacio interno */
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        transition: all 0.3s ease;
+    }
+    .tarjeta-horizontal:hover {
+        border-color: rgba(26, 188, 156, 0.5);
+        background: rgba(22, 37, 51, 0.85);
+        transform: translateX(5px);
+    }
+
+    .col-info {
+        width: 25%;
+        min-width: 180px;
+    }
+    .col-descripcion {
+        flex: 1;
+        padding: 0 25px;
+        color: #ecf0f1; /* Texto de descripción un poco más claro para mejor lectura */
+        font-size: 15px; /* Texto de descripción más grande */
+        line-height: 1.5;
+    }
+    .col-acciones {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 20%;
+        justify-content: flex-end;
+        min-width: 200px;
+    }
+
+    /* BOTONES DE LA CARPETA (MÁS GRANDES Y ACCESIBLES) */
+    .btn-abrir-moderno {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        color: white;
+        border: none;
+        padding: 10px 22px; /* Botones de acción principales más grandes */
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: 0.5px;
+        transition: all 0.3s ease;
+    }
+    .btn-abrir-moderno:hover {
+        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
+        transform: scale(1.04);
+    }
+    .btn-eliminar-moderno {
+        background: transparent;
+        color: #e74c3c;
+        border: 1px solid rgba(231, 76, 60, 0.4);
+        padding: 9px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+    .btn-eliminar-moderno:hover {
+        background: #e74c3c;
+        color: white;
+        border-color: #e74c3c;
+    }
+    .btn-eliminar-carpeta {
+        background: transparent;
+        color: #e74c3c;
+        border: none;
+        cursor: pointer;
+        font-size: 13px; /* Eliminar carpeta ligeramente más grande */
+        font-weight: bold;
+        padding: 5px 12px;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    .btn-eliminar-carpeta:hover {
+        opacity: 1;
+    }
+
+    /* ==========================================
+       PANEL DE ADMINISTRACIÓN (MÁS PEQUEÑO Y COMPACTO)
+       ========================================== */
+    .admin-seccion {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 12px 15px; /* Margen interno reducido */
+        margin-bottom: 12px;
+    }
+    .admin-seccion h5 {
+        color: #1abc9c;
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 12px; /* Título de sección más chico */
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    /* Estilo de inputs reducidos */
+    .input-admin-compacto {
+        padding: 8px 12px !important;
+        border-radius: 5px !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        background: #1c2b3a !important;
+        color: white !important;
+        font-size: 12px !important; /* Letra más chica */
+        outline: none;
+    }
+    /* Botones de acción reducidos */
+    .btn-admin-compacto {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px !important; /* Botón más bajo y corto */
+        border-radius: 5px !important;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 11px !important; /* Letra más pequeña */
+        transition: all 0.3s ease;
+    }
+    .btn-admin-compacto:hover {
+        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
+    }
+
+    /* VISOR DE SEGURIDAD */
+    #panel-visor-protegido {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; width: 100%; height: 100%;
+        background: #0e161d;
+        z-index: 10000;
+    }
+    .barra-visor {
+        height: 50px;
+        background: #1a252f;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        border-bottom: 3px solid #1abc9c;
+    }
+    .btn-cerrar {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .iframe-seguro {
+        width: 100%;
+        height: calc(100% - 50px);
+        border: none;
+    }
+
+    /* EFECTO DE BRILLO EXTREMO */
+    @keyframes superBrilloNeon {
+        0% {
+            border-color: #1abc9c;
+            box-shadow: 0 0 15px rgba(26, 188, 156, 0.2), inset 0 0 10px rgba(26, 188, 156, 0.05);
+            transform: translateY(-1px);
+        }
+        50% {
+            border-color: #17d3ad;
+            box-shadow: 0 0 35px #1abc9c, inset 0 0 20px rgba(26, 188, 156, 0.4);
+            transform: translateY(-4px);
+        }
+        100% {
+            border-color: #1abc9c;
+            box-shadow: 0 0 15px rgba(26, 188, 156, 0.2), inset 0 0 10px rgba(26, 188, 156, 0.05);
+            transform: translateY(-1px);
+        }
+    }
+    .tarjeta-brillante {
+        animation: superBrilloNeon 1.8s infinite ease-in-out !important;
+        border-width: 1.5px !important;
+        background: rgba(26, 188, 156, 0.08) !important;
+    }
+</style>
 </head>
 <body>
 <div id="wrapper">
-<div id="header">
-     <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
-     <div id="titulo-container">
-     <h1 class="titulo-animado-brillo">TUS DIRECTORIOS QUE NECESITAS</h1>
-     <p>Estamos para ayudarte</p>
-     </div>
-     </div>
-     <div id="nav">
-     <a href="index.html">INICIO</a>
-     <a href="directorio.html">DIRECTORIO</a>
-     <a href="servicios.html">SERVICIOS</a>
-     <a href="sugerencias.html">SUGERENCIAS</a>
-	 <a href="comentarios.html">COMENTARIO</a>
-     </div>
-     <div id="hero-slider" class="hero-dinamico">
-     <div class="servicios-grid">
-     <div class="servicio-card-pro" id="card-s1">
-     <h4>Directorio 2026</h4>
-     <p>Visualizaci�n de metas y eficiencia de producci�n por �rea.</p>
-     <button id="btn-s1" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQBIMkIlwwmSS6m2tLrkLS-iAcOJWA6NPVSlQkVQpkdC4fg?e=I18Ke9')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-     <div class="servicio-card-pro" id="card-s2">
-     <h4>Global Proy XLSM</h4>
-     <p>Control de asistencia y turnos del personal de planta.</p>
-     <button id="btn-s2" onclick="abrirHoja('https://1drv.ms/x/c/EB3A3138E7EEE618/IQDF5nzWf8k1SZiDLnBOBgKvAXuaJGNO1RPO02KdENlalYk?e=OGNHhe')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-<div class="servicio-card-pro" id="card-s3">
-     <h4>REPORTES GENERALES</h4>
-     <p>Resumen detallado de incidencias y producci�n semanal.</p>
-     <button id="btn-s3" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQCPbT-MkLrPTbCvImqmqh9vAX8_RrH1Abe-WUkMYA31NKk?e=vRQSYb')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-     <div class="servicio-card-pro" id="card-s4">
-     <h4>MAS</h4>
-     <p>Asistencia, turnos y contactos actualizados del equipo operativo.</p>
-     <button id="btn-s4" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQAJyqXWowLwSZOaAAuRIVQjAWyqBIu3r1jC3qZjPBDZGmk?e=1TnCiP')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-	 <div class="servicio-card-pro" id="card-s5">
-     <h4>OTROS</h4>
-     <p>Documentaci�n adicional y gu�as de procesos internos.</p>
-     <button id="btn-s5" onclick="abrirHoja('TU_LINK_AQUI')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-     <div class="servicio-card-pro" id="card-s6">
-     <h4>MAS MAS</h4>
-	 <p>Registros hist�ricos y bases de datos complementarias.</p>
-     <button id="btn-s6" onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577dde8d52/IQAJyqXWowLwSZOaAAuRIVQjAWyqBIu3r1jC3qZjPBDZGmk?e=1TnCiP')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-     <div class="servicio-card-pro">
-     <h4>MAS MAS
-	 </h4>
-     <p>Asistencia, turnos y contactos actualizados del equipo operativo.</p>
-     <button onclick="abrirHoja('https://1drv.ms/x/c/8ad1b5577WowLwSZOaAAuRIVQjAWyqBIu3r1jC3qZjPBDZGmk?e=1TnCiP')" class="btn-brillante">ABRIR DIRECTORIO</button>
-     </div>
-	 </div>
-     </div>
-     <div id="panel-hoja" class="panel-edicion">
-     <div class="barra-superior">
-     <button onclick="cerrarHoja()" class="btn-volver-dinamico"> VOLVER AL LISTADO DE DIRECTORIOS
-     </button>
-     <div class="indicador-vivo"> MODO EDICI�N ACTIVO</div>
-     </div>
-     <iframe src="" id="iframe-documento" class="iframe-full"></iframe>
-     </div>
-     </div>
-     <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
-     <p>INCOREA-CABLES</p>
-     </div>
-     </div>
+    <div id="header">
+        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
+        <div id="titulo-container">
+            <h1>Calidad que conecta tus proyectos</h1>
+            <p>Estamos para ayudarte</p>
+        </div>
+    </div>
+
+    <div id="nav">
+        <a href="index.html">INICIO</a>
+        <a href="directorio.html">DIRECTORIO</a>
+        <a href="servicios.html">SERVICIOS</a>
+        <a href="sugerencias.html">SUGERENCIAS</a>
+        <a href="comentarios.html">COMENTARIO</a>
+    </div>
+
+    <div id="comentarios-container" style="padding: 60px 5%;">
+        <div class="comentarios-header" style="border-bottom: 2px solid #1c2b3a; padding-bottom: 20px; margin-bottom: 30px;">
+            <h2 style="color: #ffffff; letter-spacing: 1.5px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 32px;">ESTRUCTURA DE ARCHIVOS</h2>
+            <p style="color: #1abc9c; margin-top: 5px; font-weight: 600; letter-spacing: 0.8px; font-size: 15px;">SELECCIONA UNA CARPETA DE LOS DOCUMENTOS</p>
+        </div>
+
+        <div id="contenedor-carpetas-dinamico" class="contenedor-carpetas">
+            </div>
+    </div>
+
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px; margin: 20px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
+        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 14px; opacity: 0.9;">PANEL DE CONTROL (ADMINISTRADOR)</h4>
+        
+        <div class="admin-seccion">
+            <h5>1. AGREGAR NUEVA CARPETA</h5>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; min-width: 200px;">
+                <button onclick="crearCarpetaNueva()" class="btn-admin-compacto"> CREAR CARPETA</button>
+            </div>
+        </div>
+
+        <div class="admin-seccion">
+            <h5>2. SUBIR DOCUMENTO A CARPETA</h5>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <select id="select-carpeta-destino" class="input-admin-compacto" style="min-width: 180px; cursor: pointer;">
+                    <option value=""> Seleccionar Carpeta </option>
+                </select>
+                <input type="text" id="nombre-doc" class="input-admin-compacto" placeholder="Nombre del documento" style="flex: 1; min-width: 140px;">
+                <input type="text" id="desc-doc" class="input-admin-compacto" placeholder="Descripción corta" style="flex: 1; min-width: 140px;">
+                <input type="text" id="link-doc" class="input-admin-compacto" placeholder="Link de Drive o OneDrive" style="flex: 1; min-width: 140px;">
+                <button onclick="guardarDocumentoEnCarpeta()" class="btn-admin-compacto">GUARDAR DOCUMENTO</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="panel-visor-protegido">
+        <div class="barra-visor">
+            <span style="color: #1abc9c; font-weight: bold; font-family: sans-serif;">MODO LECTURA PROTEGIDO</span>
+            <button onclick="cerrarVisor()" class="btn-cerrar">CERRAR</button>
+        </div>
+        <iframe src="" id="visor-iframe" class="iframe-seguro"></iframe>
+    </div>
+
+    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
+        <p>INCOREA-CABLES</p>
+    </div>
+</div>
+
 <script>
-    window.onload = function() {
-    const params = new URLSearchParams(window.location.search);
-    const seccion = params.get('abrir'); 
-    if (seccion) {
-    const tarjeta = document.getElementById('card-' + seccion);
-    if (tarjeta) {
-    tarjeta.classList.add('resaltar-tarjeta'); 
-    tarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+const CLAVE_ADMIN = "12345";
+
+window.onload = function() {
+    inicializarBaseDatos();
+    mostrarCarpetasYArchivos();
+    actualizarSelectorCarpetas();
+    chequearResaltado();
+};
+
+// Crear una estructura inicial si no existe ninguna en LocalStorage
+function inicializarBaseDatos() {
+    let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+    if (!baseDatos) {
+        baseDatos = [
+            {
+                nombre: "Directorio",
+                archivos: []
+            },
+            {
+                nombre: "Planificaciones",
+                archivos: []
+            }
+        ];
+        localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
     }
+}
+
+// 1. FUNCIÓN PARA CREAR UNA CARPETA NUEVA
+function crearCarpetaNueva() {
+    const nombreCarpeta = document.getElementById('nueva-carpeta-nombre').value.trim();
+    if (!nombreCarpeta) {
+        return alert("Por favor, ingresa un nombre para la carpeta.");
     }
-    };
-</script>
-<script>
-    function abrirHoja(url) {
-    document.getElementById('iframe-documento').src = url;
-    document.getElementById('panel-hoja').style.display = 'block';
+
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+        
+        const existe = baseDatos.some(c => c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        if (existe) {
+            return alert("Ya existe una carpeta con ese nombre.");
+        }
+
+        baseDatos.push({ nombre: nombreCarpeta, archivos: [] });
+        localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+
+        document.getElementById('nueva-carpeta-nombre').value = "";
+        mostrarCarpetasYArchivos();
+        actualizarSelectorCarpetas();
+        alert("Carpeta creada con éxito.");
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// 2. FUNCIÓN PARA AGREGAR UN ARCHIVO DENTRO DE UNA CARPETA SELECCIONADA
+function guardarDocumentoEnCarpeta() {
+    const carpetaSeleccionada = document.getElementById('select-carpeta-destino').value;
+    const nombre = document.getElementById('nombre-doc').value.trim();
+    const descripcion = document.getElementById('desc-doc').value.trim();
+    const link = document.getElementById('link-doc').value.trim();
+
+    if (!carpetaSeleccionada) {
+        return alert("Selecciona la carpeta de destino donde deseas guardar el archivo.");
+    }
+    if (!nombre || !descripcion || !link) {
+        return alert("Completa todos los campos del documento.");
+    }
+
+    const patronUrl = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?.*?$/i;
+    if (!patronUrl.test(link)) {
+        return alert("Introduce un enlace web válido.");
+    }
+
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+        
+        const carpeta = baseDatos.find(c => c.nombre === carpetaSeleccionada);
+        if (carpeta) {
+            carpeta.archivos.push({ nombre: nombre, descripcion: descripcion, link: link });
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+
+            document.getElementById('nombre-doc').value = "";
+            document.getElementById('desc-doc').value = "";
+            document.getElementById('link-doc').value = "";
+            
+            mostrarCarpetasYArchivos();
+            alert("Documento guardado exitosamente.");
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// RENDERIZAR LAS CARPETAS Y ARCHIVOS EN PANTALLA
+function mostrarCarpetasYArchivos() {
+    const contenedor = document.getElementById('contenedor-carpetas-dinamico');
+    const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+    contenedor.innerHTML = "";
+
+    if (baseDatos.length === 0) {
+        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Usa el panel inferior.</div>';
+        return;
+    }
+
+    baseDatos.forEach((carpeta, indexCarpeta) => {
+        let htmlArchivos = "";
+
+        if (carpeta.archivos.length === 0) {
+            htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
+        } else {
+            carpeta.archivos.forEach((file, indexFile) => {
+                const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
+                htmlArchivos += `
+                    <div class="tarjeta-horizontal" id="${idTarjeta}">
+                        <div class="col-info">
+                            <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
+                        </div>
+                        <div class="col-descripcion">
+                            "${file.descripcion}"
+                        </div>
+                        <div class="col-acciones">
+                            <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
+                            <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        contenedor.innerHTML += `
+            <div class="carpeta-grupo" id="grupo-carpeta-${indexCarpeta}">
+                <div class="carpeta-header" onclick="alternarCarpeta(this)">
+                    <div class="carpeta-titulo">
+                        <span></span>
+                        <span>${carpeta.nombre}</span>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <button onclick="eliminarCarpetaEntera(event, ${indexCarpeta})" class="btn-eliminar-carpeta">Eliminar Carpeta</button>
+                        <span class="carpeta-icono-estado"></span>
+                    </div>
+                </div>
+                <div class="carpeta-contenido">
+                    ${htmlArchivos}
+                </div>
+            </div>`;
+    });
+}
+
+// ANIMACIÓN DE DESPLEGAR/OCULTAR CARPETAS
+function alternarCarpeta(elementoHeader) {
+    const grupo = elementoHeader.parentElement;
+    grupo.classList.toggle('carpeta-abierta');
+}
+
+// ACTUALIZAR EL SELECTOR DROPDOWN DE LAS CARPETAS
+function actualizarSelectorCarpetas() {
+    const select = document.getElementById('select-carpeta-destino');
+    const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+    
+    select.innerHTML = '<option value="">Seleccionar Carpeta </option>';
+    
+    baseDatos.forEach(carpeta => {
+        select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
+    });
+}
+
+// BUSCA SI HAY UNA SOLICITUD DE RESALTADO Y HACE BRILLAR EL ARCHIVO
+function chequearResaltado() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const areaAResaltar = urlParams.get('resaltar');
+    
+    if (areaAResaltar) {
+        const idBuscado = "tarjeta-" + normalizarTexto(decodeURIComponent(areaAResaltar));
+        const elementoTarjeta = document.getElementById(idBuscado);
+        
+        if (elementoTarjeta) {
+            const contenedorCarpetaPadre = elementoTarjeta.closest('.carpeta-grupo');
+            
+            if (contenedorCarpetaPadre) {
+                contenedorCarpetaPadre.classList.add('carpeta-abierta');
+            }
+
+            elementoTarjeta.classList.add('tarjeta-brillante');
+            
+            setTimeout(() => {
+                elementoTarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
+        }
+    }
+}
+
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "-")
+        .replace(/-+/g, "-")
+        .trim();
+}
+
+// ELIMINAR UN ARCHIVO INDIVIDUAL
+function eliminarArchivo(indexCarpeta, indexFile) {
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Seguro que deseas eliminar este archivo?")) {
+            let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+            baseDatos[indexCarpeta].archivos.splice(indexFile, 1);
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+            mostrarCarpetasYArchivos();
+            alert("Archivo eliminado.");
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// ELIMINAR UNA CARPETA COMPLETA CON SUS ARCHIVOS
+function eliminarCarpetaEntera(event, indexCarpeta) {
+    event.stopPropagation(); 
+    
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Estás completamente seguro de eliminar esta carpeta y todos los archivos dentro de ella?")) {
+            let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+            baseDatos.splice(indexCarpeta, 1);
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+            
+            mostrarCarpetasYArchivos();
+            actualizarSelectorCarpetas();
+            alert("Carpeta eliminada.");
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// MANEJO DEL VISOR SEGURO DE DOCUMENTOS
+function abrirVisorSeguro(url) {
+    let urlFinal = url;
+    if (url.includes("docs.google.com/spreadsheets")) {
+        urlFinal = url.split('/edit')[0] + '/preview';
+    } 
+    else if (url.includes("1drv.ms") || url.includes("onedrive.live.com")) {
+        if(!url.includes("embed")) {
+            urlFinal = url.replace("redir?", "embed?") + "&wdAllowInteractivity=False&action=embedview";
+        } else {
+            urlFinal = url + "&wdAllowInteractivity=False&action=embedview";
+        }
+    }
+    const visor = document.getElementById('panel-visor-protegido');
+    const iframe = document.getElementById('visor-iframe');
+    iframe.src = urlFinal;
+    visor.style.display = 'block';
     document.body.style.overflow = 'hidden'; 
-    }
-    function cerrarHoja() {
-    document.getElementById('panel-hoja').style.display = 'none';
-    document.getElementById('iframe-documento').src = '';
-    document.body.style.overflow = 'auto';
-    }
-    function abrirHoja(url) {
-    window.open(url, '_blank');
-    }
+}
+
+function cerrarVisor() {
+    document.getElementById('panel-visor-protegido').style.display = 'none';
+    document.getElementById('visor-iframe').src = "";
+    document.body.style.overflow = 'auto'; 
+}
 </script>
 </body>
-</html> 
+</html>
