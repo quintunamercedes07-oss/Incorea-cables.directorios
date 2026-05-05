@@ -326,14 +326,12 @@
 
 <script>
 const CLAVE_ADMIN = "12345";
-// URL de tu base de datos de Firebase
 const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
 
 window.onload = function() {
     obtenerDatosDelServidor();
 };
 
-// Obtener datos globales desde Firebase
 async function obtenerDatosDelServidor() {
     try {
         const respuesta = await fetch(FIREBASE_URL);
@@ -341,14 +339,12 @@ async function obtenerDatosDelServidor() {
         
         let baseDatos = [];
         if (datos) {
-            // Convertimos la respuesta de Firebase en un array estructurado
             baseDatos = Object.keys(datos).map(key => ({
                 idFirebase: key,
                 nombre: datos[key].nombre,
                 archivos: datos[key].archivos || []
             }));
         } else {
-            // Si la base de datos está totalmente vacía, creamos la estructura por defecto en el servidor
             baseDatos = [
                 { nombre: "Directorio", archivos: [] },
                 { nombre: "Planificaciones", archivos: [] }
@@ -363,7 +359,6 @@ async function obtenerDatosDelServidor() {
             return obtenerDatosDelServidor();
         }
 
-        // Guardamos temporalmente en memoria local activa para que las funciones originales sigan trabajando igual
         localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
         
         mostrarCarpetasYArchivos();
@@ -372,13 +367,11 @@ async function obtenerDatosDelServidor() {
 
     } catch (error) {
         console.error("Error al sincronizar con el servidor Firebase:", error);
-        // Si no hay internet, cargamos de forma segura la última copia de LocalStorage
         mostrarCarpetasYArchivos();
         actualizarSelectorCarpetas();
     }
 }
 
-// 1. FUNCIÓN PARA CREAR UNA CARPETA NUEVA (Sincronizada con Firebase)
 async function crearCarpetaNueva() {
     const nombreCarpeta = document.getElementById('nueva-carpeta-nombre').value.trim();
     if (!nombreCarpeta) {
@@ -397,7 +390,6 @@ async function crearCarpetaNueva() {
         const nuevaCarpeta = { nombre: nombreCarpeta, archivos: [] };
 
         try {
-            // Subimos la carpeta nueva directamente a Firebase
             await fetch(FIREBASE_URL, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -406,7 +398,7 @@ async function crearCarpetaNueva() {
 
             document.getElementById('nueva-carpeta-nombre').value = "";
             alert("Carpeta creada con éxito globalmente.");
-            await obtenerDatosDelServidor(); // Recargar datos sincronizados
+            await obtenerDatosDelServidor();
         } catch (error) {
             alert("Error al guardar la carpeta en el servidor.");
         }
@@ -415,7 +407,6 @@ async function crearCarpetaNueva() {
     }
 }
 
-// 2. FUNCIÓN PARA AGREGAR UN ARCHIVO DENTRO DE UNA CARPETA SELECCIONADA (Sincronizada con Firebase)
 async function guardarDocumentoEnCarpeta() {
     const carpetaSeleccionada = document.getElementById('select-carpeta-destino').value;
     const nombre = document.getElementById('nombre-doc').value.trim();
@@ -444,7 +435,6 @@ async function guardarDocumentoEnCarpeta() {
             const urlCarpetaArchivos = `https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas/${carpeta.idFirebase}/archivos.json`;
 
             try {
-                // Actualizar los archivos de esa carpeta específica en Firebase
                 await fetch(urlCarpetaArchivos, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
@@ -456,7 +446,7 @@ async function guardarDocumentoEnCarpeta() {
                 document.getElementById('link-doc').value = "";
                 
                 alert("Documento guardado exitosamente globalmente.");
-                await obtenerDatosDelServidor(); // Recargar todo
+                await obtenerDatosDelServidor();
             } catch (error) {
                 alert("Error al guardar el archivo en el servidor.");
             }
@@ -466,7 +456,6 @@ async function guardarDocumentoEnCarpeta() {
     }
 }
 
-// RENDERIZAR LAS CARPETAS Y ARCHIVOS EN PANTALLA
 function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
     const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
@@ -501,6 +490,7 @@ function mostrarCarpetasYArchivos() {
             });
         }
 
+        // SE RENDERIZA CON TUS ICONOS ORIGINALES (📁, ▶, botón de Eliminar Carpeta)
         contenedor.innerHTML += `
             <div class="carpeta-grupo" id="grupo-carpeta-${indexCarpeta}">
                 <div class="carpeta-header" onclick="alternarCarpeta(this)">
@@ -520,17 +510,11 @@ function mostrarCarpetasYArchivos() {
     });
 }
 
-// ANIMACIÓN DE DESPLEGAR/OCULTAR CARPETAS
 function alternarCarpeta(elementoHeader) {
     const grupo = elementoHeader.parentElement;
     grupo.classList.toggle('carpeta-abierta');
-    const icono = elementoHeader.querySelector('.carpeta-icono-estado');
-    if(icono) {
-        icono.textContent = grupo.classList.contains('carpeta-abierta') ? '▼' : '▶';
-    }
 }
 
-// ACTUALIZAR EL SELECTOR DROPDOWN DE LAS CARPETAS
 function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
     const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
@@ -542,7 +526,6 @@ function actualizarSelectorCarpetas() {
     });
 }
 
-// BUSCA SI HAY UNA SOLICITUD DE RESALTADO Y HACE BRILLAR EL ARCHIVO
 function chequearResaltado() {
     const urlParams = new URLSearchParams(window.location.search);
     const areaAResaltar = urlParams.get('resaltar');
@@ -556,8 +539,6 @@ function chequearResaltado() {
             
             if (contenedorCarpetaPadre) {
                 contenedorCarpetaPadre.classList.add('carpeta-abierta');
-                const icono = contenedorCarpetaPadre.querySelector('.carpeta-icono-estado');
-                if(icono) icono.textContent = '▼';
             }
 
             elementoTarjeta.classList.add('tarjeta-brillante');
@@ -579,7 +560,6 @@ function normalizarTexto(texto) {
         .trim();
 }
 
-// ELIMINAR UN ARCHIVO INDIVIDUAL (Sincronizado con Firebase)
 async function eliminarArchivo(indexCarpeta, indexFile) {
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
@@ -607,7 +587,6 @@ async function eliminarArchivo(indexCarpeta, indexFile) {
     }
 }
 
-// ELIMINAR UNA CARPETA COMPLETA CON SUS ARCHIVOS (Sincronizado con Firebase)
 async function eliminarCarpetaEntera(event, indexCarpeta) {
     event.stopPropagation(); 
     
@@ -634,7 +613,6 @@ async function eliminarCarpetaEntera(event, indexCarpeta) {
     }
 }
 
-// MANEJO DEL VISOR SEGURO DE DOCUMENTOS
 function abrirVisorSeguro(url) {
     let urlFinal = url;
     if (url.includes("docs.google.com/spreadsheets")) {
