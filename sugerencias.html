@@ -35,13 +35,13 @@
     
     <label style="font-weight: bold; color: #1abc9c;">1. Selecciona la Carpeta:</label><br>
     <select id="select-carpetas" onchange="cargarDocumentosDeCarpeta()" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white; cursor: pointer;">
-       
+        <option value=""> Cargando carpetas desde el servidor... </option>
     </select>
     <br><br>
 
     <label style="font-weight: bold; color: #1abc9c;">2. Selecciona el Documento / Link:</label><br>
     <select name="directorio" id="select-directorios" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white; cursor: pointer;" disabled>
-       
+        <option value="">-- Primero selecciona una carpeta --</option>
     </select>
     <br><br>
 
@@ -72,12 +72,49 @@
     </div>
 
     <script>
-    // Cargar la lista de carpetas disponibles en el primer dropdown
-    function cargarCarpetas() {
-        const selectCarpetas = document.getElementById('select-carpetas');
-        const sistemaCarpetas = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+    const FIREBASE_CARPETAS_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
+    const FIREBASE_COMENTARIOS_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea.json";
 
+    window.onload = function() {
+        obtenerCarpetasServidor();
+    };
+
+    // Sincronizar y cargar las carpetas reales activas desde la base de datos
+    async function obtenerCarpetasServidor() {
+        const selectCarpetas = document.getElementById('select-carpetas');
+        try {
+            const respuesta = await fetch(FIREBASE_CARPETAS_URL);
+            const datos = await respuesta.json();
+            
+            let sistemaCarpetas = [];
+            if (datos) {
+                sistemaCarpetas = Object.keys(datos).map(key => ({
+                    idFirebase: key,
+                    nombre: datos[key].nombre,
+                    archivos: datos[key].archivos || []
+                }));
+            }
+
+            // Guardamos localmente para alimentar el selector
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(sistemaCarpetas));
+            cargarCarpetas(sistemaCarpetas);
+
+        } catch (error) {
+            console.error("Error cargando carpetas del servidor:", error);
+            // Respaldo local si no hay internet
+            const sistemaCarpetasLocales = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+            cargarCarpetas(sistemaCarpetasLocales);
+        }
+    }
+
+    function cargarCarpetas(sistemaCarpetas) {
+        const selectCarpetas = document.getElementById('select-carpetas');
         selectCarpetas.innerHTML = '<option value="">-- Selecciona una Carpeta --</option>';
+
+        if (sistemaCarpetas.length === 0) {
+            selectCarpetas.innerHTML = '<option value="">No hay carpetas creadas en el servidor</option>';
+            return;
+        }
 
         sistemaCarpetas.forEach((carpeta, index) => {
             let option = document.createElement('option');
@@ -95,7 +132,6 @@
         
         const indexCarpeta = selectCarpetas.value;
 
-        // Limpiar dropdown de documentos
         selectDocs.innerHTML = "";
 
         if (indexCarpeta === "") {
@@ -113,7 +149,7 @@
         }
 
         selectDocs.disabled = false;
-        carpetaSeleccionada.archivos.forEach((doc, index) => {
+        carpetaSeleccionada.archivos.forEach((doc) => {
             let option = document.createElement('option');
             option.value = doc.nombre;
             option.text = doc.nombre;
@@ -121,8 +157,8 @@
         });
     }
 
-    // Registrar la sugerencia en la Base de Datos
-    document.getElementById('form-contacto').onsubmit = function(e) {
+    // Registrar la sugerencia directamente en la Base de Datos Firebase
+    document.getElementById('form-contacto').onsubmit = async function(e) {
         e.preventDefault();
         
         const selectCarpetas = document.getElementById('select-carpetas');
@@ -130,7 +166,7 @@
         const nombreUsuario = this.nombre.value.trim();
         const mensaje = this.mensaje.value.trim();
 
-        if (selectCarpetas.selectedIndex === 0) {
+        if (selectCarpetas.selectedIndex === 0 || selectCarpetas.value === "") {
             return alert("Por favor, selecciona una carpeta.");
         }
         if (selectDocs.disabled || selectDocs.value === "") {
@@ -143,29 +179,40 @@
         const nombreCarpeta = selectCarpetas.options[selectCarpetas.selectedIndex].text;
         const nombreDocumento = selectDocs.value;
 
-        // Creamos una etiqueta limpia indicando de dónde proviene el archivo: "[Carpeta] Documento"
+        // Creamos la etiqueta de ruta: "[Carpeta] Documento"
         const rutaCompleta = `[${nombreCarpeta}] ${nombreDocumento}`;
 
         const nuevoComentario = {
             usuario: nombreUsuario,
-            area: rutaCompleta, // Guardamos la ruta completa para que comentarios.html la reconozca sin problemas
+            area: rutaCompleta, 
             mensaje: mensaje,
             estado: 'RECIBIDO'
         };
 
-        let listaComentarios = JSON.parse(localStorage.getItem('datosIncorea')) || [];
-        listaComentarios.push(nuevoComentario);
-        localStorage.setItem('datosIncorea', JSON.stringify(listaComentarios));
+        try {
+            // Guardar directamente en la base de datos de comentarios
+            const respuesta = await fetch(FIREBASE_COMENTARIOS_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(nuevoComentario)
+            });
 
-        alert('¡Sugerencia registrada para el documento: ' + nombreDocumento + ' en la carpeta ' + nombreCarpeta + '!');
-        this.reset();
-        
-        // Resetear selectores tras guardar
-        selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
-        selectDocs.disabled = true;
+            if (respuesta.ok) {
+                alert('¡Sugerencia registrada exitosamente en el sistema de control para: ' + nombreDocumento + '!');
+                this.reset();
+                
+                // Resetear selectores tras guardar
+                selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
+                selectDocs.disabled = true;
+            } else {
+                throw new Error("No se pudo escribir en la base de datos.");
+            }
+
+        } catch (error) {
+            console.error("Error al registrar sugerencia:", error);
+            alert("No se pudo enviar la sugerencia al servidor. Verifica tu conexión de red.");
+        }
     };
-
-    window.onload = cargarCarpetas;
     </script>
 
     <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
@@ -174,3 +221,4 @@
     </div>
 </body>
 </html>
+
