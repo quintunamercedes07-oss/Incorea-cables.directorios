@@ -212,7 +212,7 @@
         </div>
 
         <div id="contenedor-carpetas-dinamico" class="contenedor-carpetas">
-            <div style="text-align:center; padding: 40px; color:#bdc3c7;">Conectando con el servidor en la nube...</div>
+            <div style="text-align:center; padding: 40px; color:#bdc3c7;">Conectando con la base de datos en la nube...</div>
         </div>
     </div>
 
@@ -230,14 +230,13 @@
 </div>
 
 <script>
-// URL de tu Firebase Realtime Database
-const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
+// URL de Firebase compartida (ambos archivos leerán y escribirán de aquí)
+const FIREBASE_URL = "https://incorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
 
 window.onload = function() {
     cargarDirectorioDesdeFirebase();
 };
 
-// Cargar estructura en tiempo real desde Firebase
 function cargarDirectorioDesdeFirebase() {
     fetch(FIREBASE_URL)
         .then(res => res.json())
@@ -252,27 +251,27 @@ function cargarDirectorioDesdeFirebase() {
         });
 }
 
-// Renderiza las carpetas sin opciones de edición/eliminación (Solo lectura)
 function mostrarCarpetasYArchivos(baseDatos) {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
     contenedor.innerHTML = "";
 
-    // Filtrar posibles valores nulos que se creen en la base de datos
-    const limpiada = baseDatos.filter(Boolean);
-    if (limpiada.length === 0) {
-        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas o archivos disponibles en este momento.</div>';
+    // Eliminar posibles valores nulos que se puedan generar
+    const baseDatosLimpios = baseDatos.filter(Boolean);
+
+    if (baseDatosLimpios.length === 0) {
+        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Crea una desde la pestaña de "Servicios".</div>';
         return;
     }
 
-    baseDatos.forEach((carpeta, indexCarpeta) => {
-        if (!carpeta) return;
-
+    baseDatosLimpios.forEach((carpeta, indexCarpeta) => {
         let htmlArchivos = "";
 
         if (!carpeta.archivos || carpeta.archivos.length === 0) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
-            carpeta.archivos.forEach((file) => {
+            // Filtrar nulos dentro del array de archivos
+            const archivosLimpios = carpeta.archivos.filter(Boolean);
+            archivosLimpios.forEach((file) => {
                 const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
                 htmlArchivos += `
                     <div class="tarjeta-horizontal" id="${idTarjeta}">
