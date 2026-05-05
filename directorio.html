@@ -324,173 +324,120 @@
 </div>
 
 <script>
-    // URL de tu base de datos de Firebase
+    // URL de tu base de datos de Firebase (la misma de directorio.html)
     const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios.json";
 
-    // Función para obtener las carpetas guardadas en internet
-    async function obtenerCarpetasDeFirebase() {
+    let sistemaCarpetas = [];
+
+    // 1. OBTENER LAS CARPETAS DESDE FIREBASE EN TIEMPO REAL
+    async function cargarCarpetasDesdeFirebase() {
+        const selectCarpetas = document.getElementById('select-carpetas');
+        if (!selectCarpetas) return;
+
+        selectCarpetas.innerHTML = '<option value="">Cargando carpetas...</option>';
+
         try {
             const respuesta = await fetch(FIREBASE_URL);
             const datos = await respuesta.json();
-            
-            // Si la base de datos está vacía, iniciamos con un arreglo vacío
-            if (!datos) return [];
-            
-            // Convertir el objeto de Firebase en un arreglo fácil de leer
-            return Object.keys(datos).map(id => ({
+
+            if (!datos) {
+                selectCarpetas.innerHTML = '<option value="">-- No hay carpetas en internet --</option>';
+                return;
+            }
+
+            // Convertimos el formato de Firebase a un array que entienda tu formulario
+            sistemaCarpetas = Object.keys(datos).map(id => ({
                 id: id,
                 nombre: datos[id].nombre,
                 archivos: datos[id].archivos || []
             }));
-        } catch (error) {
-            console.error("Error al conectar con Firebase:", error);
-            return [];
-        }
-    }
 
-    // Función para guardar una nueva carpeta en internet
-    async function guardarCarpetaEnFirebase(nuevaCarpeta) {
-        try {
-            await fetch(FIREBASE_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(nuevaCarpeta)
+            // Llenar el menú desplegable de carpetas
+            selectCarpetas.innerHTML = '<option value="">-- Selecciona una Carpeta --</option>';
+            sistemaCarpetas.forEach((carpeta, index) => {
+                let option = document.createElement('option');
+                option.value = index; // Usamos el índice para encontrarla fácil después
+                option.text = carpeta.nombre;
+                selectCarpetas.appendChild(option);
             });
-            // Recargar la vista una vez guardado en internet
-            renderizarCarpetas();
+
         } catch (error) {
-            alert("No se pudo guardar la carpeta en internet. Revisa tu conexión.");
+            console.error("Error al cargar desde Firebase:", error);
+            selectCarpetas.innerHTML = '<option value="">-- Error al conectar con internet --</option>';
         }
     }
 
-    // Función para agregar un archivo a una carpeta existente en internet
-    async function guardarArchivoEnFirebase(carpetaId, archivosActualizados) {
-        try {
-            const urlCarpeta = `https://httpsincorea-cables-default-rtdb.firebaseio.com/directorios/${carpetaId}/archivos.json`;
-            await fetch(urlCarpeta, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(archivosActualizados)
-            });
-            renderizarCarpetas();
-        } catch (error) {
-            alert("Error al guardar el archivo en internet.");
-        }
-    }
+    // 2. CARGAR LOS DOCUMENTOS CUANDO EL USUARIO SELECCIONE UNA CARPETA
+    function cargarDocumentosDeCarpeta() {
+        const selectCarpetas = document.getElementById('select-carpetas');
+        const selectDocs = document.getElementById('select-directorios');
+        const indexCarpeta = selectCarpetas.value;
 
-    // DIBUJAR LAS CARPETAS EN PANTALLA
-    async function renderizarCarpetas() {
-        const contenedor = document.querySelector('.contenedor-carpetas');
-        if (!contenedor) return;
-        contenedor.innerHTML = '<p style="text-align:center; color:gray;">Cargando carpetas desde internet...</p>';
+        selectDocs.innerHTML = "";
 
-        const sistemaCarpetas = await obtenerCarpetasDeFirebase();
-        contenedor.innerHTML = '';
-
-        if (sistemaCarpetas.length === 0) {
-            contenedor.innerHTML = '<p style="text-align:center; color:gray;">No hay carpetas creadas. ¡Crea la primera abajo!</p>';
-            actualizarSelectorCarpetas([]);
+        if (indexCarpeta === "") {
+            selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
+            selectDocs.disabled = true;
             return;
         }
 
-        actualizarSelectorCarpetas(sistemaCarpetas);
+        const carpetaSeleccionada = sistemaCarpetas[indexCarpeta];
 
-        sistemaCarpetas.forEach((carpeta) => {
-            let carpetaDiv = document.createElement('div');
-            carpetaDiv.className = 'carpeta-header';
-            carpetaDiv.innerHTML = `
-                <div class="carpeta-titulo">📁 ${carpeta.nombre}</div>
-                <div class="carpeta-icono-estado">▶</div>
-            `;
-            
-            let contenidoDiv = document.createElement('div');
-            contenidoDiv.className = 'carpeta-contenido';
+        if (!carpetaSeleccionada.archivos || carpetaSeleccionada.archivos.length === 0) {
+            selectDocs.innerHTML = '<option value="">Esta carpeta no contiene archivos</option>';
+            selectDocs.disabled = true;
+            return;
+        }
 
-            if (carpeta.archivos.length === 0) {
-                contenidoDiv.innerHTML = '<p style="padding: 15px; color: gray;">Esta carpeta está vacía.</p>';
-            } else {
-                carpeta.archivos.forEach(doc => {
-                    let tarjeta = document.createElement('div');
-                    tarjeta.className = 'tarjeta-horizontal';
-                    tarjeta.innerHTML = `
-                        <div class="col-info">📄 <strong>${doc.nombre}</strong></div>
-                        <div class="col-descripcion">Documento técnico cargado en el sistema.</div>
-                        <div class="col-actions">
-                            <a href="${doc.url}" target="_blank" class="btn-abrir-moderno">ABRIR ARCHIVO</a>
-                        </div>
-                    `;
-                    contenidoDiv.appendChild(tarjeta);
-                });
-            }
-
-            let grupoCarpetas = document.createElement('div');
-            grupoCarpetas.appendChild(carpetaDiv);
-            grupoCarpetas.appendChild(contenidoDiv);
-
-            carpetaDiv.addEventListener('click', () => {
-                grupoCarpetas.classList.toggle('carpeta-abierta');
-            });
-
-            contenedor.appendChild(grupoCarpetas);
-        });
-    }
-
-    // Actualiza el menú desplegable para saber en qué carpeta añadir archivos
-    function actualizarSelectorCarpetas(sistemaCarpetas) {
-        const select = document.getElementById('select-categoria');
-        if (!select) return;
-        select.innerHTML = '<option value="">-- Selecciona Carpeta Destino --</option>';
-        sistemaCarpetas.forEach(carpeta => {
-            let option = document.createElement('option');
-            option.value = carpeta.id;
-            option.textContent = carpeta.nombre;
-            select.appendChild(option);
-        });
-    }
-
-    // EVENTO: Crear una Carpeta Nueva
-    async function crearNuevaCarpeta() {
-        const inputNombre = document.getElementById('input-nueva-carpeta');
-        const nombre = inputNombre.value.trim();
-        if (!nombre) return alert("Escribe un nombre para la carpeta.");
-
-        const nuevaCarpeta = {
-            nombre: nombre,
-            archivos: []
-        };
-
-        inputNombre.value = '';
-        await guardarCarpetaEnFirebase(nuevaCarpeta);
-    }
-
-    // EVENTO: Subir un Archivo Nuevo dentro de una carpeta
-    async function subirNuevoArchivo() {
-        const select = document.getElementById('select-categoria');
-        const inputNombreDoc = document.getElementById('input-nombre-doc');
-        const inputUrlDoc = document.getElementById('input-url-doc');
-
-        const carpetaId = select.value;
-        const nombreDoc = inputNombreDoc.value.trim();
-        const urlDoc = inputUrlDoc.value.trim() || "#";
-
-        if (!carpetaId) return alert("Selecciona una carpeta de destino.");
-        if (!nombreDoc) return alert("Escribe el nombre del documento.");
-
-        const sistemaCarpetas = await obtenerCarpetasDeFirebase();
-        const carpetaSeleccionada = sistemaCarpetas.find(c => c.id === carpetaId);
-
-        if (!carpetaSeleccionada) return;
-
-        const nuevosArchivos = [...carpetaSeleccionada.archivos, { nombre: nombreDoc, url: urlDoc }];
-
-        inputNombreDoc.value = '';
-        inputUrlDoc.value = '';
+        selectDocs.disabled = false;
+        selectDocs.innerHTML = '<option value="">-- Selecciona el archivo --</option>';
         
-        await guardarArchivoEnFirebase(carpetaId, nuevosArchivos);
+        carpetaSeleccionada.archivos.forEach((doc) => {
+            let option = document.createElement('option');
+            option.value = doc.nombre;
+            option.text = doc.nombre;
+            selectDocs.appendChild(option);
+        });
     }
 
-    // Iniciar la carga al entrar a la página
-    window.onload = renderizarCarpetas;
+    // 3. ENVIAR EL FORMULARIO (Se guarda localmente para pruebas o puedes mandarlo a otra base de datos)
+    const form = document.getElementById('form-contacto');
+    if (form) {
+        form.onsubmit = function(e) {
+            e.preventDefault();
+            const selectCarpetas = document.getElementById('select-carpetas');
+            const selectDocs = document.getElementById('select-directorios');
+            const nombreUsuario = this.nombre.value.trim();
+            const mensaje = this.mensaje.value.trim();
+
+            if (selectCarpetas.selectedIndex === 0) return alert("Por favor, selecciona una carpeta.");
+            if (selectDocs.disabled || selectDocs.value === "") return alert("Por favor, selecciona un documento.");
+            if (!nombreUsuario || !mensaje) return alert("Por favor, completa tu nombre y la sugerencia.");
+
+            const nombreCarpeta = selectCarpetas.options[selectCarpetas.selectedIndex].text;
+            const nombreDocumento = selectDocs.value;
+            const rutaCompleta = `[${nombreCarpeta}] ${nombreDocumento}`;
+
+            const nuevoComentario = {
+                usuario: nombreUsuario,
+                area: rutaCompleta,
+                mensaje: mensaje,
+                estado: 'RECIBIDO'
+            };
+
+            let listaComentarios = JSON.parse(localStorage.getItem('datosIncorea')) || [];
+            listaComentarios.push(nuevoComentario);
+            localStorage.setItem('datosIncorea', JSON.stringify(listaComentarios));
+
+            alert('¡Sugerencia registrada con éxito!');
+            this.reset();
+            selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
+            selectDocs.disabled = true;
+        };
+    }
+
+    // Ejecutar la carga al abrir la página
+    window.onload = cargarCarpetasDesdeFirebase;
 </script>
 </body>
 </html>
