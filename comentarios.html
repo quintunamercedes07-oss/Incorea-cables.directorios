@@ -116,13 +116,14 @@
             <table class="tabla-gestion">
                 <thead>
                     <tr>
-                        <th>�REA / REMITENTE</th>
+                        <th>ÁREA / REMITENTE</th>
                         <th>DETALLE OPERATIVO</th>
                         <th>ESTADO</th>
-                        <th style="width: 150px; text-align: center;">ACCI�N</th>
+                        <th style="width: 150px; text-align: center;">ACCIÓN</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-body">
+                    <tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">Conectando al servidor...</td></tr>
                 </tbody>
             </table>
         </div>
@@ -130,74 +131,153 @@
 
     <script>
         const CLAVE_ADMIN_COMENTARIOS = "12345";
+        const FIREBASE_COMENTARIOS_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea.json";
 
-        function cargarComentariosDinamicos() {
-            const datos = localStorage.getItem('datosIncorea');
-            let lista = JSON.parse(datos) || [];
+        window.onload = function() {
+            cargarComentariosDinamicos();
+        };
+
+        // Cargar datos en tiempo real desde Firebase
+        async function cargarComentariosDinamicos() {
             const cuerpoTabla = document.getElementById('tabla-body');    
             if (!cuerpoTabla) return;
-            cuerpoTabla.innerHTML = '';
-            
-            if (lista.length === 0) {
-                cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
-                return;    
-            }
-            
-            lista.forEach((item, index) => {
-                let fila = document.createElement('tr');
-                fila.className = 'fila-dinamica';
+
+            try {
+                const respuesta = await fetch(FIREBASE_COMENTARIOS_URL);
+                const datos = await respuesta.json();
                 
-                const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
-                
-                // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir con precisi�n
-                let archivoBuscado = item.area;
-                if (item.area.includes(']')) {
-                    archivoBuscado = item.area.split(']')[1].trim();
+                let lista = [];
+                if (datos) {
+                    // Convertimos el objeto de Firebase en un array e inyectamos la clave única para poder operar
+                    lista = Object.keys(datos).map(key => ({
+                        idFirebase: key,
+                        ...datos[key]
+                    }));
                 }
 
-                fila.innerHTML = `
-                    <td>
-                        <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
-                        <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
-                    </td>
-                    <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
-                    <td><span class="badge ${claseBadge}">${item.estado}</span></td>
-                    <td style="text-align: center;">
-                        <button onclick="marcarYRedirigir(${index}, '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
-                             VER TARJETA
-                        </button>
-                    </td>
-                `;
-                cuerpoTabla.appendChild(fila);
-            });
+                // Guardar copia local en localStorage para compatibilidad
+                localStorage.setItem('datosIncorea', JSON.stringify(lista));
+                
+                cuerpoTabla.innerHTML = '';
+                
+                if (lista.length === 0) {
+                    cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
+                    return;    
+                }
+                
+                lista.forEach((item) => {
+                    let fila = document.createElement('tr');
+                    fila.className = 'fila-dinamica';
+                    
+                    const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
+                    
+                    // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir con precisión
+                    let archivoBuscado = item.area;
+                    if (item.area.includes(']')) {
+                        archivoBuscado = item.area.split(']')[1].trim();
+                    }
+
+                    fila.innerHTML = `
+                        <td>
+                            <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
+                            <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
+                        </td>
+                        <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
+                        <td><span class="badge ${claseBadge}">${item.estado}</span></td>
+                        <td style="text-align: center;">
+                            <button onclick="marcarYRedirigir('${item.idFirebase}', '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
+                                 VER TARJETA
+                            </button>
+                        </td>
+                    `;
+                    cuerpoTabla.appendChild(fila);
+                });
+
+            } catch (error) {
+                console.error("Error al conectar con la base de datos:", error);
+                cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #e74c3c; font-style: italic; font-size: 14px;">Error de conexión con el servidor. Cargando datos locales...</td></tr>';
+                
+                // Carga de respaldo local si no hay internet
+                const datosLocales = localStorage.getItem('datosIncorea');
+                let lista = JSON.parse(datosLocales) || [];
+                if (lista.length > 0) {
+                    cuerpoTabla.innerHTML = '';
+                    lista.forEach((item, index) => {
+                        let fila = document.createElement('tr');
+                        fila.className = 'fila-dinamica';
+                        const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
+                        let archivoBuscado = item.area;
+                        if (item.area.includes(']')) {
+                            archivoBuscado = item.area.split(']')[1].trim();
+                        }
+                        fila.innerHTML = `
+                            <td>
+                                <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
+                                <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
+                            </td>
+                            <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
+                            <td><span class="badge ${claseBadge}">${item.estado}</span></td>
+                            <td style="text-align: center;">
+                                <button onclick="marcarYRedirigirLocal(${index}, '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
+                                     VER TARJETA
+                                </button>
+                            </td>
+                        `;
+                        cuerpoTabla.appendChild(fila);
+                    });
+                }
+            }
         }
 
-        function marcarYRedirigir(index, documentoCodificado) {
-            const datos = localStorage.getItem('datosIncorea');
-            let lista = JSON.parse(datos) || [];
+        // Marcar estado como VISTO directamente en la Base de Datos Firebase
+        async function marcarYRedirigir(idFirebase, documentoCodificado) {
+            try {
+                const urlUpdate = `https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea/${idFirebase}/estado.json`;
+                
+                // Actualizamos solo el parámetro estado a 'VISTO' en la base de datos
+                await fetch(urlUpdate, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify('VISTO')
+                });
+
+            } catch (error) {
+                console.error("Error al actualizar estado en el servidor:", error);
+            }
             
-            // Cambiar estado a VISTO
-            lista[index].estado = 'VISTO'; 
-            localStorage.setItem('datosIncorea', JSON.stringify(lista));
-            
-            // Redirigir a directorio pasando el nombre espec�fico del archivo para resaltar
+            // Redirigir a directorio pasando el nombre específico del archivo para resaltar
             window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
         }
 
-        function borrarHistorial() {
+        // Marcar local de respaldo (solo si falla el internet)
+        function marcarYRedirigirLocal(index, documentoCodificado) {
+            const datos = localStorage.getItem('datosIncorea');
+            let lista = JSON.parse(datos) || [];
+            lista[index].estado = 'VISTO'; 
+            localStorage.setItem('datosIncorea', JSON.stringify(lista));
+            window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
+        }
+
+        // Vaciar la tabla completa en Firebase
+        async function borrarHistorial() {
             const password = prompt("Ingresa la clave de administrador para limpiar la bandeja:");
             if (password === CLAVE_ADMIN_COMENTARIOS) {
-                if (confirm('�Confirmas que deseas vaciar todos los registros del sistema?')) {
-                    localStorage.removeItem('datosIncorea');
-                    cargarComentariosDinamicos(); 
-                    alert("Bandeja vaciada correctamente.");
+                if (confirm('¿Confirmas que deseas vaciar todos los registros del sistema?')) {
+                    try {
+                        await fetch(FIREBASE_COMENTARIOS_URL, {
+                            method: 'DELETE'
+                        });
+                        localStorage.removeItem('datosIncorea');
+                        alert("Bandeja vaciada correctamente.");
+                        cargarComentariosDinamicos(); 
+                    } catch (error) {
+                        alert("Error al conectar con la base de datos para borrar.");
+                    }
                 }
             } else {
-                alert("Clave incorrecta. Acci�n cancelada.");
+                alert("Clave incorrecta. Acción cancelada.");
             }
         }
-        
-        window.onload = cargarComentariosDinamicos; 
     </script>
 
     <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
