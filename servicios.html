@@ -5,7 +5,9 @@
 <title>INCOREA CABLES-servicios</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* PANEL DE CONTROL EN SERVICIOS */
+    /* ==========================================
+       PANEL DE ADMINISTRACIÓN (TUS ESTILOS EXACTOS)
+       ========================================== */
     .admin-seccion {
         background: rgba(30, 41, 59, 0.4);
         border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -20,7 +22,6 @@
         font-size: 12px;
         font-weight: 700;
         letter-spacing: 0.5px;
-        font-family: sans-serif;
     }
     .input-admin-compacto {
         padding: 8px 12px !important;
@@ -45,8 +46,8 @@
     .btn-admin-compacto:hover {
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
     }
-    
-    /* VISTA DE PREVISUALIZACIÓN DE CARPETAS CREADAS */
+
+    /* ESTILOS DE LA LISTA INTERACTIVA PARA ELIMINAR */
     .panel-carpetas-admin {
         margin-top: 20px;
         padding: 15px;
@@ -63,6 +64,7 @@
         margin-bottom: 8px;
         border-radius: 6px;
         border-left: 3px solid #1abc9c;
+        font-family: sans-serif;
     }
     .item-archivo-lista {
         display: flex;
@@ -73,6 +75,8 @@
         margin: 5px 0 5px 25px;
         border-radius: 4px;
         font-size: 13px;
+        font-family: sans-serif;
+        color: #ecf0f1;
     }
     .btn-eliminar-rojo {
         background: transparent;
@@ -136,8 +140,8 @@
         </div>
     </div>
     
-    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
-        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 16px; opacity: 0.9;">PANEL DE CONTROL GENERAL (CREACIÓN Y GESTIÓN)</h4>
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
+        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 14px; opacity: 0.9;">PANEL DE CONTROL GENERAL (EDITAR DESDE OTRO DISPOSITIVO)</h4>
         
         <div class="admin-seccion">
             <h5>1. AGREGAR NUEVA CARPETA</h5>
@@ -161,9 +165,9 @@
         </div>
 
         <div class="panel-carpetas-admin">
-            <h5 style="color: #1abc9c; margin-bottom: 15px; font-family: sans-serif; font-size: 13px; font-weight: bold;">Estructura de Datos Actual en Firebase (Para Eliminar)</h5>
+            <h5 style="color: #1abc9c; margin-bottom: 15px; font-family: sans-serif; font-size: 13px; font-weight: bold;">Estructura de Datos en la Nube (Administrar / Eliminar)</h5>
             <div id="vista-previa-firebase" style="color: white; font-family: sans-serif;">
-                Cargando base de datos remota...
+                Conectando con la base de datos...
             </div>
         </div>
     </div>
@@ -177,14 +181,13 @@
 const CLAVE_ADMIN = "12345";
 const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
 
-// Guardar toda la estructura temporalmente en un array local para manipularla y subirla completa
 let estructuraCarpetas = [];
 
 window.onload = function() {
     cargarDatosFirebase();
 };
 
-// Cargar información desde Firebase
+// Cargar información remota
 function cargarDatosFirebase() {
     fetch(FIREBASE_URL)
         .then(res => res.json())
@@ -194,12 +197,12 @@ function cargarDatosFirebase() {
             renderizarVistaEliminar();
         })
         .catch(err => {
-            console.error("Error al cargar datos:", err);
-            document.getElementById('vista-previa-firebase').innerHTML = "Error al conectar con la base de datos.";
+            console.error(err);
+            document.getElementById('vista-previa-firebase').innerHTML = "Error al conectar con la base de datos remota.";
         });
 }
 
-// Actualizar Firebase con la estructura actual
+// Sincronizar cambios en Firebase
 function guardarEnFirebase() {
     return fetch(FIREBASE_URL, {
         method: 'PUT',
@@ -208,7 +211,7 @@ function guardarEnFirebase() {
     });
 }
 
-// 1. CREAR CARPETA NUEVA
+// 1. CREAR NUEVA CARPETA EN LA NUBE
 function crearCarpetaNueva() {
     const nombreCarpeta = document.getElementById('nueva-carpeta-nombre').value.trim();
     if (!nombreCarpeta) {
@@ -228,14 +231,14 @@ function crearCarpetaNueva() {
             .then(() => {
                 document.getElementById('nueva-carpeta-nombre').value = "";
                 cargarDatosFirebase();
-                alert("Carpeta creada en la nube exitosamente.");
+                alert("Carpeta creada globalmente con éxito.");
             });
     } else {
         alert("Clave incorrecta.");
     }
 }
 
-// 2. GUARDAR UN ARCHIVO DENTRO DE UNA CARPETA
+// 2. GUARDAR DOCUMENTO DENTRO DE UNA CARPETA EN LA NUBE
 function guardarDocumentoEnCarpeta() {
     const carpetaSeleccionada = document.getElementById('select-carpeta-destino').value;
     const nombre = document.getElementById('nombre-doc').value.trim();
@@ -258,7 +261,7 @@ function guardarDocumentoEnCarpeta() {
                     document.getElementById('desc-doc').value = "";
                     document.getElementById('link-doc').value = "";
                     cargarDatosFirebase();
-                    alert("Documento guardado exitosamente en Firebase.");
+                    alert("Documento guardado globalmente con éxito.");
                 });
         }
     } else {
@@ -266,7 +269,7 @@ function guardarDocumentoEnCarpeta() {
     }
 }
 
-// Actualizar selector del panel
+// Actualiza los Selectores Dropdown
 function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
     select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
@@ -277,14 +280,14 @@ function actualizarSelectorCarpetas() {
     });
 }
 
-// RENDERIZAR VISTA EN PANEL DE SERVICIOS PARA BORRAR COSAS
+// Renderiza la lista para poder eliminar elementos desde aquí
 function renderizarVistaEliminar() {
     const contenedor = document.getElementById('vista-previa-firebase');
     contenedor.innerHTML = "";
 
-    const limpiada = estructuraCarpetas.filter(Boolean); // Filtrar posibles posiciones vacías
+    const limpiada = estructuraCarpetas.filter(Boolean);
     if (limpiada.length === 0) {
-        contenedor.innerHTML = '<div style="color: #7f8c8d; font-style: italic;">No hay carpetas creadas en Firebase. Crea una arriba.</div>';
+        contenedor.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size:13px;">No hay carpetas creadas en Firebase. Usa el formulario de arriba.</div>';
         return;
     }
 
@@ -315,11 +318,11 @@ function renderizarVistaEliminar() {
     });
 }
 
-// ELIMINAR ARCHIVO INDIVIDUAL
+// Eliminar un archivo
 function eliminarArchivo(idxCarpeta, idxFile) {
     const password = prompt("Clave de Administrador:");
     if (password === CLAVE_ADMIN) {
-        if (confirm("¿Estás seguro de eliminar este archivo de Firebase?")) {
+        if (confirm("¿Estás seguro de eliminar este archivo?")) {
             estructuraCarpetas[idxCarpeta].archivos.splice(idxFile, 1);
             guardarEnFirebase().then(() => {
                 cargarDatosFirebase();
@@ -331,11 +334,11 @@ function eliminarArchivo(idxCarpeta, idxFile) {
     }
 }
 
-// ELIMINAR CARPETA COMPLETA
+// Eliminar carpeta entera
 function eliminarCarpetaEntera(idxCarpeta) {
     const password = prompt("Clave de Administrador:");
     if (password === CLAVE_ADMIN) {
-        if (confirm("¿Seguro que deseas borrar toda la carpeta con sus archivos? Esto se borrará de Firebase permanentemente.")) {
+        if (confirm("¿Seguro que deseas borrar toda esta carpeta con sus archivos? Esto afectará a todos los dispositivos.")) {
             estructuraCarpetas.splice(idxCarpeta, 1);
             guardarEnFirebase().then(() => {
                 cargarDatosFirebase();
