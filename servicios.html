@@ -4,56 +4,348 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <title>INCOREA CABLES-servicios</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
+<style>
+    /* PANEL DE CONTROL EN SERVICIOS */
+    .admin-seccion {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 12px;
+    }
+    .admin-seccion h5 {
+        color: #1abc9c;
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        font-family: sans-serif;
+    }
+    .input-admin-compacto {
+        padding: 8px 12px !important;
+        border-radius: 5px !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        background: #1c2b3a !important;
+        color: white !important;
+        font-size: 12px !important;
+        outline: none;
+    }
+    .btn-admin-compacto {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px !important;
+        border-radius: 5px !important;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 11px !important;
+        transition: all 0.3s ease;
+    }
+    .btn-admin-compacto:hover {
+        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
+    }
+    
+    /* VISTA DE PREVISUALIZACIÓN DE CARPETAS CREADAS */
+    .panel-carpetas-admin {
+        margin-top: 20px;
+        padding: 15px;
+        background: rgba(15, 23, 42, 0.6);
+        border-radius: 8px;
+        border: 1px solid rgba(26, 188, 156, 0.2);
+    }
+    .item-carpeta-lista {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(28, 43, 58, 0.8);
+        padding: 10px 15px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        border-left: 3px solid #1abc9c;
+    }
+    .item-archivo-lista {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: rgba(17, 29, 40, 0.6);
+        padding: 8px 12px;
+        margin: 5px 0 5px 25px;
+        border-radius: 4px;
+        font-size: 13px;
+    }
+    .btn-eliminar-rojo {
+        background: transparent;
+        color: #e74c3c;
+        border: 1px solid rgba(231, 76, 60, 0.5);
+        padding: 4px 10px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: bold;
+        transition: all 0.2s;
+    }
+    .btn-eliminar-rojo:hover {
+        background: #e74c3c;
+        color: white;
+    }
+</style>
 </head>
 <body>
 <div id="wrapper">
-<div id="header">
+    <div id="header">
         <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
         <div id="titulo-container">
-        <h1>Calidad que conecta tus proyectos</h1>
-        <p>Estamos para ayudarte</p>
+            <h1>Calidad que conecta tus proyectos</h1>
+            <p>Estamos para ayudarte</p>
         </div>
-        </div>
-        </div>
-        </div>
-        <div id="nav">
+    </div>
+    
+    <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">DIRECTORIO</a>
         <a href="servicios.html">SERVICIOS</a>
         <a href="sugerencias.html">SUGERENCIAS</a>
-	    <a href="comentarios.html">COMENTARIO</a>
-        </div>
-        <div id="hero-slider" class="hero-dinamico">
+        <a href="comentarios.html">COMENTARIO</a>
+    </div>
+    
+    <div id="hero-slider" class="hero-dinamico">
         <div class="hero-overlay">
-        <h2>LOS SERVICIOS QUE NECESITAS</h2>
-        <p>TECNOLOGÍA Y CALIDAD EN CADA METRO</p>
-        <div class="servicios-grid">
-        <div class="servicio-card-pro">
-        <div class="icono-flotante">S1</div>
-        <h4>DISEÑO ESTRATÉGICO</h4>
-        <p>Creamos interfaces modernas y funcionales adaptadas a tu marca personal o empresarial.</p>
-        <div class="barra-adorno"></div>
+            <h2>LOS SERVICIOS QUE NECESITAS</h2>
+            <p>TECNOLOGÍA Y CALIDAD EN CADA METRO</p>
+            <div class="servicios-grid">
+                <div class="servicio-card-pro">
+                    <div class="icono-flotante">S1</div>
+                    <h4>DISEÑO ESTRATÉGICO</h4>
+                    <p>Creamos interfaces modernas y funcionales adaptadas a tu marca personal o empresarial.</p>
+                    <div class="barra-adorno"></div>
+                </div>
+                <div class="servicio-card-pro">
+                    <div class="icono-flotante">S2</div>
+                    <h4>MARKETING DIGITAL</h4>          
+                    <p>Posicionamos tu sitio en los primeros lugares de búsqueda para atraer más clientes.</p>
+                    <div class="barra-adorno"></div>
+                </div>
+                <div class="servicio-card-pro">
+                    <div class="icono-flotante">S3</div>
+                    <h4>SOPORTE TÉCNICO</h4>
+                    <p>Asistencia personalizada 24/7 para que tu plataforma nunca deje de funcionar.</p>
+                    <div class="barra-adorno"></div>
+                </div>
+            </div> 
         </div>
-        <div class="servicio-card-pro">
-        <div class="icono-flotante">S2</div>
-        <h4>MARKETING DIGITAL</h4>          
-		<p>Posicionamos tu sitio en los primeros lugares de búsqueda para atraer más clientes.</p>
-        <div class="barra-adorno"></div>
+    </div>
+    
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
+        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 16px; opacity: 0.9;">PANEL DE CONTROL GENERAL (CREACIÓN Y GESTIÓN)</h4>
+        
+        <div class="admin-seccion">
+            <h5>1. AGREGAR NUEVA CARPETA</h5>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; min-width: 200px;">
+                <button onclick="crearCarpetaNueva()" class="btn-admin-compacto"> CREAR CARPETA</button>
+            </div>
         </div>
-        <div class="servicio-card-pro">
-        <div class="icono-flotante">S3</div>
-        <h4>SOPORTE TÉCNICO</h4>
-        <p>Asistencia personalizada 24/7 para que tu plataforma nunca deje de funcionar.</p>
-        <div class="barra-adorno"></div>
-        </div></div> </div>
+
+        <div class="admin-seccion">
+            <h5>2. SUBIR DOCUMENTO A CARPETA</h5>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <select id="select-carpeta-destino" class="input-admin-compacto" style="min-width: 180px; cursor: pointer;">
+                    <option value=""> Seleccionar Carpeta </option>
+                </select>
+                <input type="text" id="nombre-doc" class="input-admin-compacto" placeholder="Nombre del documento" style="flex: 1; min-width: 140px;">
+                <input type="text" id="desc-doc" class="input-admin-compacto" placeholder="Descripción corta" style="flex: 1; min-width: 140px;">
+                <input type="text" id="link-doc" class="input-admin-compacto" placeholder="Link de Drive o OneDrive" style="flex: 1; min-width: 140px;">
+                <button onclick="guardarDocumentoEnCarpeta()" class="btn-admin-compacto">GUARDAR DOCUMENTO</button>
+            </div>
         </div>
-        <div style="clear:both;"></div>
+
+        <div class="panel-carpetas-admin">
+            <h5 style="color: #1abc9c; margin-bottom: 15px; font-family: sans-serif; font-size: 13px; font-weight: bold;">Estructura de Datos Actual en Firebase (Para Eliminar)</h5>
+            <div id="vista-previa-firebase" style="color: white; font-family: sans-serif;">
+                Cargando base de datos remota...
+            </div>
         </div>
-	    </div>
-        </div>
-        <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
+    </div>
+
+    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
         <p>INCOREA-CABLES</p>
+    </div>
 </div>
-</div>
+
+<script>
+const CLAVE_ADMIN = "12345";
+const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
+
+// Guardar toda la estructura temporalmente en un array local para manipularla y subirla completa
+let estructuraCarpetas = [];
+
+window.onload = function() {
+    cargarDatosFirebase();
+};
+
+// Cargar información desde Firebase
+function cargarDatosFirebase() {
+    fetch(FIREBASE_URL)
+        .then(res => res.json())
+        .then(data => {
+            estructuraCarpetas = data || [];
+            actualizarSelectorCarpetas();
+            renderizarVistaEliminar();
+        })
+        .catch(err => {
+            console.error("Error al cargar datos:", err);
+            document.getElementById('vista-previa-firebase').innerHTML = "Error al conectar con la base de datos.";
+        });
+}
+
+// Actualizar Firebase con la estructura actual
+function guardarEnFirebase() {
+    return fetch(FIREBASE_URL, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(estructuraCarpetas)
+    });
+}
+
+// 1. CREAR CARPETA NUEVA
+function crearCarpetaNueva() {
+    const nombreCarpeta = document.getElementById('nueva-carpeta-nombre').value.trim();
+    if (!nombreCarpeta) {
+        return alert("Por favor, ingresa un nombre para la carpeta.");
+    }
+
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        const existe = estructuraCarpetas.some(c => c && c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        if (existe) {
+            return alert("Ya existe una carpeta con ese nombre.");
+        }
+
+        estructuraCarpetas.push({ nombre: nombreCarpeta, archivos: [] });
+        
+        guardarEnFirebase()
+            .then(() => {
+                document.getElementById('nueva-carpeta-nombre').value = "";
+                cargarDatosFirebase();
+                alert("Carpeta creada en la nube exitosamente.");
+            });
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// 2. GUARDAR UN ARCHIVO DENTRO DE UNA CARPETA
+function guardarDocumentoEnCarpeta() {
+    const carpetaSeleccionada = document.getElementById('select-carpeta-destino').value;
+    const nombre = document.getElementById('nombre-doc').value.trim();
+    const descripcion = document.getElementById('desc-doc').value.trim();
+    const link = document.getElementById('link-doc').value.trim();
+
+    if (!carpetaSeleccionada) return alert("Selecciona la carpeta de destino.");
+    if (!nombre || !descripcion || !link) return alert("Completa todos los campos.");
+
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        const carpeta = estructuraCarpetas.find(c => c && c.nombre === carpetaSeleccionada);
+        if (carpeta) {
+            if (!carpeta.archivos) carpeta.archivos = [];
+            carpeta.archivos.push({ nombre: nombre, descripcion: descripcion, link: link });
+
+            guardarEnFirebase()
+                .then(() => {
+                    document.getElementById('nombre-doc').value = "";
+                    document.getElementById('desc-doc').value = "";
+                    document.getElementById('link-doc').value = "";
+                    cargarDatosFirebase();
+                    alert("Documento guardado exitosamente en Firebase.");
+                });
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// Actualizar selector del panel
+function actualizarSelectorCarpetas() {
+    const select = document.getElementById('select-carpeta-destino');
+    select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
+    estructuraCarpetas.forEach(carpeta => {
+        if (carpeta) {
+            select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
+        }
+    });
+}
+
+// RENDERIZAR VISTA EN PANEL DE SERVICIOS PARA BORRAR COSAS
+function renderizarVistaEliminar() {
+    const contenedor = document.getElementById('vista-previa-firebase');
+    contenedor.innerHTML = "";
+
+    const limpiada = estructuraCarpetas.filter(Boolean); // Filtrar posibles posiciones vacías
+    if (limpiada.length === 0) {
+        contenedor.innerHTML = '<div style="color: #7f8c8d; font-style: italic;">No hay carpetas creadas en Firebase. Crea una arriba.</div>';
+        return;
+    }
+
+    estructuraCarpetas.forEach((carpeta, idxCarpeta) => {
+        if (!carpeta) return;
+
+        let htmlCarpeta = `
+            <div style="margin-bottom: 15px;">
+                <div class="item-carpeta-lista">
+                    <span style="font-weight: bold; color: #1abc9c;">📁 ${carpeta.nombre}</span>
+                    <button class="btn-eliminar-rojo" onclick="eliminarCarpetaEntera(${idxCarpeta})">Eliminar Carpeta</button>
+                </div>`;
+
+        if (carpeta.archivos && carpeta.archivos.length > 0) {
+            carpeta.archivos.forEach((file, idxFile) => {
+                htmlCarpeta += `
+                    <div class="item-archivo-lista">
+                        <span>📄 ${file.nombre}</span>
+                        <button class="btn-eliminar-rojo" onclick="eliminarArchivo(${idxCarpeta}, ${idxFile})">Eliminar Archivo</button>
+                    </div>`;
+            });
+        } else {
+            htmlCarpeta += `<div style="margin-left: 25px; color:#7f8c8d; font-size:12px; font-style:italic;">Vacía</div>`;
+        }
+
+        htmlCarpeta += `</div>`;
+        contenedor.innerHTML += htmlCarpeta;
+    });
+}
+
+// ELIMINAR ARCHIVO INDIVIDUAL
+function eliminarArchivo(idxCarpeta, idxFile) {
+    const password = prompt("Clave de Administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Estás seguro de eliminar este archivo de Firebase?")) {
+            estructuraCarpetas[idxCarpeta].archivos.splice(idxFile, 1);
+            guardarEnFirebase().then(() => {
+                cargarDatosFirebase();
+                alert("Archivo eliminado con éxito.");
+            });
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+// ELIMINAR CARPETA COMPLETA
+function eliminarCarpetaEntera(idxCarpeta) {
+    const password = prompt("Clave de Administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Seguro que deseas borrar toda la carpeta con sus archivos? Esto se borrará de Firebase permanentemente.")) {
+            estructuraCarpetas.splice(idxCarpeta, 1);
+            guardarEnFirebase().then(() => {
+                cargarDatosFirebase();
+                alert("Carpeta borrada del sistema.");
+            });
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+</script>
 </body>
 </html>
