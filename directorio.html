@@ -220,7 +220,13 @@ window.onload = function() {
 
 function escucharBaseDatos() {
     dbRef.on('value', (snapshot) => {
-        baseDatos = snapshot.val() || [];
+        const rawData = snapshot.val();
+        // Forzar a que los datos procesados siempre se comporten como un array limpio libre de nulls
+        if (rawData) {
+            baseDatos = Array.isArray(rawData) ? rawData : Object.values(rawData);
+        } else {
+            baseDatos = [];
+        }
         mostrarCarpetasYArchivos();
     });
 }
@@ -233,6 +239,7 @@ function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
     contenedor.innerHTML = "";
 
+    // Filtrar elementos nulos para evitar errores si Firebase desconfigura los índices del Array
     const baseDatosLimpios = baseDatos.filter(Boolean);
 
     if (baseDatosLimpios.length === 0) {
@@ -243,25 +250,32 @@ function mostrarCarpetasYArchivos() {
     baseDatosLimpios.forEach((carpeta, indexCarpeta) => {
         let htmlArchivos = "";
 
-        if (!carpeta.archivos || carpeta.archivos.length === 0) {
+        if (!carpeta.archivos) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
-            const archivosLimpios = carpeta.archivos.filter(Boolean);
-            archivosLimpios.forEach((file, indexFile) => {
-                htmlArchivos += `
-                    <div class="tarjeta-horizontal">
-                        <div class="col-info">
-                            <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
-                        </div>
-                        <div class="col-descripcion">
-                            "${file.descripcion}"
-                        </div>
-                        <div class="col-acciones">
-                            <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
-                            <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
-                        </div>
-                    </div>`;
-            });
+            // Convertir archivos a array si Firebase lo guardó como objeto indexado, y remover nulos
+            const archivosArray = Array.isArray(carpeta.archivos) ? carpeta.archivos : Object.values(carpeta.archivos);
+            const archivosLimpios = archivosArray.filter(Boolean);
+
+            if (archivosLimpios.length === 0) {
+                htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
+            } else {
+                archivosLimpios.forEach((file, indexFile) => {
+                    htmlArchivos += `
+                        <div class="tarjeta-horizontal">
+                            <div class="col-info">
+                                <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
+                            </div>
+                            <div class="col-descripcion">
+                                "${file.descripcion}"
+                            </div>
+                            <div class="col-acciones">
+                                <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
+                                <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
+                            </div>
+                        </div>`;
+                });
+            }
         }
 
         contenedor.innerHTML += `
@@ -292,6 +306,10 @@ function eliminarArchivo(indexCarpeta, indexFile) {
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
         if (confirm("¿Seguro que deseas eliminar este archivo?")) {
+            // Normalizar a array antes de hacer splice
+            if (!Array.isArray(baseDatos[indexCarpeta].archivos)) {
+                baseDatos[indexCarpeta].archivos = Object.values(baseDatos[indexCarpeta].archivos);
+            }
             baseDatos[indexCarpeta].archivos.splice(indexFile, 1);
             guardarEnFirebase();
         }
