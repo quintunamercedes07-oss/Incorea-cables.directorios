@@ -5,21 +5,21 @@
 <title>INCOREA CABLES-Directorio</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* CONTENEDOR DE CARPETAS */
+    /* CONTENEDOR DE CARPETAS (MÁS ANCHO Y AMPLIO) */
     .contenedor-carpetas {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 20px; /* Más espacio entre carpetas */
         margin-top: 30px;
         font-family: 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* DISEÑO DE LA CABECERA DE LA CARPETA */
+    /* DISEÑO DE LA CABECERA DE LA CARPETA (MÁS GRANDE Y ROBUSTA) */
     .carpeta-header {
         background: rgba(28, 43, 58, 0.9);
-        border: 2px solid rgba(26, 188, 156, 0.4);
+        border: 2px solid rgba(26, 188, 156, 0.4); /* Borde un poco más grueso */
         border-radius: 10px;
-        padding: 22px 30px;
+        padding: 22px 30px; /* Más acolchado para hacerla más grande */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -37,17 +37,13 @@
         align-items: center;
         gap: 15px;
         color: #ffffff;
-        font-size: 22px;
-        font-weight: 800;
+        font-size: 22px; /* Título notablemente más grande */
+        font-weight: 800; /* Más negrita */
     }
     .carpeta-icono-estado {
         color: #1abc9c;
-        font-size: 18px;
+        font-size: 18px; /* Icono indicador más grande */
         transition: transform 0.3s ease;
-    }
-    .carpeta-icono-estado::after {
-        content: "▶";
-        display: inline-block;
     }
 
     /* CONTENEDOR DE TARJETAS DENTRO DE LA CARPETA */
@@ -63,8 +59,9 @@
         margin-left: 12px;
     }
 
+    /* Clase activa para abrir la carpeta mediante JS */
     .carpeta-abierta .carpeta-contenido {
-        max-height: 1500px;
+        max-height: 1500px; /* Más margen para albergar contenido grande */
         margin-top: 15px;
         margin-bottom: 20px;
     }
@@ -72,14 +69,14 @@
         transform: rotate(90deg);
     }
 
-    /* TARJETA INDIVIDUAL DE DOCUMENTO */
+    /* TARJETA INDIVIDUAL DE DOCUMENTO (MÁS AMPLIA) */
     .tarjeta-horizontal {
         background: rgba(17, 29, 40, 0.75);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
-        padding: 18px 25px;
+        padding: 18px 25px; /* Más espacio interno */
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -98,8 +95,8 @@
     .col-descripcion {
         flex: 1;
         padding: 0 25px;
-        color: #ecf0f1;
-        font-size: 15px;
+        color: #ecf0f1; /* Texto de descripción un poco más claro para mejor lectura */
+        font-size: 15px; /* Texto de descripción más grande */
         line-height: 1.5;
     }
     .col-acciones {
@@ -111,12 +108,12 @@
         min-width: 200px;
     }
 
-    /* BOTONES */
+    /* BOTONES DE LA CARPETA (MÁS GRANDES Y ACCESIBLES) */
     .btn-abrir-moderno {
         background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
         color: white;
         border: none;
-        padding: 10px 22px;
+        padding: 10px 22px; /* Botones de acción principales más grandes */
         border-radius: 8px;
         cursor: pointer;
         font-weight: 700;
@@ -185,10 +182,6 @@
         background: rgba(26, 188, 156, 0.08) !important;
     }
 </style>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
 </head>
 <body>
 <div id="wrapper">
@@ -232,79 +225,60 @@
 </div>
 
 <script>
-// CONFIGURACIÓN DE FIREBASE (Reemplaza con tus credenciales reales)
-const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    databaseURL: "https://TU_BASE_DE_DATOS.firebaseio.com",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
-};
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const dbRef = firebase.database().ref("sistemaCarpetas");
-let baseDatos = [];
-
 window.onload = function() {
-    escucharBaseDatos();
+    inicializarBaseDatos();
+    mostrarCarpetasYArchivos();
+    chequearResaltado();
 };
 
-function escucharBaseDatos() {
-    dbRef.on('value', (snapshot) => {
-        const rawData = snapshot.val();
-        if (rawData) {
-            baseDatos = Array.isArray(rawData) ? rawData : Object.values(rawData);
-        } else {
-            baseDatos = [];
-        }
-        mostrarCarpetasYArchivos();
-        chequearResaltado();
-    });
+function inicializarBaseDatos() {
+    let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+    if (!baseDatos) {
+        baseDatos = [
+            {
+                nombre: "Directorio",
+                archivos: []
+            },
+            {
+                nombre: "Planificaciones",
+                archivos: []
+            }
+        ];
+        localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+    }
 }
 
 function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
+    const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
     contenedor.innerHTML = "";
 
-    const baseDatosLimpios = baseDatos.filter(Boolean);
-
-    if (baseDatosLimpios.length === 0) {
-        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Agrégalas desde Servicios.</div>';
+    if (baseDatos.length === 0) {
+        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas.</div>';
         return;
     }
 
-    baseDatosLimpios.forEach((carpeta, indexCarpeta) => {
+    baseDatos.forEach((carpeta, indexCarpeta) => {
         let htmlArchivos = "";
 
-        if (!carpeta.archivos) {
+        if (carpeta.archivos.length === 0) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
-            const archivosArray = Array.isArray(carpeta.archivos) ? carpeta.archivos : Object.values(carpeta.archivos);
-            const archivosLimpios = archivosArray.filter(Boolean);
-
-            if (archivosLimpios.length === 0) {
-                htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
-            } else {
-                archivosLimpios.forEach((file) => {
-                    const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
-                    htmlArchivos += `
-                        <div class="tarjeta-horizontal" id="${idTarjeta}">
-                            <div class="col-info">
-                                <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
-                            </div>
-                            <div class="col-descripcion">
-                                "${file.descripcion}"
-                            </div>
-                            <div class="col-acciones">
-                                <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
-                            </div>
-                        </div>`;
-                });
-            }
+            carpeta.archivos.forEach((file) => {
+                const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
+                htmlArchivos += `
+                    <div class="tarjeta-horizontal" id="${idTarjeta}">
+                        <div class="col-info">
+                            <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
+                        </div>
+                        <div class="col-descripcion">
+                            "${file.descripcion}"
+                        </div>
+                        <div class="col-acciones">
+                            <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
+                        </div>
+                    </div>`;
+            });
         }
 
         contenedor.innerHTML += `
@@ -314,7 +288,7 @@ function mostrarCarpetasYArchivos() {
                         <span>📁</span>
                         <span>${carpeta.nombre}</span>
                     </div>
-                    <span class="carpeta-icono-estado"></span>
+                    <span class="carpeta-icono-estado">▶</span>
                 </div>
                 <div class="carpeta-contenido">
                     ${htmlArchivos}
@@ -338,9 +312,11 @@ function chequearResaltado() {
         
         if (elementoTarjeta) {
             const contenedorCarpetaPadre = elementoTarjeta.closest('.carpeta-grupo');
+            
             if (contenedorCarpetaPadre) {
                 contenedorCarpetaPadre.classList.add('carpeta-abierta');
             }
+
             elementoTarjeta.classList.add('tarjeta-brillante');
             
             setTimeout(() => {
