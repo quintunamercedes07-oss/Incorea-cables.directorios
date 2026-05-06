@@ -2,10 +2,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>INCOREA CABLES-Servicios (Admin)</title>
+<title>INCOREA CABLES-Servicios</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* CONTENEDOR DE CARPETAS */
+    /* CONTENEDOR DE CARPETAS (MÁS ANCHO Y AMPLIO) */
     .contenedor-carpetas {
         display: flex;
         flex-direction: column;
@@ -45,11 +45,8 @@
         font-size: 18px;
         transition: transform 0.3s ease;
     }
-    .carpeta-icono-estado::after {
-        content: "▶";
-        display: inline-block;
-    }
 
+    /* CONTENEDOR DE TARJETAS */
     .carpeta-contenido {
         max-height: 0;
         overflow: hidden;
@@ -84,6 +81,11 @@
         justify-content: space-between;
         transition: all 0.3s ease;
     }
+    .tarjeta-horizontal:hover {
+        border-color: rgba(26, 188, 156, 0.5);
+        background: rgba(22, 37, 51, 0.85);
+        transform: translateX(5px);
+    }
 
     .col-info { width: 25%; min-width: 180px; }
     .col-descripcion { flex: 1; padding: 0 25px; color: #ecf0f1; font-size: 15px; line-height: 1.5; }
@@ -99,10 +101,12 @@
         cursor: pointer;
         font-weight: 700;
         font-size: 12px;
+        letter-spacing: 0.5px;
         transition: all 0.3s ease;
     }
     .btn-abrir-moderno:hover {
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
+        transform: scale(1.04);
     }
     .btn-eliminar-moderno {
         background: transparent;
@@ -118,6 +122,7 @@
     .btn-eliminar-moderno:hover {
         background: #e74c3c;
         color: white;
+        border-color: #e74c3c;
     }
     .btn-eliminar-carpeta {
         background: transparent;
@@ -130,9 +135,11 @@
         opacity: 0.5;
         transition: opacity 0.2s;
     }
-    .btn-eliminar-carpeta:hover { opacity: 1; }
+    .btn-eliminar-carpeta:hover {
+        opacity: 1;
+    }
 
-    /* PANEL DE CONTROL COMPACTO */
+    /* PANEL DE ADMINISTRACIÓN */
     .admin-seccion {
         background: rgba(30, 41, 59, 0.4);
         border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -189,13 +196,21 @@
         padding: 0 20px;
         border-bottom: 3px solid #1abc9c;
     }
-    .btn-cerrar { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .iframe-seguro { width: 100%; height: calc(100% - 50px); border: none; }
+    .btn-cerrar {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .iframe-seguro {
+        width: 100%;
+        height: calc(100% - 50px);
+        border: none;
+    }
 </style>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
 </head>
 <body>
 <div id="wrapper">
@@ -217,8 +232,8 @@
 
     <div id="comentarios-container" style="padding: 60px 5%;">
         <div class="comentarios-header" style="border-bottom: 2px solid #1c2b3a; padding-bottom: 20px; margin-bottom: 30px;">
-            <h2 style="color: #ffffff; letter-spacing: 1.5px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 32px;">ESTRUCTURA DE ARCHIVOS (ADMIN)</h2>
-            <p style="color: #1abc9c; margin-top: 5px; font-weight: 600; letter-spacing: 0.8px; font-size: 15px;">PANEL DE GESTIÓN DE ARCHIVOS Y CARPETAS</p>
+            <h2 style="color: #ffffff; letter-spacing: 1.5px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 32px;">ESTRUCTURA DE ARCHIVOS</h2>
+            <p style="color: #1abc9c; margin-top: 5px; font-weight: 600; letter-spacing: 0.8px; font-size: 15px;">SELECCIONA UNA CARPETA DE LOS DOCUMENTOS</p>
         </div>
 
         <div id="contenedor-carpetas-dinamico" class="contenedor-carpetas">
@@ -231,7 +246,7 @@
         <div class="admin-seccion">
             <h5>1. AGREGAR NUEVA CARPETA</h5>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta" style="flex: 1; min-width: 200px;">
+                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; min-width: 200px;">
                 <button onclick="crearCarpetaNueva()" class="btn-admin-compacto"> CREAR CARPETA</button>
             </div>
         </div>
@@ -266,42 +281,27 @@
 <script>
 const CLAVE_ADMIN = "12345";
 
-// CONFIGURACIÓN DE FIREBASE (Usa exactamente las mismas credenciales que en directorio.html)
-const firebaseConfig = {
-    apiKey: "TU_API_KEY",
-    authDomain: "TU_AUTH_DOMAIN",
-    databaseURL: "https://TU_BASE_DE_DATOS.firebaseio.com",
-    projectId: "TU_PROJECT_ID",
-    storageBucket: "TU_STORAGE_BUCKET",
-    messagingSenderId: "TU_MESSAGING_SENDER_ID",
-    appId: "TU_APP_ID"
-};
-
-if (!firebase.apps.length) {
-    firebase.initializeApp(firebaseConfig);
-}
-const dbRef = firebase.database().ref("sistemaCarpetas");
-let baseDatos = [];
-
 window.onload = function() {
-    escucharBaseDatos();
+    inicializarBaseDatos();
+    mostrarCarpetasYArchivos();
+    actualizarSelectorCarpetas();
 };
 
-function escucharBaseDatos() {
-    dbRef.on('value', (snapshot) => {
-        const rawData = snapshot.val();
-        if (rawData) {
-            baseDatos = Array.isArray(rawData) ? rawData : Object.values(rawData);
-        } else {
-            baseDatos = [];
-        }
-        mostrarCarpetasYArchivos();
-        actualizarSelectorCarpetas();
-    });
-}
-
-function guardarEnFirebase() {
-    dbRef.set(baseDatos);
+function inicializarBaseDatos() {
+    let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+    if (!baseDatos) {
+        baseDatos = [
+            {
+                nombre: "Directorio",
+                archivos: []
+            },
+            {
+                nombre: "Planificaciones",
+                archivos: []
+            }
+        ];
+        localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+    }
 }
 
 function crearCarpetaNueva() {
@@ -312,16 +312,19 @@ function crearCarpetaNueva() {
 
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
-        const baseDatosLimpios = baseDatos.filter(Boolean);
-        const existe = baseDatosLimpios.some(c => c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
         
+        const existe = baseDatos.some(c => c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
         if (existe) {
             return alert("Ya existe una carpeta con ese nombre.");
         }
 
         baseDatos.push({ nombre: nombreCarpeta, archivos: [] });
-        guardarEnFirebase();
+        localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+
         document.getElementById('nueva-carpeta-nombre').value = "";
+        mostrarCarpetasYArchivos();
+        actualizarSelectorCarpetas();
         alert("Carpeta creada con éxito.");
     } else {
         alert("Clave incorrecta.");
@@ -335,10 +338,10 @@ function guardarDocumentoEnCarpeta() {
     const link = document.getElementById('link-doc').value.trim();
 
     if (!carpetaSeleccionada) {
-        return alert("Selecciona la carpeta de destino.");
+        return alert("Selecciona la carpeta de destino donde deseas guardar el archivo.");
     }
     if (!nombre || !descripcion || !link) {
-        return alert("Completa todos los campos.");
+        return alert("Completa todos los campos del documento.");
     }
 
     const patronUrl = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?.*?$/i;
@@ -348,20 +351,18 @@ function guardarDocumentoEnCarpeta() {
 
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
-        const carpeta = baseDatos.find(c => c && c.nombre === carpetaSeleccionada);
+        let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+        
+        const carpeta = baseDatos.find(c => c.nombre === carpetaSeleccionada);
         if (carpeta) {
-            if (!carpeta.archivos) {
-                carpeta.archivos = [];
-            } else if (!Array.isArray(carpeta.archivos)) {
-                carpeta.archivos = Object.values(carpeta.archivos);
-            }
-            
             carpeta.archivos.push({ nombre: nombre, descripcion: descripcion, link: link });
-            guardarEnFirebase();
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
 
             document.getElementById('nombre-doc').value = "";
             document.getElementById('desc-doc').value = "";
             document.getElementById('link-doc').value = "";
+            
+            mostrarCarpetasYArchivos();
             alert("Documento guardado exitosamente.");
         }
     } else {
@@ -371,43 +372,35 @@ function guardarDocumentoEnCarpeta() {
 
 function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
+    const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
     contenedor.innerHTML = "";
 
-    const baseDatosLimpios = baseDatos.filter(Boolean);
-
-    if (baseDatosLimpios.length === 0) {
-        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas.</div>';
+    if (baseDatos.length === 0) {
+        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Usa el panel inferior.</div>';
         return;
     }
 
-    baseDatosLimpios.forEach((carpeta, indexCarpeta) => {
+    baseDatos.forEach((carpeta, indexCarpeta) => {
         let htmlArchivos = "";
 
-        if (!carpeta.archivos) {
+        if (carpeta.archivos.length === 0) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
-            const archivosArray = Array.isArray(carpeta.archivos) ? carpeta.archivos : Object.values(carpeta.archivos);
-            const archivosLimpios = archivosArray.filter(Boolean);
-
-            if (archivosLimpios.length === 0) {
-                htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
-            } else {
-                archivosLimpios.forEach((file, indexFile) => {
-                    htmlArchivos += `
-                        <div class="tarjeta-horizontal">
-                            <div class="col-info">
-                                <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
-                            </div>
-                            <div class="col-descripcion">
-                                "${file.descripcion}"
-                            </div>
-                            <div class="col-acciones">
-                                <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
-                                <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
-                            </div>
-                        </div>`;
-                });
-            }
+            carpeta.archivos.forEach((file, indexFile) => {
+                htmlArchivos += `
+                    <div class="tarjeta-horizontal">
+                        <div class="col-info">
+                            <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
+                        </div>
+                        <div class="col-descripcion">
+                            "${file.descripcion}"
+                        </div>
+                        <div class="col-acciones">
+                            <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
+                            <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
+                        </div>
+                    </div>`;
+            });
         }
 
         contenedor.innerHTML += `
@@ -419,7 +412,7 @@ function mostrarCarpetasYArchivos() {
                     </div>
                     <div style="display:flex; align-items:center; gap:15px;">
                         <button onclick="eliminarCarpetaEntera(event, ${indexCarpeta})" class="btn-eliminar-carpeta">Eliminar Carpeta</button>
-                        <span class="carpeta-icono-estado"></span>
+                        <span class="carpeta-icono-estado">▶</span>
                     </div>
                 </div>
                 <div class="carpeta-contenido">
@@ -436,9 +429,11 @@ function alternarCarpeta(elementoHeader) {
 
 function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
+    const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+    
     select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
-    const baseDatosLimpios = baseDatos.filter(Boolean);
-    baseDatosLimpios.forEach(carpeta => {
+    
+    baseDatos.forEach(carpeta => {
         select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
     });
 }
@@ -447,11 +442,11 @@ function eliminarArchivo(indexCarpeta, indexFile) {
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
         if (confirm("¿Seguro que deseas eliminar este archivo?")) {
-            if (!Array.isArray(baseDatos[indexCarpeta].archivos)) {
-                baseDatos[indexCarpeta].archivos = Object.values(baseDatos[indexCarpeta].archivos);
-            }
+            let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
             baseDatos[indexCarpeta].archivos.splice(indexFile, 1);
-            guardarEnFirebase();
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+            mostrarCarpetasYArchivos();
+            alert("Archivo eliminado.");
         }
     } else {
         alert("Clave incorrecta.");
@@ -460,11 +455,17 @@ function eliminarArchivo(indexCarpeta, indexFile) {
 
 function eliminarCarpetaEntera(event, indexCarpeta) {
     event.stopPropagation(); 
+    
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
-        if (confirm("¿Estás seguro de eliminar esta carpeta completa?")) {
+        if (confirm("¿Estás completamente seguro de eliminar esta carpeta?")) {
+            let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
             baseDatos.splice(indexCarpeta, 1);
-            guardarEnFirebase();
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+            
+            mostrarCarpetasYArchivos();
+            actualizarSelectorCarpetas();
+            alert("Carpeta eliminada.");
         }
     } else {
         alert("Clave incorrecta.");
