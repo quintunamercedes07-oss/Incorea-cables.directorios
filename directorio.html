@@ -9,17 +9,17 @@
     .contenedor-carpetas {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 20px; /* Más espacio entre carpetas */
         margin-top: 30px;
         font-family: 'Segoe UI', Roboto, sans-serif;
     }
 
-    /* DISEÑO DE LA CABECERA DE LA CARPETA */
+    /* DISEÑO DE LA CABECERA DE LA CARPETA (MÁS GRANDE Y ROBUSTA) */
     .carpeta-header {
         background: rgba(28, 43, 58, 0.9);
-        border: 2px solid rgba(26, 188, 156, 0.4);
+        border: 2px solid rgba(26, 188, 156, 0.4); /* Borde un poco más grueso */
         border-radius: 10px;
-        padding: 22px 30px;
+        padding: 22px 30px; /* Más acolchado para hacerla más grande */
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -37,20 +37,16 @@
         align-items: center;
         gap: 15px;
         color: #ffffff;
-        font-size: 22px;
-        font-weight: 800;
+        font-size: 22px; /* Título notablemente más grande */
+        font-weight: 800; /* Más negrita */
     }
     .carpeta-icono-estado {
         color: #1abc9c;
-        font-size: 18px;
+        font-size: 18px; /* Icono indicador más grande */
         transition: transform 0.3s ease;
     }
-    .carpeta-icono-estado::after {
-        content: "▶";
-        display: inline-block;
-    }
 
-    /* CONTENEDOR DE TARJETAS */
+    /* CONTENEDOR DE TARJETAS DENTRO DE LA CARPETA */
     .carpeta-contenido {
         max-height: 0;
         overflow: hidden;
@@ -63,8 +59,9 @@
         margin-left: 12px;
     }
 
+    /* Clase activa para abrir la carpeta mediante JS */
     .carpeta-abierta .carpeta-contenido {
-        max-height: 1500px;
+        max-height: 1500px; /* Más margen para albergar contenido grande */
         margin-top: 15px;
         margin-bottom: 20px;
     }
@@ -72,14 +69,14 @@
         transform: rotate(90deg);
     }
 
-    /* TARJETA INDIVIDUAL DE DOCUMENTO */
+    /* TARJETA INDIVIDUAL DE DOCUMENTO (MÁS AMPLIA) */
     .tarjeta-horizontal {
         background: rgba(17, 29, 40, 0.75);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255, 255, 255, 0.08);
         border-radius: 12px;
-        padding: 18px 25px;
+        padding: 18px 25px; /* Más espacio interno */
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -98,8 +95,8 @@
     .col-descripcion {
         flex: 1;
         padding: 0 25px;
-        color: #ecf0f1;
-        font-size: 15px;
+        color: #ecf0f1; /* Texto de descripción un poco más claro para mejor lectura */
+        font-size: 15px; /* Texto de descripción más grande */
         line-height: 1.5;
     }
     .col-acciones {
@@ -108,14 +105,15 @@
         gap: 12px;
         width: 20%;
         justify-content: flex-end;
-        min-width: 100px;
+        min-width: 200px;
     }
 
+    /* BOTONES DE LA CARPETA (MÁS GRANDES Y ACCESIBLES) */
     .btn-abrir-moderno {
         background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
         color: white;
         border: none;
-        padding: 10px 22px;
+        padding: 10px 22px; /* Botones de acción principales más grandes */
         border-radius: 8px;
         cursor: pointer;
         font-weight: 700;
@@ -126,6 +124,80 @@
     .btn-abrir-moderno:hover {
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
         transform: scale(1.04);
+    }
+    .btn-eliminar-moderno {
+        background: transparent;
+        color: #e74c3c;
+        border: 1px solid rgba(231, 76, 60, 0.4);
+        padding: 9px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+    .btn-eliminar-moderno:hover {
+        background: #e74c3c;
+        color: white;
+        border-color: #e74c3c;
+    }
+    .btn-eliminar-carpeta {
+        background: transparent;
+        color: #e74c3c;
+        border: none;
+        cursor: pointer;
+        font-size: 13px; /* Eliminar carpeta ligeramente más grande */
+        font-weight: bold;
+        padding: 5px 12px;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    .btn-eliminar-carpeta:hover {
+        opacity: 1;
+    }
+
+    /* ==========================================
+       PANEL DE ADMINISTRACIÓN (MÁS PEQUEÑO Y COMPACTO)
+       ========================================== */
+    .admin-seccion {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 12px 15px; /* Margen interno reducido */
+        margin-bottom: 12px;
+    }
+    .admin-seccion h5 {
+        color: #1abc9c;
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 12px; /* Título de sección más chico */
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    /* Estilo de inputs reducidos */
+    .input-admin-compacto {
+        padding: 8px 12px !important;
+        border-radius: 5px !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        background: #1c2b3a !important;
+        color: white !important;
+        font-size: 12px !important; /* Letra más chica */
+        outline: none;
+    }
+    /* Botones de acción reducidos */
+    .btn-admin-compacto {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px !important; /* Botón más bajo y corto */
+        border-radius: 5px !important;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 11px !important; /* Letra más pequeña */
+        transition: all 0.3s ease;
+    }
+    .btn-admin-compacto:hover {
+        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
     }
 
     /* VISOR DE SEGURIDAD */
@@ -160,7 +232,7 @@
         border: none;
     }
 
-    /* EFECTO BRILLO */
+    /* EFECTO DE BRILLO EXTREMO */
     @keyframes superBrilloNeon {
         0% {
             border-color: #1abc9c;
@@ -206,159 +278,11 @@
     <div id="comentarios-container" style="padding: 60px 5%;">
         <div class="comentarios-header" style="border-bottom: 2px solid #1c2b3a; padding-bottom: 20px; margin-bottom: 30px;">
             <h2 style="color: #ffffff; letter-spacing: 1.5px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 32px;">ESTRUCTURA DE ARCHIVOS</h2>
-            <p style="color: #1abc9c; margin-top: 5px; font-weight: 600; letter-spacing: 0.8px; font-size: 15px;">SELECCIONA UNA CARPETA PARA LEER LOS DOCUMENTOS</p>
+            <p style="color: #1abc9c; margin-top: 5px; font-weight: 600; letter-spacing: 0.8px; font-size: 15px;">SELECCIONA UNA CARPETA DE LOS DOCUMENTOS</p>
         </div>
 
         <div id="contenedor-carpetas-dinamico" class="contenedor-carpetas">
-            <div style="text-align:center; padding: 40px; color:#bdc3c7;">Conectando con el servidor remoto...</div>
-        </div>
+            </div>
     </div>
 
-    <div id="panel-visor-protegido">
-        <div class="barra-visor">
-            <span style="color: #1abc9c; font-weight: bold; font-family: sans-serif;">MODO LECTURA PROTEGIDO</span>
-            <button onclick="cerrarVisor()" class="btn-cerrar">CERRAR</button>
-        </div>
-        <iframe src="" id="visor-iframe" class="iframe-seguro"></iframe>
-    </div>
-
-    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
-        <p>INCOREA-CABLES</p>
-    </div>
-</div>
-
-<script>
-const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
-
-window.onload = function() {
-    cargarDirectorioRemoto();
-};
-
-// Cargar estructura en tiempo real de Firebase
-function cargarDirectorioRemoto() {
-    fetch(FIREBASE_URL)
-        .then(res => res.json())
-        .then(data => {
-            mostrarCarpetasYArchivos(data || []);
-            chequearResaltado();
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById('contenedor-carpetas-dinamico').innerHTML = '<div style="text-align:center; color:#e74c3c; padding:30px;">Error al conectar con la base de datos. Inténtalo de nuevo.</div>';
-        });
-}
-
-function mostrarCarpetasYArchivos(baseDatos) {
-    const contenedor = document.getElementById('contenedor-carpetas-dinamico');
-    contenedor.innerHTML = "";
-
-    const limpiada = baseDatos.filter(Boolean);
-    if (limpiada.length === 0) {
-        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas o archivos disponibles en este momento.</div>';
-        return;
-    }
-
-    baseDatos.forEach((carpeta, indexCarpeta) => {
-        if (!carpeta) return;
-
-        let htmlArchivos = "";
-
-        if (!carpeta.archivos || carpeta.archivos.length === 0) {
-            htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
-        } else {
-            carpeta.archivos.forEach((file) => {
-                const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
-                htmlArchivos += `
-                    <div class="tarjeta-horizontal" id="${idTarjeta}">
-                        <div class="col-info">
-                            <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
-                        </div>
-                        <div class="col-descripcion">
-                            "${file.descripcion}"
-                        </div>
-                        <div class="col-acciones">
-                            <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
-                        </div>
-                    </div>`;
-            });
-        }
-
-        contenedor.innerHTML += `
-            <div class="carpeta-grupo" id="grupo-carpeta-${indexCarpeta}">
-                <div class="carpeta-header" onclick="alternarCarpeta(this)">
-                    <div class="carpeta-titulo">
-                        <span>📁</span>
-                        <span>${carpeta.nombre}</span>
-                    </div>
-                    <span class="carpeta-icono-estado"></span>
-                </div>
-                <div class="carpeta-contenido">
-                    ${htmlArchivos}
-                </div>
-            </div>`;
-    });
-}
-
-function alternarCarpeta(elementoHeader) {
-    const grupo = elementoHeader.parentElement;
-    grupo.classList.toggle('carpeta-abierta');
-}
-
-function chequearResaltado() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const areaAResaltar = urlParams.get('resaltar');
-    
-    if (areaAResaltar) {
-        const idBuscado = "tarjeta-" + normalizarTexto(decodeURIComponent(areaAResaltar));
-        const elementoTarjeta = document.getElementById(idBuscado);
-        
-        if (elementoTarjeta) {
-            const contenedorCarpetaPadre = elementoTarjeta.closest('.carpeta-grupo');
-            if (contenedorCarpetaPadre) {
-                contenedorCarpetaPadre.classList.add('carpeta-abierta');
-            }
-            elementoTarjeta.classList.add('tarjeta-brillante');
-            setTimeout(() => {
-                elementoTarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 400);
-        }
-    }
-}
-
-function normalizarTexto(texto) {
-    return texto
-        .toLowerCase()
-        .normalize("NFD")
-        .replace(/[\u0300-\u036f]/g, "")
-        .replace(/[^a-z0-9]/g, "-")
-        .replace(/-+/g, "-")
-        .trim();
-}
-
-function abrirVisorSeguro(url) {
-    let urlFinal = url;
-    if (url.includes("docs.google.com/spreadsheets")) {
-        urlFinal = url.split('/edit')[0] + '/preview';
-    } 
-    else if (url.includes("1drv.ms") || url.includes("onedrive.live.com")) {
-        if(!url.includes("embed")) {
-            urlFinal = url.replace("redir?", "embed?") + "&wdAllowInteractivity=False&action=embedview";
-        } else {
-            urlFinal = url + "&wdAllowInteractivity=False&action=embedview";
-        }
-    }
-    const visor = document.getElementById('panel-visor-protegido');
-    const iframe = document.getElementById('visor-iframe');
-    iframe.src = urlFinal;
-    visor.style.display = 'block';
-    document.body.style.overflow = 'hidden'; 
-}
-
-function cerrarVisor() {
-    document.getElementById('panel-visor-protegido').style.display = 'none';
-    document.getElementById('visor-iframe').src = "";
-    document.body.style.overflow = 'auto'; 
-}
-</script>
-</body>
-</html>
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px;
