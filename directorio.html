@@ -292,7 +292,7 @@
         <div class="admin-seccion">
             <h5>1. AGREGAR NUEVA CARPETA</h5>
             <div style="display: flex; gap: 8px; flex-wrap: wrap;">
-                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; min-width: 200px;">
+                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta" style="flex: 1; min-width: 200px;">
                 <button onclick="crearCarpetaNueva()" class="btn-admin-compacto"> CREAR CARPETA</button>
             </div>
         </div>
@@ -304,8 +304,8 @@
                     <option value=""> Seleccionar Carpeta </option>
                 </select>
                 <input type="text" id="nombre-doc" class="input-admin-compacto" placeholder="Nombre del documento" style="flex: 1; min-width: 140px;">
-                <input type="text" id="desc-doc" class="input-admin-compacto" placeholder="Descripción corta" style="flex: 1; min-width: 140px;">
-                <input type="text" id="link-doc" class="input-admin-compacto" placeholder="Link de Drive o OneDrive" style="flex: 1; min-width: 140px;">
+                <input type="text" id="desc-doc" class="input-admin-compacto" placeholder="Descripción " style="flex: 1; min-width: 140px;">
+                <input type="text" id="link-doc" class="input-admin-compacto" placeholder="Link " style="flex: 1; min-width: 140px;">
                 <button onclick="guardarDocumentoEnCarpeta()" class="btn-admin-compacto">GUARDAR DOCUMENTO</button>
             </div>
         </div>
@@ -519,7 +519,7 @@ function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
     const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
     
-    select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
+    select.innerHTML = '<option value=""> Seleccionar Carpeta </option>';
     
     baseDatos.forEach(carpeta => {
         select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
