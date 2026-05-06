@@ -108,7 +108,7 @@
 <script>
 const CLAVE_ADMIN = "12345";
 
-// CONFIGURACIÓN DE FIREBASE
+// CONFIGURACIÓN DE FIREBASE (Asegúrate de que sea EXACTAMENTE la misma que en directorio.html)
 const firebaseConfig = {
     apiKey: "TU_API_KEY",
     authDomain: "TU_AUTH_DOMAIN",
@@ -126,9 +126,15 @@ if (!firebase.apps.length) {
 const dbRef = firebase.database().ref("sistemaCarpetas");
 let baseDatos = [];
 
-// Escuchar cambios de la base de datos
+// Escuchar cambios de la base de datos en tiempo real
 dbRef.on('value', (snapshot) => {
-    baseDatos = snapshot.val() || [];
+    const rawData = snapshot.val();
+    // Forzar conversión a Array limpio para que JS no de error al usar métodos de array (.some, .find)
+    if (rawData) {
+        baseDatos = Array.isArray(rawData) ? rawData : Object.values(rawData);
+    } else {
+        baseDatos = [];
+    }
     actualizarSelectorCarpetas();
 });
 
@@ -144,7 +150,10 @@ function crearCarpetaNueva() {
 
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
-        const existe = baseDatos.some(c => c && c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        // Filtrar nulos para evitar errores al evaluar con .some()
+        const baseDatosLimpios = baseDatos.filter(Boolean);
+        const existe = baseDatosLimpios.some(c => c && c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        
         if (existe) {
             return alert("Ya existe una carpeta con ese nombre.");
         }
@@ -175,7 +184,13 @@ function guardarDocumentoEnCarpeta() {
     if (password === CLAVE_ADMIN) {
         const carpeta = baseDatos.find(c => c && c.nombre === carpetaSeleccionada);
         if (carpeta) {
-            if (!carpeta.archivos) carpeta.archivos = [];
+            if (!carpeta.archivos) {
+                carpeta.archivos = [];
+            } else if (!Array.isArray(carpeta.archivos)) {
+                // Si Firebase devolvió los archivos como un objeto indexado, convertirlo a Array
+                carpeta.archivos = Object.values(carpeta.archivos);
+            }
+            
             carpeta.archivos.push({ nombre: nombre, descripcion: descripcion, link: link });
             guardarEnFirebase();
 
@@ -192,7 +207,11 @@ function guardarDocumentoEnCarpeta() {
 function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
     select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
-    baseDatos.forEach(carpeta => {
+    
+    // Filtrar elementos nulos antes de renderizar las opciones del dropdown
+    const baseDatosLimpios = baseDatos.filter(Boolean);
+    
+    baseDatosLimpios.forEach(carpeta => {
         if (carpeta) {
             select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
         }
