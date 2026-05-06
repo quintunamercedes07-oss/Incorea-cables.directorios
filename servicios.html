@@ -2,12 +2,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>INCOREA CABLES-Servicios</title>
+<title>INCOREA CABLES-servicios</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* ==========================================
-       PANEL DE ADMINISTRACIÓN COMPACTO (TUS ESTILOS)
-       ========================================== */
+    /* Estilos del panel de control */
     .admin-seccion {
         background: rgba(30, 41, 59, 0.4);
         border: 1px dashed rgba(255, 255, 255, 0.1);
@@ -46,55 +44,11 @@
     .btn-admin-compacto:hover {
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
     }
-
-    /* ESTILOS DE LA VISTA ADMINISTRATIVA GLOBAL */
-    .panel-carpetas-admin {
-        margin-top: 25px;
-        padding: 20px;
-        background: rgba(15, 23, 42, 0.6);
-        border-radius: 10px;
-        border: 1px solid rgba(26, 188, 156, 0.2);
-    }
-    .item-carpeta-lista {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(28, 43, 58, 0.9);
-        padding: 12px 20px;
-        margin-bottom: 10px;
-        border-radius: 8px;
-        border-left: 4px solid #1abc9c;
-        font-family: 'Segoe UI', sans-serif;
-    }
-    .item-archivo-lista {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(17, 29, 40, 0.7);
-        padding: 10px 15px;
-        margin: 6px 0 6px 30px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-family: 'Segoe UI', sans-serif;
-        color: #ecf0f1;
-        border: 1px solid rgba(255,255,255,0.03);
-    }
-    .btn-eliminar-rojo {
-        background: transparent;
-        color: #e74c3c;
-        border: 1px solid rgba(231, 76, 60, 0.5);
-        padding: 6px 12px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-size: 11px;
-        font-weight: bold;
-        transition: all 0.2s;
-    }
-    .btn-eliminar-rojo:hover {
-        background: #e74c3c;
-        color: white;
-    }
 </style>
+
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 </head>
 <body>
 <div id="wrapper">
@@ -116,13 +70,13 @@
     
     <div id="hero-slider" class="hero-dinamico">
         <div class="hero-overlay" style="padding: 40px 0;">
-            <h2 style="text-align: center; color: white;">LOS SERVICIOS QUE NECESITAS</h2>
-            <p style="text-align: center; color: #1abc9c;">TECNOLOGÍA Y CALIDAD EN CADA METRO</p>
+            <h2>ADMINISTRACIÓN DE ARCHIVOS</h2>
+            <p>CREA CARPETAS Y SUBE ENLACES EN TIEMPO REAL</p>
         </div>
     </div>
-    
-    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
-        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 20px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 16px; opacity: 0.9;">PANEL DE CONTROL GENERAL (EDITABLE EN TIEMPO REAL)</h4>
+
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px; margin: 40px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
+        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 14px; opacity: 0.9;">PANEL DE CONTROL (ADMINISTRADOR)</h4>
         
         <div class="admin-seccion">
             <h5>1. AGREGAR NUEVA CARPETA</h5>
@@ -144,15 +98,8 @@
                 <button onclick="guardarDocumentoEnCarpeta()" class="btn-admin-compacto">GUARDAR DOCUMENTO</button>
             </div>
         </div>
-
-        <div class="panel-carpetas-admin">
-            <h5 style="color: #1abc9c; margin-bottom: 15px; font-family: sans-serif; font-size: 13px; font-weight: bold;">Estructura de Carpetas Activa en el Directorio</h5>
-            <div id="vista-previa-firebase" style="color: white; font-family: sans-serif;">
-                Cargando datos compartidos de la nube...
-            </div>
-        </div>
     </div>
-
+    
     <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
         <p>INCOREA-CABLES</p>
     </div>
@@ -160,34 +107,33 @@
 
 <script>
 const CLAVE_ADMIN = "12345";
-const FIREBASE_URL = "https://incorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
 
-let estructuraCarpetas = [];
-
-window.onload = function() {
-    cargarDatosFirebase();
+// CONFIGURACIÓN DE FIREBASE
+const firebaseConfig = {
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_AUTH_DOMAIN",
+    databaseURL: "https://TU_BASE_DE_DATOS.firebaseio.com",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_STORAGE_BUCKET",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    appId: "TU_APP_ID"
 };
 
-function cargarDatosFirebase() {
-    fetch(FIREBASE_URL)
-        .then(res => res.json())
-        .then(data => {
-            estructuraCarpetas = data || [];
-            actualizarSelectorCarpetas();
-            renderizarVistaEliminar();
-        })
-        .catch(err => {
-            console.error(err);
-            document.getElementById('vista-previa-firebase').innerHTML = "Error al conectar con la base de datos remota.";
-        });
+// Inicializar Firebase
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
 }
+const dbRef = firebase.database().ref("sistemaCarpetas");
+let baseDatos = [];
+
+// Escuchar cambios de la base de datos
+dbRef.on('value', (snapshot) => {
+    baseDatos = snapshot.val() || [];
+    actualizarSelectorCarpetas();
+});
 
 function guardarEnFirebase() {
-    return fetch(FIREBASE_URL, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(estructuraCarpetas)
-    });
+    dbRef.set(baseDatos);
 }
 
 function crearCarpetaNueva() {
@@ -198,19 +144,15 @@ function crearCarpetaNueva() {
 
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
-        const existe = estructuraCarpetas.some(c => c && c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        const existe = baseDatos.some(c => c && c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
         if (existe) {
             return alert("Ya existe una carpeta con ese nombre.");
         }
 
-        estructuraCarpetas.push({ nombre: nombreCarpeta, archivos: [] });
-        
-        guardarEnFirebase()
-            .then(() => {
-                document.getElementById('nueva-carpeta-nombre').value = "";
-                cargarDatosFirebase();
-                alert("Carpeta creada con éxito. Ya es visible en el Directorio.");
-            });
+        baseDatos.push({ nombre: nombreCarpeta, archivos: [] });
+        guardarEnFirebase();
+        document.getElementById('nueva-carpeta-nombre').value = "";
+        alert("Carpeta creada con éxito.");
     } else {
         alert("Clave incorrecta.");
     }
@@ -222,24 +164,25 @@ function guardarDocumentoEnCarpeta() {
     const descripcion = document.getElementById('desc-doc').value.trim();
     const link = document.getElementById('link-doc').value.trim();
 
-    if (!carpetaSeleccionada) return alert("Selecciona la carpeta de destino.");
-    if (!nombre || !descripcion || !link) return alert("Completa todos los campos.");
+    if (!carpetaSeleccionada) {
+        return alert("Selecciona la carpeta de destino.");
+    }
+    if (!nombre || !descripcion || !link) {
+        return alert("Completa todos los campos.");
+    }
 
     const password = prompt("Ingresa la clave de administrador:");
     if (password === CLAVE_ADMIN) {
-        const carpeta = estructuraCarpetas.find(c => c && c.nombre === carpetaSeleccionada);
+        const carpeta = baseDatos.find(c => c && c.nombre === carpetaSeleccionada);
         if (carpeta) {
             if (!carpeta.archivos) carpeta.archivos = [];
             carpeta.archivos.push({ nombre: nombre, descripcion: descripcion, link: link });
+            guardarEnFirebase();
 
-            guardarEnFirebase()
-                .then(() => {
-                    document.getElementById('nombre-doc').value = "";
-                    document.getElementById('desc-doc').value = "";
-                    document.getElementById('link-doc').value = "";
-                    cargarDatosFirebase();
-                    alert("Documento guardado con éxito. Ya es visible en el Directorio.");
-                });
+            document.getElementById('nombre-doc').value = "";
+            document.getElementById('desc-doc').value = "";
+            document.getElementById('link-doc').value = "";
+            alert("Documento guardado exitosamente.");
         }
     } else {
         alert("Clave incorrecta.");
@@ -249,79 +192,11 @@ function guardarDocumentoEnCarpeta() {
 function actualizarSelectorCarpetas() {
     const select = document.getElementById('select-carpeta-destino');
     select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
-    estructuraCarpetas.forEach(carpeta => {
+    baseDatos.forEach(carpeta => {
         if (carpeta) {
             select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
         }
     });
-}
-
-function renderizarVistaEliminar() {
-    const contenedor = document.getElementById('vista-previa-firebase');
-    contenedor.innerHTML = "";
-
-    const limpiada = estructuraCarpetas.filter(Boolean);
-    if (limpiada.length === 0) {
-        contenedor.innerHTML = '<div style="color: #7f8c8d; font-style: italic; font-size:13px;">No hay carpetas activas. Crea una carpeta usando los campos de arriba.</div>';
-        return;
-    }
-
-    estructuraCarpetas.forEach((carpeta, idxCarpeta) => {
-        if (!carpeta) return;
-
-        let htmlCarpeta = `
-            <div style="margin-bottom: 15px;">
-                <div class="item-carpeta-lista">
-                    <span style="font-weight: bold; color: #1abc9c;">📁 ${carpeta.nombre}</span>
-                    <button class="btn-eliminar-rojo" onclick="eliminarCarpetaEntera(${idxCarpeta})">Eliminar Carpeta</button>
-                </div>`;
-
-        if (carpeta.archivos && carpeta.archivos.length > 0) {
-            const archivosLimpios = carpeta.archivos.filter(Boolean);
-            archivosLimpios.forEach((file, idxFile) => {
-                htmlCarpeta += `
-                    <div class="item-archivo-lista">
-                        <span>📄 ${file.nombre}</span>
-                        <button class="btn-eliminar-rojo" onclick="eliminarArchivo(${idxCarpeta}, ${idxFile})">Eliminar Archivo</button>
-                    </div>`;
-            });
-        } else {
-            htmlCarpeta += `<div style="margin-left: 30px; color:#7f8c8d; font-size:12px; font-style:italic;">Esta carpeta no tiene archivos todavía.</div>`;
-        }
-
-        htmlCarpeta += `</div>`;
-        contenedor.innerHTML += htmlCarpeta;
-    });
-}
-
-function eliminarArchivo(idxCarpeta, idxFile) {
-    const password = prompt("Clave de Administrador:");
-    if (password === CLAVE_ADMIN) {
-        if (confirm("¿Seguro que deseas eliminar este archivo del Directorio?")) {
-            estructuraCarpetas[idxCarpeta].archivos.splice(idxFile, 1);
-            guardarEnFirebase().then(() => {
-                cargarDatosFirebase();
-                alert("Archivo removido globalmente.");
-            });
-        }
-    } else {
-        alert("Clave incorrecta.");
-    }
-}
-
-function eliminarCarpetaEntera(idxCarpeta) {
-    const password = prompt("Clave de Administrador:");
-    if (password === CLAVE_ADMIN) {
-        if (confirm("¿Estás absolutamente seguro? Eliminarás esta carpeta y todo su contenido del Directorio en todos los dispositivos.")) {
-            estructuraCarpetas.splice(idxCarpeta, 1);
-            guardarEnFirebase().then(() => {
-                cargarDatosFirebase();
-                alert("Carpeta eliminada globalmente.");
-            });
-        }
-    } else {
-        alert("Clave incorrecta.");
-    }
 }
 </script>
 </body>
