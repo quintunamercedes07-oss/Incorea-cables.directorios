@@ -84,7 +84,8 @@
     }
     .col-info { width: 25%; min-width: 180px; }
     .col-descripcion { flex: 1; padding: 0 25px; color: #ecf0f1; font-size: 15px; line-height: 1.5; }
-    .col-acciones { display: flex; align-items: center; gap: 12px; width: 20%; justify-content: flex-end; min-width: 120px; }
+    .col-acciones { display: flex; align-items: center; gap: 12px; width: 20%; justify-content: flex-end; min-width: 200px; }
+    
     .btn-abrir-moderno {
         background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
         color: white;
@@ -99,8 +100,35 @@
     }
     .btn-abrir-moderno:hover {
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
-        transform: scale(1.04);
     }
+    .btn-eliminar-moderno {
+        background: transparent;
+        color: #e74c3c;
+        border: 1px solid rgba(231, 76, 60, 0.4);
+        padding: 9px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+    .btn-eliminar-moderno:hover {
+        background: #e74c3c;
+        color: white;
+    }
+    .btn-eliminar-carpeta {
+        background: transparent;
+        color: #e74c3c;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 5px 12px;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    .btn-eliminar-carpeta:hover { opacity: 1; }
+
     #panel-visor-protegido {
         display: none;
         position: fixed;
@@ -150,8 +178,7 @@
         </div>
 
         <div id="contenedor-carpetas-dinamico" class="contenedor-carpetas">
-            <div style="text-align:center; padding: 40px; color:#bdc3c7;">Conectando con la base de datos en la nube...</div>
-        </div>
+            </div>
     </div>
 
     <div id="panel-visor-protegido">
@@ -168,39 +195,48 @@
 </div>
 
 <script>
-// ==========================================
-// CONFIGURA AQUÍ TU BASE DE DATOS (Pon tu link real de Firebase)
-// ==========================================
+const CLAVE_ADMIN = "12345";
+
+// CONFIGURACIÓN DE FIREBASE (Usa exactamente la misma configuración que en servicios.html)
 const firebaseConfig = {
-    databaseURL: "https://incorea-cables-default-rtdb.firebaseio.com/"
+    apiKey: "TU_API_KEY",
+    authDomain: "TU_AUTH_DOMAIN",
+    databaseURL: "https://TU_BASE_DE_DATOS.firebaseio.com",
+    projectId: "TU_PROJECT_ID",
+    storageBucket: "TU_STORAGE_BUCKET",
+    messagingSenderId: "TU_MESSAGING_SENDER_ID",
+    appId: "TU_APP_ID"
 };
 
-firebase.initializeApp(firebaseConfig);
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+}
 const dbRef = firebase.database().ref("sistemaCarpetas");
+let baseDatos = [];
 
 window.onload = function() {
-    escucharYActualizarDirectorio();
+    escucharBaseDatos();
 };
 
-function escucharYActualizarDirectorio() {
+function escucharBaseDatos() {
     dbRef.on('value', (snapshot) => {
-        const data = snapshot.val();
-        mostrarCarpetasYArchivos(data || []);
-    }, (err) => {
-        console.error(err);
-        document.getElementById('contenedor-carpetas-dinamico').innerHTML = 
-            '<div style="text-align:center; color:#e74c3c; padding:30px;">Error al conectar con la base de datos remota.</div>';
+        baseDatos = snapshot.val() || [];
+        mostrarCarpetasYArchivos();
     });
 }
 
-function mostrarCarpetasYArchivos(baseDatos) {
+function guardarEnFirebase() {
+    dbRef.set(baseDatos);
+}
+
+function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
     contenedor.innerHTML = "";
 
     const baseDatosLimpios = baseDatos.filter(Boolean);
 
     if (baseDatosLimpios.length === 0) {
-        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Visita Servicios para agregar una.</div>';
+        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Agrégalas desde Servicios.</div>';
         return;
     }
 
@@ -211,7 +247,7 @@ function mostrarCarpetasYArchivos(baseDatos) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
             const archivosLimpios = carpeta.archivos.filter(Boolean);
-            archivosLimpios.forEach((file) => {
+            archivosLimpios.forEach((file, indexFile) => {
                 htmlArchivos += `
                     <div class="tarjeta-horizontal">
                         <div class="col-info">
@@ -221,6 +257,7 @@ function mostrarCarpetasYArchivos(baseDatos) {
                             "${file.descripcion}"
                         </div>
                         <div class="col-acciones">
+                            <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
                             <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
                         </div>
                     </div>`;
@@ -228,13 +265,16 @@ function mostrarCarpetasYArchivos(baseDatos) {
         }
 
         contenedor.innerHTML += `
-            <div class="carpeta-grupo">
+            <div class="carpeta-grupo" id="grupo-carpeta-${indexCarpeta}">
                 <div class="carpeta-header" onclick="alternarCarpeta(this)">
                     <div class="carpeta-titulo">
                         <span>📁</span>
                         <span>${carpeta.nombre}</span>
                     </div>
-                    <span class="carpeta-icono-estado"></span>
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <button onclick="eliminarCarpetaEntera(event, ${indexCarpeta})" class="btn-eliminar-carpeta">Eliminar Carpeta</button>
+                        <span class="carpeta-icono-estado"></span>
+                    </div>
                 </div>
                 <div class="carpeta-contenido">
                     ${htmlArchivos}
@@ -246,6 +286,31 @@ function mostrarCarpetasYArchivos(baseDatos) {
 function alternarCarpeta(elementoHeader) {
     const grupo = elementoHeader.parentElement;
     grupo.classList.toggle('carpeta-abierta');
+}
+
+function eliminarArchivo(indexCarpeta, indexFile) {
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Seguro que deseas eliminar este archivo?")) {
+            baseDatos[indexCarpeta].archivos.splice(indexFile, 1);
+            guardarEnFirebase();
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+function eliminarCarpetaEntera(event, indexCarpeta) {
+    event.stopPropagation(); 
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Estás seguro de eliminar esta carpeta completa?")) {
+            baseDatos.splice(indexCarpeta, 1);
+            guardarEnFirebase();
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
 }
 
 function abrirVisorSeguro(url) {
