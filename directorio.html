@@ -126,6 +126,78 @@
         transform: scale(1.04);
     }
 
+    .btn-eliminar-moderno {
+        background: transparent;
+        color: #e74c3c;
+        border: 1px solid rgba(231, 76, 60, 0.4);
+        padding: 9px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 12px;
+        font-weight: bold;
+        transition: all 0.2s ease;
+    }
+    .btn-eliminar-moderno:hover {
+        background: #e74c3c;
+        color: white;
+        border-color: #e74c3c;
+    }
+
+    .btn-eliminar-carpeta {
+        background: transparent;
+        color: #e74c3c;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: bold;
+        padding: 5px 12px;
+        opacity: 0.5;
+        transition: opacity 0.2s;
+    }
+    .btn-eliminar-carpeta:hover {
+        opacity: 1;
+    }
+
+    /* PANEL DE ADMINISTRACIÓN COMPACTO AL PIE */
+    .admin-seccion {
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px dashed rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        padding: 12px 15px;
+        margin-bottom: 12px;
+    }
+    .admin-seccion h5 {
+        color: #1abc9c;
+        margin-top: 0;
+        margin-bottom: 8px;
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+    }
+    .input-admin-compacto {
+        padding: 8px 12px !important;
+        border-radius: 5px !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        background: #1c2b3a !important;
+        color: white !important;
+        font-size: 12px !important;
+        outline: none;
+    }
+    .btn-admin-compacto {
+        background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
+        color: white;
+        border: none;
+        padding: 8px 15px !important;
+        border-radius: 5px !important;
+        cursor: pointer;
+        font-weight: bold;
+        font-size: 11px !important;
+        transition: all 0.3s ease;
+    }
+    .btn-admin-compacto:hover {
+        background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
+    }
+
     /* VISOR DE SEGURIDAD */
     #panel-visor-protegido {
         display: none;
@@ -211,6 +283,31 @@
             </div>
     </div>
 
+    <div id="admin-panel" style="background: rgba(44, 62, 80, 0.3); backdrop-filter: blur(12px); padding: 18px 25px; border-radius: 12px; margin: 20px 5%; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid #1abc9c;">
+        <h4 style="color: #ffffff; margin-top: 0; margin-bottom: 15px; font-family: 'Segoe UI', sans-serif; font-weight: 700; letter-spacing: 0.5px; text-align: center; font-size: 14px; opacity: 0.9;">PANEL DE CONTROL (ADMINISTRADOR)</h4>
+        
+        <div class="admin-seccion">
+            <h5>1. AGREGAR NUEVA CARPETA</h5>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <input type="text" id="nueva-carpeta-nombre" class="input-admin-compacto" placeholder="Nombre de Carpeta (Ej: Planificaciones)" style="flex: 1; min-width: 200px;">
+                <button onclick="crearCarpetaNueva()" class="btn-admin-compacto"> CREAR CARPETA</button>
+            </div>
+        </div>
+
+        <div class="admin-seccion">
+            <h5>2. SUBIR DOCUMENTO A CARPETA</h5>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                <select id="select-carpeta-destino" class="input-admin-compacto" style="min-width: 180px; cursor: pointer;">
+                    <option value=""> Seleccionar Carpeta </option>
+                </select>
+                <input type="text" id="nombre-doc" class="input-admin-compacto" placeholder="Nombre del documento" style="flex: 1; min-width: 140px;">
+                <input type="text" id="desc-doc" class="input-admin-compacto" placeholder="Descripción corta" style="flex: 1; min-width: 140px;">
+                <input type="text" id="link-doc" class="input-admin-compacto" placeholder="Link de Drive o OneDrive" style="flex: 1; min-width: 140px;">
+                <button onclick="guardarDocumentoEnCarpeta()" class="btn-admin-compacto">GUARDAR DOCUMENTO</button>
+            </div>
+        </div>
+    </div>
+
     <div id="panel-visor-protegido">
         <div class="barra-visor">
             <span style="color: #1abc9c; font-weight: bold; font-family: sans-serif;">MODO LECTURA PROTEGIDO</span>
@@ -225,9 +322,12 @@
 </div>
 
 <script>
+const CLAVE_ADMIN = "12345";
+
 window.onload = function() {
     inicializarBaseDatos();
     mostrarCarpetasYArchivos();
+    actualizarSelectorCarpetas();
     chequearResaltado();
 };
 
@@ -248,13 +348,79 @@ function inicializarBaseDatos() {
     }
 }
 
+function crearCarpetaNueva() {
+    const nombreCarpeta = document.getElementById('nueva-carpeta-nombre').value.trim();
+    if (!nombreCarpeta) {
+        return alert("Por favor, ingresa un nombre para la carpeta.");
+    }
+
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+        
+        const existe = baseDatos.some(c => c.nombre.toLowerCase() === nombreCarpeta.toLowerCase());
+        if (existe) {
+            return alert("Ya existe una carpeta con ese nombre.");
+        }
+
+        baseDatos.push({ nombre: nombreCarpeta, archivos: [] });
+        localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+
+        document.getElementById('nueva-carpeta-nombre').value = "";
+        mostrarCarpetasYArchivos();
+        actualizarSelectorCarpetas();
+        alert("Carpeta creada con éxito.");
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+function guardarDocumentoEnCarpeta() {
+    const carpetaSeleccionada = document.getElementById('select-carpeta-destino').value;
+    const nombre = document.getElementById('nombre-doc').value.trim();
+    const descripcion = document.getElementById('desc-doc').value.trim();
+    const link = document.getElementById('link-doc').value.trim();
+
+    if (!carpetaSeleccionada) {
+        return alert("Selecciona la carpeta de destino donde deseas guardar el archivo.");
+    }
+    if (!nombre || !descripcion || !link) {
+        return alert("Completa todos los campos del documento.");
+    }
+
+    const patronUrl = /^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?.*?$/i;
+    if (!patronUrl.test(link)) {
+        return alert("Introduce un enlace web válido.");
+    }
+
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+        
+        const carpeta = baseDatos.find(c => c.nombre === carpetaSeleccionada);
+        if (carpeta) {
+            carpeta.archivos.push({ nombre: nombre, descripcion: descripcion, link: link });
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+
+            document.getElementById('nombre-doc').value = "";
+            document.getElementById('desc-doc').value = "";
+            document.getElementById('link-doc').value = "";
+            
+            mostrarCarpetasYArchivos();
+            alert("Documento guardado exitosamente.");
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
 function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
     const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
     contenedor.innerHTML = "";
 
     if (baseDatos.length === 0) {
-        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas.</div>';
+        contenedor.innerHTML = '<div style="text-align:center; padding: 40px; color: #bdc3c7; font-style: italic;">No hay carpetas creadas. Usa el panel inferior.</div>';
         return;
     }
 
@@ -264,7 +430,7 @@ function mostrarCarpetasYArchivos() {
         if (carpeta.archivos.length === 0) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
-            carpeta.archivos.forEach((file) => {
+            carpeta.archivos.forEach((file, indexFile) => {
                 const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
                 htmlArchivos += `
                     <div class="tarjeta-horizontal" id="${idTarjeta}">
@@ -275,6 +441,7 @@ function mostrarCarpetasYArchivos() {
                             "${file.descripcion}"
                         </div>
                         <div class="col-acciones">
+                            <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
                             <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
                         </div>
                     </div>`;
@@ -288,7 +455,10 @@ function mostrarCarpetasYArchivos() {
                         <span>📁</span>
                         <span>${carpeta.nombre}</span>
                     </div>
-                    <span class="carpeta-icono-estado">▶</span>
+                    <div style="display:flex; align-items:center; gap:15px;">
+                        <button onclick="eliminarCarpetaEntera(event, ${indexCarpeta})" class="btn-eliminar-carpeta">Eliminar Carpeta</button>
+                        <span class="carpeta-icono-estado">▶</span>
+                    </div>
                 </div>
                 <div class="carpeta-contenido">
                     ${htmlArchivos}
@@ -300,6 +470,51 @@ function mostrarCarpetasYArchivos() {
 function alternarCarpeta(elementoHeader) {
     const grupo = elementoHeader.parentElement;
     grupo.classList.toggle('carpeta-abierta');
+}
+
+function actualizarSelectorCarpetas() {
+    const select = document.getElementById('select-carpeta-destino');
+    const baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
+    
+    select.innerHTML = '<option value="">-- Seleccionar Carpeta --</option>';
+    
+    baseDatos.forEach(carpeta => {
+        select.innerHTML += `<option value="${carpeta.nombre}">${carpeta.nombre}</option>`;
+    });
+}
+
+function eliminarArchivo(indexCarpeta, indexFile) {
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Seguro que deseas eliminar este archivo?")) {
+            let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+            baseDatos[indexCarpeta].archivos.splice(indexFile, 1);
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+            mostrarCarpetasYArchivos();
+            alert("Archivo eliminado.");
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
+}
+
+function eliminarCarpetaEntera(event, indexCarpeta) {
+    event.stopPropagation(); 
+    
+    const password = prompt("Ingresa la clave de administrador:");
+    if (password === CLAVE_ADMIN) {
+        if (confirm("¿Estás completamente seguro de eliminar esta carpeta?")) {
+            let baseDatos = JSON.parse(localStorage.getItem('sistemaCarpetas'));
+            baseDatos.splice(indexCarpeta, 1);
+            localStorage.setItem('sistemaCarpetas', JSON.stringify(baseDatos));
+            
+            mostrarCarpetasYArchivos();
+            actualizarSelectorCarpetas();
+            alert("Carpeta eliminada.");
+        }
+    } else {
+        alert("Clave incorrecta.");
+    }
 }
 
 function chequearResaltado() {
