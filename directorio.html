@@ -5,6 +5,7 @@
 <title>INCOREA CABLES-Directorio</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
+    /* CONTENEDOR DE CARPETAS */
     .contenedor-carpetas {
         display: flex;
         flex-direction: column;
@@ -12,6 +13,8 @@
         margin-top: 30px;
         font-family: 'Segoe UI', Roboto, sans-serif;
     }
+
+    /* DISEÑO DE LA CABECERA DE LA CARPETA */
     .carpeta-header {
         background: rgba(28, 43, 58, 0.9);
         border: 2px solid rgba(26, 188, 156, 0.4);
@@ -46,6 +49,8 @@
         content: "▶";
         display: inline-block;
     }
+
+    /* CONTENEDOR DE TARJETAS DENTRO DE LA CARPETA */
     .carpeta-contenido {
         max-height: 0;
         overflow: hidden;
@@ -57,6 +62,7 @@
         border-left: 3px dashed rgba(26, 188, 156, 0.3);
         margin-left: 12px;
     }
+
     .carpeta-abierta .carpeta-contenido {
         max-height: 1500px;
         margin-top: 15px;
@@ -65,6 +71,8 @@
     .carpeta-abierta .carpeta-icono-estado {
         transform: rotate(90deg);
     }
+
+    /* TARJETA INDIVIDUAL DE DOCUMENTO */
     .tarjeta-horizontal {
         background: rgba(17, 29, 40, 0.75);
         backdrop-filter: blur(16px);
@@ -82,10 +90,28 @@
         background: rgba(22, 37, 51, 0.85);
         transform: translateX(5px);
     }
-    .col-info { width: 25%; min-width: 180px; }
-    .col-descripcion { flex: 1; padding: 0 25px; color: #ecf0f1; font-size: 15px; line-height: 1.5; }
-    .col-acciones { display: flex; align-items: center; gap: 12px; width: 20%; justify-content: flex-end; min-width: 200px; }
-    
+
+    .col-info {
+        width: 25%;
+        min-width: 180px;
+    }
+    .col-descripcion {
+        flex: 1;
+        padding: 0 25px;
+        color: #ecf0f1;
+        font-size: 15px;
+        line-height: 1.5;
+    }
+    .col-acciones {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        width: 20%;
+        justify-content: flex-end;
+        min-width: 200px;
+    }
+
+    /* BOTONES */
     .btn-abrir-moderno {
         background: linear-gradient(135deg, #1abc9c 0%, #16a085 100%);
         color: white;
@@ -100,35 +126,10 @@
     }
     .btn-abrir-moderno:hover {
         background: linear-gradient(135deg, #17d3ad 0%, #1abc9c 100%);
+        transform: scale(1.04);
     }
-    .btn-eliminar-moderno {
-        background: transparent;
-        color: #e74c3c;
-        border: 1px solid rgba(231, 76, 60, 0.4);
-        padding: 9px 15px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 12px;
-        font-weight: bold;
-        transition: all 0.2s ease;
-    }
-    .btn-eliminar-moderno:hover {
-        background: #e74c3c;
-        color: white;
-    }
-    .btn-eliminar-carpeta {
-        background: transparent;
-        color: #e74c3c;
-        border: none;
-        cursor: pointer;
-        font-size: 13px;
-        font-weight: bold;
-        padding: 5px 12px;
-        opacity: 0.5;
-        transition: opacity 0.2s;
-    }
-    .btn-eliminar-carpeta:hover { opacity: 1; }
 
+    /* VISOR DE SEGURIDAD */
     #panel-visor-protegido {
         display: none;
         position: fixed;
@@ -145,8 +146,44 @@
         padding: 0 20px;
         border-bottom: 3px solid #1abc9c;
     }
-    .btn-cerrar { background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; }
-    .iframe-seguro { width: 100%; height: calc(100% - 50px); border: none; }
+    .btn-cerrar {
+        background: #e74c3c;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: bold;
+    }
+    .iframe-seguro {
+        width: 100%;
+        height: calc(100% - 50px);
+        border: none;
+    }
+
+    /* EFECTO DE BRILLO EXTREMO */
+    @keyframes superBrilloNeon {
+        0% {
+            border-color: #1abc9c;
+            box-shadow: 0 0 15px rgba(26, 188, 156, 0.2), inset 0 0 10px rgba(26, 188, 156, 0.05);
+            transform: translateY(-1px);
+        }
+        50% {
+            border-color: #17d3ad;
+            box-shadow: 0 0 35px #1abc9c, inset 0 0 20px rgba(26, 188, 156, 0.4);
+            transform: translateY(-4px);
+        }
+        100% {
+            border-color: #1abc9c;
+            box-shadow: 0 0 15px rgba(26, 188, 156, 0.2), inset 0 0 10px rgba(26, 188, 156, 0.05);
+            transform: translateY(-1px);
+        }
+    }
+    .tarjeta-brillante {
+        animation: superBrilloNeon 1.8s infinite ease-in-out !important;
+        border-width: 1.5px !important;
+        background: rgba(26, 188, 156, 0.08) !important;
+    }
 </style>
 
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -195,9 +232,7 @@
 </div>
 
 <script>
-const CLAVE_ADMIN = "12345";
-
-// CONFIGURACIÓN DE FIREBASE (Usa exactamente la misma configuración que en servicios.html)
+// CONFIGURACIÓN DE FIREBASE (Reemplaza con tus credenciales reales)
 const firebaseConfig = {
     apiKey: "TU_API_KEY",
     authDomain: "TU_AUTH_DOMAIN",
@@ -221,25 +256,20 @@ window.onload = function() {
 function escucharBaseDatos() {
     dbRef.on('value', (snapshot) => {
         const rawData = snapshot.val();
-        // Forzar a que los datos procesados siempre se comporten como un array limpio libre de nulls
         if (rawData) {
             baseDatos = Array.isArray(rawData) ? rawData : Object.values(rawData);
         } else {
             baseDatos = [];
         }
         mostrarCarpetasYArchivos();
+        chequearResaltado();
     });
-}
-
-function guardarEnFirebase() {
-    dbRef.set(baseDatos);
 }
 
 function mostrarCarpetasYArchivos() {
     const contenedor = document.getElementById('contenedor-carpetas-dinamico');
     contenedor.innerHTML = "";
 
-    // Filtrar elementos nulos para evitar errores si Firebase desconfigura los índices del Array
     const baseDatosLimpios = baseDatos.filter(Boolean);
 
     if (baseDatosLimpios.length === 0) {
@@ -253,16 +283,16 @@ function mostrarCarpetasYArchivos() {
         if (!carpeta.archivos) {
             htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
         } else {
-            // Convertir archivos a array si Firebase lo guardó como objeto indexado, y remover nulos
             const archivosArray = Array.isArray(carpeta.archivos) ? carpeta.archivos : Object.values(carpeta.archivos);
             const archivosLimpios = archivosArray.filter(Boolean);
 
             if (archivosLimpios.length === 0) {
                 htmlArchivos = `<div style="padding: 15px; color: #7f8c8d; font-style: italic; font-size: 14px;">Esta carpeta está vacía.</div>`;
             } else {
-                archivosLimpios.forEach((file, indexFile) => {
+                archivosLimpios.forEach((file) => {
+                    const idTarjeta = "tarjeta-" + normalizarTexto(file.nombre);
                     htmlArchivos += `
-                        <div class="tarjeta-horizontal">
+                        <div class="tarjeta-horizontal" id="${idTarjeta}">
                             <div class="col-info">
                                 <strong style="color: #ffffff; font-size: 17px; font-weight: 700; display: block;">${file.nombre}</strong>
                             </div>
@@ -270,7 +300,6 @@ function mostrarCarpetasYArchivos() {
                                 "${file.descripcion}"
                             </div>
                             <div class="col-acciones">
-                                <button onclick="eliminarArchivo(${indexCarpeta}, ${indexFile})" class="btn-eliminar-moderno">ELIMINAR</button>
                                 <button onclick="abrirVisorSeguro('${file.link}')" class="btn-abrir-moderno"> ABRIR</button>
                             </div>
                         </div>`;
@@ -285,10 +314,7 @@ function mostrarCarpetasYArchivos() {
                         <span>📁</span>
                         <span>${carpeta.nombre}</span>
                     </div>
-                    <div style="display:flex; align-items:center; gap:15px;">
-                        <button onclick="eliminarCarpetaEntera(event, ${indexCarpeta})" class="btn-eliminar-carpeta">Eliminar Carpeta</button>
-                        <span class="carpeta-icono-estado"></span>
-                    </div>
+                    <span class="carpeta-icono-estado"></span>
                 </div>
                 <div class="carpeta-contenido">
                     ${htmlArchivos}
@@ -302,33 +328,36 @@ function alternarCarpeta(elementoHeader) {
     grupo.classList.toggle('carpeta-abierta');
 }
 
-function eliminarArchivo(indexCarpeta, indexFile) {
-    const password = prompt("Ingresa la clave de administrador:");
-    if (password === CLAVE_ADMIN) {
-        if (confirm("¿Seguro que deseas eliminar este archivo?")) {
-            // Normalizar a array antes de hacer splice
-            if (!Array.isArray(baseDatos[indexCarpeta].archivos)) {
-                baseDatos[indexCarpeta].archivos = Object.values(baseDatos[indexCarpeta].archivos);
+function chequearResaltado() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const areaAResaltar = urlParams.get('resaltar');
+    
+    if (areaAResaltar) {
+        const idBuscado = "tarjeta-" + normalizarTexto(decodeURIComponent(areaAResaltar));
+        const elementoTarjeta = document.getElementById(idBuscado);
+        
+        if (elementoTarjeta) {
+            const contenedorCarpetaPadre = elementoTarjeta.closest('.carpeta-grupo');
+            if (contenedorCarpetaPadre) {
+                contenedorCarpetaPadre.classList.add('carpeta-abierta');
             }
-            baseDatos[indexCarpeta].archivos.splice(indexFile, 1);
-            guardarEnFirebase();
+            elementoTarjeta.classList.add('tarjeta-brillante');
+            
+            setTimeout(() => {
+                elementoTarjeta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 400);
         }
-    } else {
-        alert("Clave incorrecta.");
     }
 }
 
-function eliminarCarpetaEntera(event, indexCarpeta) {
-    event.stopPropagation(); 
-    const password = prompt("Ingresa la clave de administrador:");
-    if (password === CLAVE_ADMIN) {
-        if (confirm("¿Estás seguro de eliminar esta carpeta completa?")) {
-            baseDatos.splice(indexCarpeta, 1);
-            guardarEnFirebase();
-        }
-    } else {
-        alert("Clave incorrecta.");
-    }
+function normalizarTexto(texto) {
+    return texto
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9]/g, "-")
+        .replace(/-+/g, "-")
+        .trim();
 }
 
 function abrirVisorSeguro(url) {
