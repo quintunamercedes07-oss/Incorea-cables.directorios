@@ -2,32 +2,38 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>INCOREA CABLES</title>
+<title>CONTACTOS - INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
     .container { margin: 20px 5%; min-height: 300px; }
-    .rama { margin-bottom: 25px; }
-    .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; }
-    .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
-    .archivo a { color: #eee; text-decoration: none; font-size: 15px; transition: 0.3s; }
-    .archivo a:hover { color: #1abc9c; padding-left: 5px; }
+    .rama { margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; }
+    .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px; }
+    
+    /* Diseño de tarjetas de contacto */
+    .contacto-card { 
+        display: flex; justify-content: space-between; align-items: center;
+        padding: 12px; border-bottom: 1px solid #1a252f; 
+    }
+    .c-info b { font-size: 16px; color: #eee; display: block; }
+    .c-info span { font-size: 13px; color: #888; }
+    
+    .c-links { display: flex; gap: 8px; }
+    .btn-c { 
+        padding: 6px 12px; border-radius: 4px; font-size: 11px; 
+        text-decoration: none; font-weight: bold; transition: 0.3s;
+    }
+    .btn-wa { background: #25d366; color: white; }
+    .btn-tel { background: #3498db; color: white; }
+    .btn-mail { background: #f1c40f; color: #000; }
 
-    /* Panel Admin Discreto */
-    .admin-zona { background: rgba(255, 255, 255, 0.02); padding: 20px 5%; border-top: 1px solid #1a252f; margin-top: 60px; transition: 0.5s; }
-    .admin-zona:hover { background: rgba(255, 255, 255, 0.04); }
+    /* Admin */
+    .admin-zona { background: rgba(255, 255, 255, 0.02); padding: 20px 5%; border-top: 1px solid #1a252f; margin-top: 60px; }
     .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
     input, select { background: transparent; border: 1px solid #333; color: #888; padding: 6px 10px; border-radius: 4px; font-size: 11px; outline: none; }
-    input:focus { border-color: #1abc9c; color: white; }
-    button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 10px; transition: 0.3s; }
-    button:hover { background: #1abc9c; color: #0e161d; }
-    
-    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #222; padding-top: 15px; max-width: 800px; margin: 20px auto; }
-    .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; align-items: center; color: #666; }
-    .clic-edit { cursor: pointer; flex: 1; }
-    .clic-edit:hover { color: #1abc9c; }
-    .btn-x { background: transparent; border: 1px solid #e74c3c; color: #e74c3c; padding: 2px 6px; font-size: 9px; cursor: pointer; }
-    .btn-x:hover { background: #e74c3c; color: white; }
+    button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 10px; }
+    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #222; padding-top: 15px; }
+    .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; color: #666; }
 </style>
 </head>
 
@@ -63,19 +69,14 @@
             <input type="hidden" id="editIdF"> 
             <select id="rd"></select>
             <input type="text" id="fn" placeholder="Nombre de la Persona">
-            <input type="text" id="fl" placeholder="WhatsApp o Email (Link)">
+            <input type="text" id="fl" placeholder="Numero o Correo">
             <button onclick="saveF()">GUARDAR CONTACTO</button>
         </div>
-        <div id="gestion">
-            <div id="listaG"></div>
-        </div>
+        <div id="gestion"><div id="listaG"></div></div>
     </div>
-    
-    <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
 </div>
 
 <script>
-// URL exclusiva para contactos
 const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_contactos";
 const KEY = "1234";
 
@@ -87,45 +88,62 @@ async function load() {
     const v = document.getElementById('visor'), s = document.getElementById('rd'), g = document.getElementById('listaG');
     v.innerHTML = ""; g.innerHTML = ""; s.innerHTML = '<option value="">Seleccionar Grupo...</option>';
     if(!data) return;
+
     Object.keys(data).forEach(idR => {
         const r = data[idR];
         s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
         let fHtml = "";
+
         if(r.archivos) {
             Object.keys(r.archivos).forEach(idF => {
                 const f = r.archivos[idF];
-                // Si pones un número de teléfono, puedes usar "https://wa.me/tunúmero" como link
-                fHtml += `<div class="archivo"><a href="${f.link}" target="_blank">👤 ${f.nombre}</a></div>`;
-                g.innerHTML += `<div class="edit-item"><span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">└ ${f.nombre}</span><button class="btn-x" onclick="delF('${idR}','${idF}')">x</button></div>`;
+                let btns = "";
+                
+                // DETECTOR DE TIPO DE CONTACTO (Número o Email)
+                if(f.link.includes("@")) {
+                    btns = `<a href="mailto:${f.link}" class="btn-c btn-mail">Email</a>`;
+                } else {
+                    const numLimpio = f.link.replace(/\s+/g, '');
+                    btns = `
+                        <a href="https://wa.me/${numLimpio}" target="_blank" class="btn-c btn-wa">WhatsApp</a>
+                        <a href="tel:${numLimpio}" class="btn-c btn-tel">Llamar</a>
+                    `;
+                }
+
+                fHtml += `
+                    <div class="contacto-card">
+                        <div class="c-info"><b>${f.nombre}</b><span>${f.link}</span></div>
+                        <div class="c-links">${btns}</div>
+                    </div>`;
+                
+                g.innerHTML += `<div class="edit-item" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">└ ${f.nombre} (Editar)</div>`;
             });
         }
         v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
-        g.innerHTML += `<div class="edit-item"><b class="clic-edit" onclick="upR('${idR}','${r.nombre}')">📁 ${r.nombre}</b><button class="btn-x" onclick="delR('${idR}')">Borrar</button></div>`;
+        g.innerHTML += `<div class="edit-item"><b onclick="upR('${idR}','${r.nombre}')">📁 GRUPO: ${r.nombre}</b> <span onclick="delR('${idR}')" style="color:red; cursor:pointer;">[X]</span></div>`;
     });
 }
 
-function val() { return prompt("Clave de Admin:") === KEY; }
+function val() { return prompt("Clave:") === KEY; }
 function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
-function upR(id, n) { document.getElementById('editIdR').value = id; document.getElementById('rn').value = n; window.scrollTo(0,document.body.scrollHeight); }
-function upF(idR, idF, n, l) { document.getElementById('rd').value = idR; document.getElementById('editIdF').value = idF; document.getElementById('fn').value = n; document.getElementById('fl').value = l; window.scrollTo(0,document.body.scrollHeight); }
+function upR(id, n) { document.getElementById('editIdR').value = id; document.getElementById('rn').value = n; }
+function upF(idR, idF, n, l) { document.getElementById('rd').value = idR; document.getElementById('editIdF').value = idF; document.getElementById('fn').value = n; document.getElementById('fl').value = l; }
 
 async function saveR() {
     const id = document.getElementById('editIdR').value, n = document.getElementById('rn').value;
     if(!n || !val()) return;
     await fetch(id ? `${URL}/${id}.json` : `${URL}.json`, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n}) });
-    reset(); load();
+    location.reload();
 }
 
 async function saveF() {
     const idR = document.getElementById('rd').value, idF = document.getElementById('editIdF').value, n = document.getElementById('fn').value, l = document.getElementById('fl').value;
     if(!idR || !n || !l || !val()) return;
     await fetch(idF ? `${URL}/${idR}/archivos/${idF}.json` : `${URL}/${idR}/archivos.json`, { method: idF ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
-    reset(); load();
+    location.reload();
 }
 
-function reset() { document.getElementById('editIdR').value = ""; document.getElementById('editIdF').value = ""; document.getElementById('rn').value = ""; document.getElementById('fn').value = ""; document.getElementById('fl').value = ""; }
-async function delR(id) { if(confirm("¿Borrar grupo?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
-async function delF(idR, idF) { if(confirm("¿Borrar contacto?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
+async function delR(id) { if(confirm("¿Borrar?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); location.reload(); } }
 </script>
 </body>
 </html>
