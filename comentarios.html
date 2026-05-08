@@ -2,48 +2,32 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>Comentarios - INCOREA CABLES</title>
+<title>COMENTARIOS - INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
-    .container { margin: 20px 5%; min-height: 400px; }
-    
-    /* ESTILO DE COMENTARIOS INDIVIDUALES */
-    .comentario-box { 
-        background: rgba(255, 255, 255, 0.03); 
-        padding: 15px; 
-        border-radius: 8px; 
-        margin-bottom: 15px; 
-        border-left: 3px solid #1abc9c;
-    }
-    .comentario-texto { font-size: 15px; color: #eee; line-height: 1.4; }
-    .comentario-fecha { font-size: 10px; color: #555; margin-top: 8px; text-transform: uppercase; }
+    .container { margin: 20px 5%; min-height: 300px; }
+    .rama { margin-bottom: 25px; }
+    .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
+    .archivo a { color: #eee; text-decoration: none; font-size: 15px; transition: 0.3s; }
+    .archivo a:hover { color: #1abc9c; padding-left: 5px; }
 
-    /* AREA DE ENVÍO */
-    .enviar-zona { 
-        background: #0a0f14; 
-        padding: 30px 5%; 
-        border-top: 1px solid #1abc9c33; 
-        text-align: center; 
-    }
-    textarea { 
-        width: 100%; max-width: 600px; height: 80px; 
-        background: #111; border: 1px solid #333; 
-        color: white; padding: 12px; border-radius: 6px; 
-        font-family: inherit; margin-bottom: 10px; outline: none;
-    }
-    textarea:focus { border-color: #1abc9c; }
+    /* Panel Admin Discreto */
+    .admin-zona { background: rgba(255, 255, 255, 0.02); padding: 20px 5%; border-top: 1px solid #1a252f; margin-top: 60px; transition: 0.5s; }
+    .admin-zona:hover { background: rgba(255, 255, 255, 0.04); }
+    .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
+    input, select { background: transparent; border: 1px solid #333; color: #888; padding: 6px 10px; border-radius: 4px; font-size: 11px; outline: none; }
+    input:focus { border-color: #1abc9c; color: white; }
+    button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 10px; transition: 0.3s; }
+    button:hover { background: #1abc9c; color: #0e161d; }
     
-    .btn-enviar { 
-        background: #1abc9c; color: #0e161d; border: none; 
-        padding: 10px 25px; border-radius: 4px; font-weight: bold; 
-        cursor: pointer; transition: 0.3s; 
-    }
-    .btn-enviar:hover { background: #16a085; }
-
-    /* ADMIN DISCRETO */
-    .admin-del { color: #e74c3c; font-size: 10px; cursor: pointer; margin-top: 10px; display: inline-block; }
-    .admin-del:hover { text-decoration: underline; }
+    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #222; padding-top: 15px; max-width: 800px; margin: 20px auto; }
+    .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; align-items: center; color: #666; }
+    .clic-edit { cursor: pointer; flex: 1; }
+    .clic-edit:hover { color: #1abc9c; }
+    .btn-x { background: transparent; border: 1px solid #e74c3c; color: #e74c3c; padding: 2px 6px; font-size: 9px; cursor: pointer; }
+    .btn-x:hover { background: #e74c3c; color: white; }
 </style>
 </head>
 
@@ -53,7 +37,7 @@
         <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
         <div id="titulo-container">
             <h1>INCOREA CABLES</h1>
-            <p>Muro de Comentarios</p>
+            <p>Seccion de Comentarios</p>
         </div>
     </div>
 
@@ -65,71 +49,82 @@
         <a href="comentarios.html">COMENTARIOS</a>
     </div>
 
-    <div class="container" id="muro"></div>
+    <div class="container" id="visor"></div>
 
-    <div class="enviar-zona">
-        <textarea id="msg" placeholder="Escribe tu comentario aquí..."></textarea>
-        <br>
-        <button class="btn-enviar" onclick="enviarComentario()">PUBLICAR COMENTARIO</button>
+    <div class="admin-zona">
+        <div class="inputs">
+            <input type="hidden" id="editIdR"> 
+            <input type="text" id="rn" placeholder="Nombre Carpeta de Comentarios">
+            <button onclick="saveR()">GUARDAR CARPETA</button>
+            <button onclick="verG()" style="border-color:#444; color:#666">GESTIONAR</button>
+        </div>
+        <div class="inputs">
+            <input type="hidden" id="editIdF"> 
+            <select id="rd"></select>
+            <input type="text" id="fn" placeholder="Titulo del Comentario">
+            <input type="text" id="fl" placeholder="Link o Referencia">
+            <button onclick="saveF()">GUARDAR ITEM</button>
+        </div>
+        <div id="gestion">
+            <div id="listaG"></div>
+        </div>
     </div>
     
     <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
 </div>
 
 <script>
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/solo_comentarios";
+// URL individual para que no se mezcle con Servicios ni Sugerencias
+const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_comentarios";
 const KEY = "1234";
 
-window.onload = cargarComentarios;
+window.onload = load;
 
-async function cargarComentarios() {
+async function load() {
     const res = await fetch(`${URL}.json`);
     const data = await res.json();
-    const muro = document.getElementById('muro');
-    muro.innerHTML = "";
-
-    if(!data) {
-        muro.innerHTML = "<p style='color:#444; text-align:center;'>No hay comentarios aún. ¡Sé el primero!</p>";
-        return;
-    }
-
-    // Mostrar de más nuevo a más viejo
-    Object.keys(data).reverse().forEach(id => {
-        const c = data[id];
-        muro.innerHTML += `
-            <div class="comentario-box">
-                <div class="comentario-texto">${c.texto}</div>
-                <div class="comentario-fecha">${c.fecha}</div>
-                <span class="admin-del" onclick="borrarComentario('${id}')">[ Eliminar ]</span>
-            </div>
-        `;
+    const v = document.getElementById('visor'), s = document.getElementById('rd'), g = document.getElementById('listaG');
+    v.innerHTML = ""; g.innerHTML = ""; s.innerHTML = '<option value="">Carpeta...</option>';
+    if(!data) return;
+    Object.keys(data).forEach(idR => {
+        const r = data[idR];
+        s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
+        let fHtml = "";
+        if(r.archivos) {
+            Object.keys(r.archivos).forEach(idF => {
+                const f = r.archivos[idF];
+                const dL = f.link.includes("onedrive") ? f.link.split('?')[0].replace("redir", "download") + "?download=1" : f.link;
+                fHtml += `<div class="archivo"><a href="${dL}" target="_blank">📄 ${f.nombre}</a></div>`;
+                g.innerHTML += `<div class="edit-item"><span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">└ ${f.nombre}</span><button class="btn-x" onclick="delF('${idR}','${idF}')">x</button></div>`;
+            });
+        }
+        v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
+        g.innerHTML += `<div class="edit-item"><b class="clic-edit" onclick="upR('${idR}','${r.nombre}')">📁 ${r.nombre}</b><button class="btn-x" onclick="delR('${idR}')">Borrar</button></div>`;
     });
 }
 
-async function enviarComentario() {
-    const txt = document.getElementById('msg').value;
-    if(!txt.trim()) return alert("Escribe algo antes de enviar.");
+function val() { return prompt("Clave:") === KEY; }
+function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
+function upR(id, n) { document.getElementById('editIdR').value = id; document.getElementById('rn').value = n; window.scrollTo(0,document.body.scrollHeight); }
+function upF(idR, idF, n, l) { document.getElementById('rd').value = idR; document.getElementById('editIdF').value = idF; document.getElementById('fn').value = n; document.getElementById('fl').value = l; window.scrollTo(0,document.body.scrollHeight); }
 
-    const nuevoComentario = {
-        texto: txt,
-        fecha: new Date().toLocaleString()
-    };
-
-    await fetch(`${URL}.json`, {
-        method: 'POST',
-        body: JSON.stringify(nuevoComentario)
-    });
-
-    document.getElementById('msg').value = "";
-    cargarComentarios();
+async function saveR() {
+    const id = document.getElementById('editIdR').value, n = document.getElementById('rn').value;
+    if(!n || !val()) return;
+    await fetch(id ? `${URL}/${id}.json` : `${URL}.json`, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n}) });
+    reset(); load();
 }
 
-async function borrarComentario(id) {
-    if(prompt("Clave de administrador:") === KEY) {
-        await fetch(`${URL}/${id}.json`, { method: 'DELETE' });
-        cargarComentarios();
-    }
+async function saveF() {
+    const idR = document.getElementById('rd').value, idF = document.getElementById('editIdF').value, n = document.getElementById('fn').value, l = document.getElementById('fl').value;
+    if(!idR || !n || !l || !val()) return;
+    await fetch(idF ? `${URL}/${idR}/archivos/${idF}.json` : `${URL}/${idR}/archivos.json`, { method: idF ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
+    reset(); load();
 }
+
+function reset() { document.getElementById('editIdR').value = ""; document.getElementById('editIdF').value = ""; document.getElementById('rn').value = ""; document.getElementById('fn').value = ""; document.getElementById('fl').value = ""; }
+async function delR(id) { if(confirm("Borrar?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
+async function delF(idR, idF) { if(confirm("Borrar?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
 </script>
 </body>
 </html>
