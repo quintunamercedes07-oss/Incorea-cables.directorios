@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
@@ -15,7 +15,7 @@
 
     /* Panel Admin Discreto */
     .admin-zona { background: rgba(255, 255, 255, 0.02); padding: 20px 5%; border-top: 1px solid #1a252f; margin-top: 60px; transition: 0.5s; }
-    .admin-zona:hover { background: rgba(255, 255, 255, 0.05); }
+    .admin-zona:hover { background: rgba(255, 255, 255, 0.04); }
     .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
     input, select { background: transparent; border: 1px solid #333; color: #888; padding: 6px 10px; border-radius: 4px; font-size: 11px; outline: none; }
     input:focus { border-color: #1abc9c; color: white; }
@@ -28,7 +28,6 @@
     .clic-edit:hover { color: #1abc9c; }
     .btn-x { background: transparent; border: 1px solid #e74c3c; color: #e74c3c; padding: 2px 6px; font-size: 9px; cursor: pointer; }
     .btn-x:hover { background: #e74c3c; color: white; }
-    .seccion-tag { text-align: center; color: #1abc9c; font-size: 10px; letter-spacing: 2px; margin-bottom: 15px; }
 </style>
 </head>
 
@@ -53,12 +52,11 @@
     <div class="container" id="visor"></div>
 
     <div class="admin-zona">
-        <div class="seccion-tag" id="tag-seccion">ADMINISTRACIÓN</div>
         <div class="inputs">
             <input type="hidden" id="editIdR"> 
             <input type="text" id="rn" placeholder="Nombre Carpeta">
             <button onclick="saveR()">GUARDAR CARPETA</button>
-            <button onclick="verG()" style="border-color:#555; color:#aaa">GESTIONAR</button>
+            <button onclick="verG()" style="border-color:#444; color:#666">GESTIONAR</button>
         </div>
         <div class="inputs">
             <input type="hidden" id="editIdF"> 
@@ -76,7 +74,6 @@
 </div>
 
 <script>
-// DETECTOR AUTOMÁTICO DE SECCIÓN
 const nombreArchivo = window.location.pathname.split("/").pop() || "directorio.html";
 const carpetas = {
     "directorio.html": "dir_db",
@@ -90,7 +87,6 @@ const KEY = "1234";
 
 window.onload = () => {
     document.getElementById('sub-txt').innerText = nombreArchivo.replace(".html","").toUpperCase();
-    document.getElementById('tag-seccion').innerText = "GESTIÓN: " + SECCION.replace("_db","").toUpperCase();
     load();
 };
 
@@ -109,7 +105,7 @@ async function load() {
                 const f = r.archivos[idF];
                 const dL = f.link.includes("onedrive") ? f.link.split('?')[0].replace("redir", "download") + "?download=1" : f.link;
                 fHtml += `<div class="archivo"><a href="${dL}" target="_blank"> ${f.nombre}</a></div>`;
-                g.innerHTML += `<div class="edit-item"><span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">${f.nombre}</span><button class="btn-x" onclick="delF('${idR}','${idF}')">x</button></div>`;
+                g.innerHTML += `<div class="edit-item"><span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">â”” ${f.nombre}</span><button class="btn-x" onclick="delF('${idR}','${idF}')">x</button></div>`;
             });
         }
         v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
@@ -137,8 +133,8 @@ async function saveF() {
 }
 
 function reset() { document.getElementById('editIdR').value = ""; document.getElementById('editIdF').value = ""; document.getElementById('rn').value = ""; document.getElementById('fn').value = ""; document.getElementById('fl').value = ""; }
-async function delR(id) { if(confirm("¿Borrar?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
-async function delF(idR, idF) { if(confirm("¿Borrar?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
+async function delR(id) { if(confirm("Borrar?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
+async function delF(idR, idF) { if(confirm("Borrar?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
 </script>
 </body>
 </html>
