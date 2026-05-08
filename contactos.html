@@ -2,38 +2,99 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>CONTACTOS - INCOREA CABLES</title>
+<title>DIRECTORIO DE CONTACTOS - INCOREA</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
-    .container { margin: 20px 5%; min-height: 300px; }
-    .rama { margin-bottom: 25px; background: rgba(255,255,255,0.02); padding: 15px; border-radius: 8px; }
-    .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 10px; }
+    /* RESET Y ESTILOS GENERALES DIFERENTES */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b1116; color: #ecf0f1; margin: 0; padding: 0; }
+    #wrapper { width: 100%; max-width: 1200px; margin: 0 auto; background: none; }
     
-    /* Diseño de tarjetas de contacto */
-    .contacto-card { 
-        display: flex; justify-content: space-between; align-items: center;
-        padding: 12px; border-bottom: 1px solid #1a252f; 
+    /* Titulo de seccion impactante */
+    .section-header { text-align: center; padding: 40px 0; background: rgba(26, 188, 156, 0.03); border-bottom: 1px solid #1abc9c11; }
+    .section-header h2 { color: #1abc9c; font-size: 28px; text-transform: uppercase; letter-spacing: 3px; margin: 0; }
+    .section-header p { color: #888; font-size: 14px; margin: 5px 0 0 0; }
+
+    /* CONTENEDOR PRINCIPAL DIFERENTE */
+    .contactos-container { padding: 30px; }
+    
+    /* Estilo de Departamento (Grupo) */
+    .depto-block { margin-bottom: 40px; }
+    .depto-title { 
+        color: #eee; font-size: 18px; font-weight: bold; 
+        padding: 10px 0; border-bottom: 2px solid #34495e; 
+        margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
     }
-    .c-info b { font-size: 16px; color: #eee; display: block; }
-    .c-info span { font-size: 13px; color: #888; }
+
+    /* EL NUEVO DISEÑO: PARRILLA DE TARJETAS */
+    .cards-grid { 
+        display: grid; 
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
+        gap: 20px; 
+    }
+
+    /* LA TARJETA DE CONTACTO INDIVIDUAL */
+    .contacto-card { 
+        background: #141d26; 
+        border-radius: 8px; 
+        padding: 20px; 
+        transition: 0.3s ease; 
+        border: 1px solid transparent;
+        display: flex; flex-direction: column; justify-content: space-between;
+    }
+    .contacto-card:hover { 
+        transform: translateY(-5px); 
+        border-color: #1abc9c33; 
+        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    }
     
-    .c-links { display: flex; gap: 8px; }
-    .btn-c { 
-        padding: 6px 12px; border-radius: 4px; font-size: 11px; 
-        text-decoration: none; font-weight: bold; transition: 0.3s;
+    .c-avatar { 
+        width: 50px; height: 50px; background: #1abc9c; 
+        border-radius: 50%; color: #0b1116; font-size: 24px; 
+        font-weight: bold; display: flex; align-items: center; 
+        justify-content: center; margin-bottom: 15px;
+    }
+
+    .c-name { font-size: 17px; font-weight: bold; color: white; margin-bottom: 3px; }
+    .c-data { font-size: 12px; color: #888; margin-bottom: 15px; word-break: break-all; }
+    
+    /* Botones de accion en la tarjeta */
+    .c-actions { display: flex; gap: 8px; border-top: 1px solid #2c3e50; padding-top: 15px; margin-top: auto; }
+    .btn-action { 
+        flex: 1; text-align: center; padding: 8px 0; 
+        border-radius: 4px; text-decoration: none; font-size: 11px; 
+        font-weight: bold; transition: 0.2s;
     }
     .btn-wa { background: #25d366; color: white; }
-    .btn-tel { background: #3498db; color: white; }
-    .btn-mail { background: #f1c40f; color: #000; }
+    .btn-wa:hover { background: #1ebd5a; }
+    
+    .btn-mail { background: #f1c40f; color: #0b1116; }
+    .btn-mail:hover { background: #dbc02d; }
 
-    /* Admin */
-    .admin-zona { background: rgba(255, 255, 255, 0.02); padding: 20px 5%; border-top: 1px solid #1a252f; margin-top: 60px; }
-    .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
-    input, select { background: transparent; border: 1px solid #333; color: #888; padding: 6px 10px; border-radius: 4px; font-size: 11px; outline: none; }
-    button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 10px; }
-    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #222; padding-top: 15px; }
-    .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; color: #666; }
+    .btn-tel { background: rgba(52, 152, 219, 0.1); color: #3498db; border: 1px solid #3498db; }
+    .btn-tel:hover { background: #3498db; color: white; }
+
+    /* --- PANEL ADMIN (Discreto pero funcional) --- */
+    .admin-zona { background: #090e12; padding: 25px 30px; border-top: 1px solid #1abc9c22; margin-top: 50px; text-align: center; }
+    .inputs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; justify-content: center; }
+    
+    input, select { 
+        background: #1a252f; border: 1px solid #2c3e50; color: #ccc; 
+        padding: 8px 12px; border-radius: 4px; font-size: 11px; outline: none; transition: 0.2s;
+    }
+    input:focus, select:focus { border-color: #1abc9c; color: white; }
+
+    button { 
+        background: #1abc9c; border: none; color: #0b1116; 
+        padding: 8px 18px; border-radius: 4px; font-weight: bold; 
+        font-size: 11px; cursor: pointer; transition: 0.3s;
+    }
+    button:hover { background: #16a085; }
+
+    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #2c3e50; padding-top: 15px; }
+    .edit-item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 12px; border-bottom: 1px solid #1a252f; color: #7f8c8d; text-align: left;}
+    .c-edit { cursor: pointer; color: #bdc3c7; flex: 1;}
+    .c-edit:hover { color: #1abc9c; }
+    .b-del { color: #e74c3c; cursor: pointer; margin-left: 10px; }
 </style>
 </head>
 
@@ -43,7 +104,7 @@
         <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
         <div id="titulo-container">
             <h1>INCOREA CABLES</h1>
-            <p>Directorio de Contactos</p>
+            <p>Directorio Digital</p>
         </div>
     </div>
 
@@ -56,28 +117,35 @@
         <a href="contactos.html">CONTACTOS</a>
     </div>
 
-    <div class="container" id="visor"></div>
+    <div class="section-header">
+        <h2>CENTRO DE CONTACTOS</h2>
+        <p>Elija un departamento para comunicarse</p>
+    </div>
+
+    <div class="contactos-container" id="grid_visor"></div>
 
     <div class="admin-zona">
+        <strong style="color: #1abc9c; font-size: 12px; display: block; margin-bottom: 15px;">ADMINISTRAR CONTACTOS (Clave: 1234)</strong>
         <div class="inputs">
             <input type="hidden" id="editIdR"> 
-            <input type="text" id="rn" placeholder="Departamento (Ej: Ventas)">
+            <input type="text" id="rn" placeholder="Nombre Departamento (Ej: Ventas)">
             <button onclick="saveR()">GUARDAR GRUPO</button>
-            <button onclick="verG()" style="border-color:#444; color:#666">GESTIONAR</button>
+            <button onclick="verG()" style="background: #34495e; color: white;">GESTIONAR EDICIÓN</button>
         </div>
         <div class="inputs">
             <input type="hidden" id="editIdF"> 
             <select id="rd"></select>
-            <input type="text" id="fn" placeholder="Nombre de la Persona">
-            <input type="text" id="fl" placeholder="Numero o Correo">
-            <button onclick="saveF()">GUARDAR CONTACTO</button>
+            <input type="text" id="fn" placeholder="Nombre Contacto">
+            <input type="text" id="fl" placeholder="WhatsApp / Email">
+            <button onclick="saveF()">GUARDAR TARJETA</button>
         </div>
         <div id="gestion"><div id="listaG"></div></div>
     </div>
 </div>
 
 <script>
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_contactos";
+// URL individual y separada
+const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_contactos_grid";
 const KEY = "1234";
 
 window.onload = load;
@@ -85,42 +153,51 @@ window.onload = load;
 async function load() {
     const res = await fetch(`${URL}.json`);
     const data = await res.json();
-    const v = document.getElementById('visor'), s = document.getElementById('rd'), g = document.getElementById('listaG');
-    v.innerHTML = ""; g.innerHTML = ""; s.innerHTML = '<option value="">Seleccionar Grupo...</option>';
+    const v = document.getElementById('grid_visor'), s = document.getElementById('rd'), g = document.getElementById('listaG');
+    v.innerHTML = ""; g.innerHTML = ""; s.innerHTML = '<option value="">Carpeta...</option>';
     if(!data) return;
 
     Object.keys(data).forEach(idR => {
         const r = data[idR];
         s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
-        let fHtml = "";
+        let cardsHtml = "";
 
         if(r.archivos) {
             Object.keys(r.archivos).forEach(idF => {
                 const f = r.archivos[idF];
                 let btns = "";
                 
-                // DETECTOR DE TIPO DE CONTACTO (Número o Email)
+                // DETECTOR INTELIGENTE
                 if(f.link.includes("@")) {
-                    btns = `<a href="mailto:${f.link}" class="btn-c btn-mail">Email</a>`;
+                    btns = `<a href="mailto:${f.link}" class="btn-action btn-mail">Email</a>`;
                 } else {
                     const numLimpio = f.link.replace(/\s+/g, '');
                     btns = `
-                        <a href="https://wa.me/${numLimpio}" target="_blank" class="btn-c btn-wa">WhatsApp</a>
-                        <a href="tel:${numLimpio}" class="btn-c btn-tel">Llamar</a>
+                        <a href="tel:${numLimpio}" class="btn-action btn-tel">Llamar</a>
+                        <a href="https://wa.me/${numLimpio}" target="_blank" class="btn-action btn-wa">WhatsApp</a>
                     `;
                 }
 
-                fHtml += `
+                // NUEVO HTML DE TARJETA
+                cardsHtml += `
                     <div class="contacto-card">
-                        <div class="c-info"><b>${f.nombre}</b><span>${f.link}</span></div>
-                        <div class="c-links">${btns}</div>
+                        <div class="c-avatar">${f.nombre.substring(0,1).toUpperCase()}</div>
+                        <div class="c-name">${f.nombre}</div>
+                        <div class="c-data">${f.link}</div>
+                        <div class="c-actions">${btns}</div>
                     </div>`;
                 
-                g.innerHTML += `<div class="edit-item" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">└ ${f.nombre} (Editar)</div>`;
+                g.innerHTML += `<div class="edit-item"><span class="c-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">└ ${f.nombre}</span> <span class="b-del" onclick="delF('${idR}','${idF}')">[x]</span></div>`;
             });
         }
-        v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
-        g.innerHTML += `<div class="edit-item"><b onclick="upR('${idR}','${r.nombre}')">📁 GRUPO: ${r.nombre}</b> <span onclick="delR('${idR}')" style="color:red; cursor:pointer;">[X]</span></div>`;
+        // NUEVO HTML DEL CONTENEDOR (Grupo + Parrilla)
+        v.innerHTML += `
+            <div class="depto-block">
+                <div class="depto-title">${r.nombre}</div>
+                <div class="cards-grid">${cardsHtml || '<p style="color:#555;font-size:12px;">Sin contactos...</p>'}</div>
+            </div>`;
+            
+        g.innerHTML += `<div class="edit-item"><b class="c-edit" onclick="upR('${idR}','${r.nombre}')">📁 GRUPO: ${r.nombre}</b> <span class="b-del" onclick="delR('${idR}')">[Borrar]</span></div>`;
     });
 }
 
@@ -143,7 +220,8 @@ async function saveF() {
     location.reload();
 }
 
-async function delR(id) { if(confirm("¿Borrar?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); location.reload(); } }
+async function delR(id) { if(confirm("¿Borrar grupo y todo su contenido?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); location.reload(); } }
+async function delF(idR, idF) { if(confirm("¿Borrar tarjeta de contacto?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); location.reload(); } }
 </script>
 </body>
 </html>
