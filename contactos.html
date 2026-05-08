@@ -2,111 +2,61 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>DIRECTORIO DE CONTACTOS - INCOREA</title>
+<title>CONTACTO - INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* RESET Y ESTILOS GENERALES DIFERENTES */
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0b1116; color: #ecf0f1; margin: 0; padding: 0; }
-    #wrapper { width: 100%; max-width: 1200px; margin: 0 auto; background: none; }
+    /* COLORES CORPORATIVOS SEGUN TU IMAGEN */
+    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #0a0f14; color: #ffffff; margin: 0; }
     
-    /* Titulo de seccion impactante */
-    .section-header { text-align: center; padding: 40px 0; background: rgba(26, 188, 156, 0.03); border-bottom: 1px solid #1abc9c11; }
-    .section-header h2 { color: #1abc9c; font-size: 28px; text-transform: uppercase; letter-spacing: 3px; margin: 0; }
-    .section-header p { color: #888; font-size: 14px; margin: 5px 0 0 0; }
+    /* ENCABEZADO CON TU ESTILO */
+    .hero-contact {
+        background: linear-gradient(rgba(10, 15, 20, 0.7), rgba(10, 15, 20, 0.7)), url('image_19f99f.jpg');
+        background-size: cover;
+        background-position: center;
+        height: 380px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-bottom: 3px solid #d4af37; /* Línea dorada divisoria */
+    }
+    .hero-contact h1 { font-size: 55px; margin: 0; letter-spacing: 8px; font-weight: bold; color: #ffffff; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
+    .hero-contact p { font-size: 16px; max-width: 600px; line-height: 1.6; color: #d4af37; font-weight: bold; margin-top: 10px; }
 
-    /* CONTENEDOR PRINCIPAL DIFERENTE */
-    .contactos-container { padding: 30px; }
+    /* CONTENEDOR FORMULARIO */
+    .contact-wrapper { display: flex; max-width: 1100px; margin: 60px auto; padding: 0 30px; gap: 60px; }
+    .form-side { flex: 2; }
+    .info-side { flex: 1; border-left: 1px solid #1a252f; padding-left: 40px; }
+
+    .input-group { margin-bottom: 25px; }
+    .input-group label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 10px; color: #d4af37; text-transform: uppercase; letter-spacing: 1px; }
     
-    /* Estilo de Departamento (Grupo) */
-    .depto-block { margin-bottom: 40px; }
-    .depto-title { 
-        color: #eee; font-size: 18px; font-weight: bold; 
-        padding: 10px 0; border-bottom: 2px solid #34495e; 
-        margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px;
+    .input-group input, .input-group textarea { 
+        width: 100%; border: 1px solid #1a252f; background: #141d26; padding: 16px; 
+        box-sizing: border-box; outline: none; transition: 0.3s; color: white; border-radius: 4px;
     }
-
-    /* EL NUEVO DISEÑO: PARRILLA DE TARJETAS */
-    .cards-grid { 
-        display: grid; 
-        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); 
-        gap: 20px; 
-    }
-
-    /* LA TARJETA DE CONTACTO INDIVIDUAL */
-    .contacto-card { 
-        background: #141d26; 
-        border-radius: 8px; 
-        padding: 20px; 
-        transition: 0.3s ease; 
-        border: 1px solid transparent;
-        display: flex; flex-direction: column; justify-content: space-between;
-    }
-    .contacto-card:hover { 
-        transform: translateY(-5px); 
-        border-color: #1abc9c33; 
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
+    .input-group input:focus, .input-group textarea:focus { border-color: #d4af37; background: #1a252f; }
     
-    .c-avatar { 
-        width: 50px; height: 50px; background: #1abc9c; 
-        border-radius: 50%; color: #0b1116; font-size: 24px; 
-        font-weight: bold; display: flex; align-items: center; 
-        justify-content: center; margin-bottom: 15px;
+    .btn-submit { 
+        background: #d4af37; color: #0a0f14; border: none; padding: 18px 50px; 
+        text-transform: uppercase; letter-spacing: 3px; font-weight: bold; cursor: pointer; 
+        transition: 0.4s; width: 100%; border-radius: 4px;
     }
+    .btn-submit:hover { background: #ffffff; transform: translateY(-3px); }
 
-    .c-name { font-size: 17px; font-weight: bold; color: white; margin-bottom: 3px; }
-    .c-data { font-size: 12px; color: #888; margin-bottom: 15px; word-break: break-all; }
+    .info-side h3 { color: #d4af37; font-size: 18px; margin-bottom: 25px; text-transform: uppercase; }
+    .info-side p { margin-bottom: 25px; color: #bdc3c7; line-height: 1.8; font-size: 15px; }
+    .info-side a { color: #ffffff; text-decoration: none; border-bottom: 1px solid #d4af37; padding-bottom: 2px; }
     
-    /* Botones de accion en la tarjeta */
-    .c-actions { display: flex; gap: 8px; border-top: 1px solid #2c3e50; padding-top: 15px; margin-top: auto; }
-    .btn-action { 
-        flex: 1; text-align: center; padding: 8px 0; 
-        border-radius: 4px; text-decoration: none; font-size: 11px; 
-        font-weight: bold; transition: 0.2s;
-    }
-    .btn-wa { background: #25d366; color: white; }
-    .btn-wa:hover { background: #1ebd5a; }
-    
-    .btn-mail { background: #f1c40f; color: #0b1116; }
-    .btn-mail:hover { background: #dbc02d; }
-
-    .btn-tel { background: rgba(52, 152, 219, 0.1); color: #3498db; border: 1px solid #3498db; }
-    .btn-tel:hover { background: #3498db; color: white; }
-
-    /* --- PANEL ADMIN (Discreto pero funcional) --- */
-    .admin-zona { background: #090e12; padding: 25px 30px; border-top: 1px solid #1abc9c22; margin-top: 50px; text-align: center; }
-    .inputs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; justify-content: center; }
-    
-    input, select { 
-        background: #1a252f; border: 1px solid #2c3e50; color: #ccc; 
-        padding: 8px 12px; border-radius: 4px; font-size: 11px; outline: none; transition: 0.2s;
-    }
-    input:focus, select:focus { border-color: #1abc9c; color: white; }
-
-    button { 
-        background: #1abc9c; border: none; color: #0b1116; 
-        padding: 8px 18px; border-radius: 4px; font-weight: bold; 
-        font-size: 11px; cursor: pointer; transition: 0.3s;
-    }
-    button:hover { background: #16a085; }
-
-    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #2c3e50; padding-top: 15px; }
-    .edit-item { display: flex; justify-content: space-between; padding: 8px 0; font-size: 12px; border-bottom: 1px solid #1a252f; color: #7f8c8d; text-align: left;}
-    .c-edit { cursor: pointer; color: #bdc3c7; flex: 1;}
-    .c-edit:hover { color: #1abc9c; }
-    .b-del { color: #e74c3c; cursor: pointer; margin-left: 10px; }
+    /* NAV INTEGRADO */
+    #nav { background: #070a0e; padding: 20px 0; text-align: center; border-bottom: 1px solid #1a252f; }
+    #nav a { color: #ffffff; text-decoration: none; margin: 0 20px; font-size: 13px; letter-spacing: 1px; font-weight: bold; }
+    #nav a:hover { color: #d4af37; }
 </style>
 </head>
 
 <body>
-<div id="wrapper">
-    <div id="header">
-        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
-        <div id="titulo-container">
-            <h1>INCOREA CABLES</h1>
-            <p>Directorio Digital</p>
-        </div>
-    </div>
 
     <div id="nav">
         <a href="index.html">INICIO</a>
@@ -114,114 +64,60 @@
         <a href="servicios.html">SERVICIOS</a>
         <a href="sugerencias.html">SUGERENCIAS</a>
         <a href="comentarios.html">COMENTARIOS</a>
-        <a href="contactos.html">CONTACTOS</a>
+        <a href="contactos.html" style="color:#d4af37">CONTACTO</a>
     </div>
 
-    <div class="section-header">
-        <h2>CENTRO DE CONTACTOS</h2>
-        <p>Elija un departamento para comunicarse</p>
+    <div class="hero-contact">
+        <h1>CONTACTO</h1>
+        <p>Expertos en Soluciones Eléctricas y Cableado Estructural</p>
     </div>
 
-    <div class="contactos-container" id="grid_visor"></div>
-
-    <div class="admin-zona">
-        <strong style="color: #1abc9c; font-size: 12px; display: block; margin-bottom: 15px;">ADMINISTRAR CONTACTOS (Clave: 1234)</strong>
-        <div class="inputs">
-            <input type="hidden" id="editIdR"> 
-            <input type="text" id="rn" placeholder="Nombre Departamento (Ej: Ventas)">
-            <button onclick="saveR()">GUARDAR GRUPO</button>
-            <button onclick="verG()" style="background: #34495e; color: white;">GESTIONAR EDICIÓN</button>
+    <div class="contact-wrapper">
+        <div class="form-side">
+            <div class="input-group">
+                <label>Nombre Completo *</label>
+                <input type="text" id="nombre" placeholder="Ej: Juan Pérez">
+            </div>
+            <div class="input-group">
+                <label>Correo Electrónico *</label>
+                <input type="email" id="email" placeholder="correo@empresa.com">
+            </div>
+            <div class="input-group">
+                <label>Asunto / Empresa</label>
+                <input type="text" id="empresa" placeholder="Nombre de su organización">
+            </div>
+            <div class="input-group">
+                <label>Mensaje *</label>
+                <textarea id="mensaje" rows="5" placeholder="Cuéntenos sobre su proyecto..."></textarea>
+            </div>
+            <button class="btn-submit" onclick="enviarForm()">Enviar Mensaje</button>
         </div>
-        <div class="inputs">
-            <input type="hidden" id="editIdF"> 
-            <select id="rd"></select>
-            <input type="text" id="fn" placeholder="Nombre Contacto">
-            <input type="text" id="fl" placeholder="WhatsApp / Email">
-            <button onclick="saveF()">GUARDAR TARJETA</button>
-        </div>
-        <div id="gestion"><div id="listaG"></div></div>
-    </div>
-</div>
 
-<script>
-// URL individual y separada
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_contactos_grid";
-const KEY = "1234";
-
-window.onload = load;
-
-async function load() {
-    const res = await fetch(`${URL}.json`);
-    const data = await res.json();
-    const v = document.getElementById('grid_visor'), s = document.getElementById('rd'), g = document.getElementById('listaG');
-    v.innerHTML = ""; g.innerHTML = ""; s.innerHTML = '<option value="">Carpeta...</option>';
-    if(!data) return;
-
-    Object.keys(data).forEach(idR => {
-        const r = data[idR];
-        s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
-        let cardsHtml = "";
-
-        if(r.archivos) {
-            Object.keys(r.archivos).forEach(idF => {
-                const f = r.archivos[idF];
-                let btns = "";
-                
-                // DETECTOR INTELIGENTE
-                if(f.link.includes("@")) {
-                    btns = `<a href="mailto:${f.link}" class="btn-action btn-mail">Email</a>`;
-                } else {
-                    const numLimpio = f.link.replace(/\s+/g, '');
-                    btns = `
-                        <a href="tel:${numLimpio}" class="btn-action btn-tel">Llamar</a>
-                        <a href="https://wa.me/${numLimpio}" target="_blank" class="btn-action btn-wa">WhatsApp</a>
-                    `;
-                }
-
-                // NUEVO HTML DE TARJETA
-                cardsHtml += `
-                    <div class="contacto-card">
-                        <div class="c-avatar">${f.nombre.substring(0,1).toUpperCase()}</div>
-                        <div class="c-name">${f.nombre}</div>
-                        <div class="c-data">${f.link}</div>
-                        <div class="c-actions">${btns}</div>
-                    </div>`;
-                
-                g.innerHTML += `<div class="edit-item"><span class="c-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">└ ${f.nombre}</span> <span class="b-del" onclick="delF('${idR}','${idF}')">[x]</span></div>`;
-            });
-        }
-        // NUEVO HTML DEL CONTENEDOR (Grupo + Parrilla)
-        v.innerHTML += `
-            <div class="depto-block">
-                <div class="depto-title">${r.nombre}</div>
-                <div class="cards-grid">${cardsHtml || '<p style="color:#555;font-size:12px;">Sin contactos...</p>'}</div>
-            </div>`;
+        <div class="info-side">
+            <h3>NUESTRAS OFICINAS</h3>
+            <p><strong>Ubicación:</strong><br>Av. Principal, Edificio Incorea<br>Quito, Ecuador</p>
+            <p><a href="#">Ver en Google Maps ></a></p>
             
-        g.innerHTML += `<div class="edit-item"><b class="c-edit" onclick="upR('${idR}','${r.nombre}')">📁 GRUPO: ${r.nombre}</b> <span class="b-del" onclick="delR('${idR}')">[Borrar]</span></div>`;
-    });
-}
+            <h3>ATENCIÓN AL CLIENTE</h3>
+            <p>ventas@incorea.com<br>info@incorea.com<br>+593 99 999 9999</p>
+            
+            <h3>HORARIOS</h3>
+            <p>Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábado: 9:00 AM - 1:00 PM</p>
+        </div>
+    </div>
 
-function val() { return prompt("Clave:") === KEY; }
-function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
-function upR(id, n) { document.getElementById('editIdR').value = id; document.getElementById('rn').value = n; }
-function upF(idR, idF, n, l) { document.getElementById('rd').value = idR; document.getElementById('editIdF').value = idF; document.getElementById('fn').value = n; document.getElementById('fl').value = l; }
+    <script>
+        function enviarForm() {
+            const nom = document.getElementById('nombre').value;
+            const msg = document.getElementById('mensaje').value;
+            if(!nom || !msg) {
+                alert("Por favor complete los campos obligatorios.");
+                return;
+            }
+            alert("Solicitud enviada correctamente. Un asesor de INCOREA se contactará con usted.");
+            location.reload();
+        }
+    </script>
 
-async function saveR() {
-    const id = document.getElementById('editIdR').value, n = document.getElementById('rn').value;
-    if(!n || !val()) return;
-    await fetch(id ? `${URL}/${id}.json` : `${URL}.json`, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n}) });
-    location.reload();
-}
-
-async function saveF() {
-    const idR = document.getElementById('rd').value, idF = document.getElementById('editIdF').value, n = document.getElementById('fn').value, l = document.getElementById('fl').value;
-    if(!idR || !n || !l || !val()) return;
-    await fetch(idF ? `${URL}/${idR}/archivos/${idF}.json` : `${URL}/${idR}/archivos.json`, { method: idF ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
-    location.reload();
-}
-
-async function delR(id) { if(confirm("¿Borrar grupo y todo su contenido?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); location.reload(); } }
-async function delF(idR, idF) { if(confirm("¿Borrar tarjeta de contacto?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); location.reload(); } }
-</script>
 </body>
 </html>
