@@ -109,23 +109,20 @@
     <div id="comentarios-container" style="padding: 60px 5%;">
         <div class="comentarios-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #1c2b3a; padding-bottom: 20px;">
             <h2 style="color: #ffffff; letter-spacing: 1px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 28px;">BANDEJA DE CONTROL</h2>
-            <button onclick="borrarHistorial()" class="btn-borrar">ELIMINAR</button>
+            <button onclick="borrarHistorial()" class="btn-borrar">LIMPIAR REGISTROS</button>
         </div>
 
         <div class="tabla-wrapper" style="background: rgba(44, 62, 80, 0.2); backdrop-filter: blur(12px); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
             <table class="tabla-gestion">
                 <thead>
                     <tr>
-                        <th>脕REA </th>
-                        <th>DETALLE </th>
+                        <th>罵EA / REMITENTE</th>
+                        <th>DETALLE OPERATIVO</th>
                         <th>ESTADO</th>
-                        <th style="width: 150px; text-align: center;">ACCI脫N</th>
+                        <th style="width: 150px; text-align: center;">ACCI覰</th>
                     </tr>
                 </thead>
                 <tbody id="tabla-body">
-                    <tr>
-                        <td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">Cargando registros desde el servidor remoto...</td>
-                    </tr>
                 </tbody>
             </table>
         </div>
@@ -133,116 +130,70 @@
 
     <script>
         const CLAVE_ADMIN_COMENTARIOS = "12345";
-        const FIREBASE_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea.json";
 
-        // Objeto global para almacenar los comentarios estructurados por su ID de Firebase
-        let comentariosGlobales = {};
-
-        // CARGAR COMENTARIOS DESDE FIREBASE
         function cargarComentariosDinamicos() {
+            const datos = localStorage.getItem('datosIncorea');
+            let lista = JSON.parse(datos) || [];
             const cuerpoTabla = document.getElementById('tabla-body');    
             if (!cuerpoTabla) return;
-
-            fetch(FIREBASE_URL)
-                .then(response => response.json())
-                .then(data => {
-                    cuerpoTabla.innerHTML = '';
-                    
-                    // Si no hay datos (null), mostrar que la bandeja est谩 vac铆a
-                    if (!data) {
-                        cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
-                        return;    
-                    }
-
-                    comentariosGlobales = data;
-
-                    // Convertir el objeto de Firebase en una lista y procesarla
-                    Object.keys(data).forEach((idFirebase) => {
-                        const item = data[idFirebase];
-                        let fila = document.createElement('tr');
-                        fila.className = 'fila-dinamica';
-                        
-                        const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
-                        
-                        // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir
-                        let archivoBuscado = item.area;
-                        if (item.area && item.area.includes(']')) {
-                            archivoBuscado = item.area.split(']')[1].trim();
-                        }
-
-                        fila.innerHTML = `
-                            <td>
-                                <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area || 'Sin 脕rea'}</strong><br>
-                                <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario || 'An贸nimo'}</small>
-                            </td>
-                            <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje || ''}"</td>
-                            <td><span class="badge ${claseBadge}">${item.estado || 'RECIBIDO'}</span></td>
-                            <td style="text-align: center;">
-                                <button onclick="marcarYRedirigir('${idFirebase}', '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
-                                     VER TARJETA
-                                </button>
-                            </td>
-                        `;
-                        cuerpoTabla.appendChild(fila);
-                    });
-                })
-                .catch(error => {
-                    console.error("Error al conectar con Firebase:", error);
-                    cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #e74c3c; font-style: italic; font-size: 14px;">Error de conexi贸n con el servidor. Por favor, verifica tu conexi贸n a internet.</td></tr>';
-                });
-        }
-
-        // MARCAR REGISTRO COMO VISTO EN FIREBASE Y LUEGO REDIRIGIR
-        function marcarYRedirigir(idFirebase, documentoCodificado) {
-            const urlUpdate = `https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea/${idFirebase}.json`;
-
-            // Enviar actualizaci贸n de estado ("VISTO") a Firebase
-            fetch(urlUpdate, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ estado: "VISTO" })
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Redirigir a directorio pasando el nombre espec铆fico del archivo para resaltar
-                    window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
-                } else {
-                    alert("Error al actualizar el estado de la sugerencia.");
+            cuerpoTabla.innerHTML = '';
+            
+            if (lista.length === 0) {
+                cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
+                return;    
+            }
+            
+            lista.forEach((item, index) => {
+                let fila = document.createElement('tr');
+                fila.className = 'fila-dinamica';
+                
+                const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
+                
+                // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir con precisi髇
+                let archivoBuscado = item.area;
+                if (item.area.includes(']')) {
+                    archivoBuscado = item.area.split(']')[1].trim();
                 }
-            })
-            .catch(error => {
-                console.error("Error en la petici贸n PATCH:", error);
-                // Si falla la red, redirigimos de todas formas
-                window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
+
+                fila.innerHTML = `
+                    <td>
+                        <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
+                        <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
+                    </td>
+                    <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
+                    <td><span class="badge ${claseBadge}">${item.estado}</span></td>
+                    <td style="text-align: center;">
+                        <button onclick="marcarYRedirigir(${index}, '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
+                             VER TARJETA
+                        </button>
+                    </td>
+                `;
+                cuerpoTabla.appendChild(fila);
             });
         }
 
-        // ELIMINAR TODO EL HISTORIAL DE COMENTARIOS EN FIREBASE
+        function marcarYRedirigir(index, documentoCodificado) {
+            const datos = localStorage.getItem('datosIncorea');
+            let lista = JSON.parse(datos) || [];
+            
+            // Cambiar estado a VISTO
+            lista[index].estado = 'VISTO'; 
+            localStorage.setItem('datosIncorea', JSON.stringify(lista));
+            
+            // Redirigir a directorio pasando el nombre espec韋ico del archivo para resaltar
+            window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
+        }
+
         function borrarHistorial() {
             const password = prompt("Ingresa la clave de administrador para limpiar la bandeja:");
             if (password === CLAVE_ADMIN_COMENTARIOS) {
-                if (confirm('驴Confirmas que deseas vaciar todos los registros del sistema? Esto eliminar谩 permanentemente los datos en Firebase.')) {
-                    
-                    fetch(FIREBASE_URL, {
-                        method: "DELETE"
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            alert("Bandeja vaciada correctamente en el servidor.");
-                            cargarComentariosDinamicos(); 
-                        } else {
-                            alert("No se pudo vaciar la bandeja en el servidor.");
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error al borrar registros:", error);
-                        alert("Error de conexi贸n al intentar vaciar la bandeja.");
-                    });
+                if (confirm('緾onfirmas que deseas vaciar todos los registros del sistema?')) {
+                    localStorage.removeItem('datosIncorea');
+                    cargarComentariosDinamicos(); 
+                    alert("Bandeja vaciada correctamente.");
                 }
             } else {
-                alert("Clave incorrecta. Acci贸n cancelada.");
+                alert("Clave incorrecta. Acci髇 cancelada.");
             }
         }
         

@@ -2,223 +2,143 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>INCOREA CABLES-sugerencias</title>
+<title>INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
+<style>
+    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
+    .container { margin: 20px 5%; min-height: 300px; }
+    .rama { margin-bottom: 25px; }
+    .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; text-transform: uppercase; }
+    .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
+    .archivo a { color: #eee; text-decoration: none; font-size: 15px; transition: 0.3s; }
+    .archivo a:hover { color: #1abc9c; padding-left: 5px; }
+
+    /* Panel Admin Discreto */
+    .admin-zona { background: rgba(255, 255, 255, 0.02); padding: 20px 5%; border-top: 1px solid #1a252f; margin-top: 60px; transition: 0.5s; }
+    .admin-zona:hover { background: rgba(255, 255, 255, 0.05); }
+    .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
+    input, select { background: transparent; border: 1px solid #333; color: #888; padding: 6px 10px; border-radius: 4px; font-size: 11px; outline: none; }
+    input:focus { border-color: #1abc9c; color: white; }
+    button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 6px 12px; cursor: pointer; border-radius: 4px; font-size: 10px; transition: 0.3s; }
+    button:hover { background: #1abc9c; color: #0e161d; }
+    
+    #gestion { display: none; margin-top: 20px; border-top: 1px dashed #222; padding-top: 15px; max-width: 800px; margin: 20px auto; }
+    .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; align-items: center; color: #666; }
+    .clic-edit { cursor: pointer; flex: 1; }
+    .clic-edit:hover { color: #1abc9c; }
+    .btn-x { background: transparent; border: 1px solid #e74c3c; color: #e74c3c; padding: 2px 6px; font-size: 9px; cursor: pointer; }
+    .btn-x:hover { background: #e74c3c; color: white; }
+    .seccion-tag { text-align: center; color: #1abc9c; font-size: 10px; letter-spacing: 2px; margin-bottom: 15px; }
+</style>
 </head>
+
 <body>
-    <div id="wrapper">
+<div id="wrapper">
     <div id="header">
-    <div id="logo-container">
-    <img src="logo de la empresa.png" id="logo-imagen" alt="Logo">
+        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
+        <div id="titulo-container">
+            <h1>INCOREA CABLES</h1>
+            <p id="sub-txt">Cargando...</p>
+        </div>
     </div>
-    <div id="titulo-container">
-    <h1 class="titulo-animado-brillo">MEJORA TUS DIRECTORIOS</h1>
-    <p>Estamos para ayudarte</p>
-    </div>
-    </div>
+
     <div id="nav">
-    <a href="index.html">INICIO</a>
-    <a href="directorio.html">DIRECTORIO</a>
-    <a href="servicios.html">SERVICIOS</a>
-    <a href="sugerencias.html">SUGERENCIAS</a>
-    <a href="comentarios.html">COMENTARIO</a>
+        <a href="index.html">INICIO</a>
+        <a href="directorio.html">DIRECTORIO</a>
+        <a href="servicios.html">SERVICIOS</a>
+        <a href="sugerencias.html">SUGERENCIAS</a>
+        <a href="comentarios.html">COMENTARIOS</a>
     </div>
-    <div id="main-container" style="padding: 40px 5%; overflow: hidden;">
-    <div id="content" style="width:55%; float:left; padding:20px; text-align: left;">
-    <h2 class="titulo-seccion" style="color: #1abc9c;">SUGERENCIAS Y MEJORAS</h2>
-    <p style="margin-bottom: 20px;">¿Cómo podemos mejorar nuestros directorios? Déjanos tus comentarios aquí.</p>
+
+    <div class="container" id="visor"></div>
+
+    <div class="admin-zona">
+        <div class="seccion-tag" id="tag-seccion">ADMINISTRACI�N</div>
+        <div class="inputs">
+            <input type="hidden" id="editIdR"> 
+            <input type="text" id="rn" placeholder="Nombre Carpeta">
+            <button onclick="saveR()">GUARDAR CARPETA</button>
+            <button onclick="verG()" style="border-color:#555; color:#aaa">GESTIONAR</button>
+        </div>
+        <div class="inputs">
+            <input type="hidden" id="editIdF"> 
+            <select id="rd"></select>
+            <input type="text" id="fn" placeholder="Nombre Item">
+            <input type="text" id="fl" placeholder="Link OneDrive / URL">
+            <button onclick="saveF()">GUARDAR ITEM</button>
+        </div>
+        <div id="gestion">
+            <div id="listaG"></div>
+        </div>
+    </div>
     
-    <form action="#" method="post" id="form-contacto">
-    <label style="font-weight: bold; color: #1abc9c;">Nombre del Usuario / Área:</label><br>
-    <input type="text" name="nombre" class="input-estilo" placeholder="Ej: Operaciones - Planta 1" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white;">
-    <br><br>
-    
-    <label style="font-weight: bold; color: #1abc9c;">1. Selecciona la Carpeta:</label><br>
-    <select id="select-carpetas" onchange="cargarDocumentosDeCarpeta()" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white; cursor: pointer;">
-        <option value=""> Cargando carpetas desde el servidor... </option>
-    </select>
-    <br><br>
+    <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
+</div>
 
-    <label style="font-weight: bold; color: #1abc9c;">2. Selecciona el Documento Link:</label><br>
-    <select name="directorio" id="select-directorios" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white; cursor: pointer;" disabled>
-        <option value=""> Primero selecciona una carpeta </option>
-    </select>
-    <br><br>
+<script>
+// DETECTOR AUTOM�TICO DE SECCI�N
+const nombreArchivo = window.location.pathname.split("/").pop() || "directorio.html";
+const carpetas = {
+    "directorio.html": "dir_db",
+    "sugerencias.html": "sug_db",
+    "comentarios.html": "com_db",
+    "servicios.html": "serv_db"
+};
+const SECCION = carpetas[nombreArchivo] || "general_db";
+const URL = `https://httpsincorea-cables-default-rtdb.firebaseio.com/${SECCION}`;
+const KEY = "1234";
 
-    <label style="font-weight: bold; color: #1abc9c;">Comentario:</label><br>
-    <textarea name="mensaje" class="input-estilo" placeholder="Describe qué mejorarías en la hoja de cálculo..." style="width: 100%; height:150px; padding: 10px; margin: 10px 0; border-radius: 5px; border: 1px solid #34495e; background: #2c3e50; color: white; resize: none;"></textarea>
-    <br><br>
-    
-    <input type="submit" value="REGISTRAR COMENTARIO" class="btn-brillante" style="border: none; cursor: pointer; width: 100%;">
-    </form>
-    </div>
+window.onload = () => {
+    document.getElementById('sub-txt').innerText = nombreArchivo.replace(".html","").toUpperCase();
+    document.getElementById('tag-seccion').innerText = "GESTI�N: " + SECCION.replace("_db","").toUpperCase();
+    load();
+};
 
-    <div id="sidebar" style="width:35%; float:right; padding:20px; background: #2c3e50; border-radius: 20px; text-align: left; box-shadow: 0 10px 25px rgba(0,0,0,0.4);">
-    <h3 class="titulo-sidebar" style="color: #1abc9c; margin-top: 0;">CONTROL INTERNO</h3>
-    <p style="font-size: 13px; color: #bdc3c7;">Este espacio es para optimizar la eficiencia de nuestros sistemas operativos.</p>
-    <div style="margin: 20px 0; border-left: 3px solid #1abc9c; padding-left: 15px;">
-    <strong style="color: #ffffff;">Propósito:</strong><br>
-    <span style="font-size: 13px; color: #bdc3c7;">Recopilar feedback técnico para actualizar las macros y funciones de las hojas de cálculo.</span>
-    </div>
-    <div style="margin: 20px 0; border-left: 3px solid #1abc9c; padding-left: 15px;">
-    <strong style="color: #ffffff;">Frecuencia de Actualización:</strong><br>
-    <span style="font-size: 13px; color: #bdc3c7;">Las sugerencias se revisan cada viernes al cierre de turno.</span>
-    </div>
-    <hr style="border: 0; border-top: 1px solid #34495e; margin: 20px 0;">
-    <div style="text-align: center;">          
-    <p style="font-size: 11px; color: #1abc9c; font-style: italic;">"Calidad y precisión en cada registro operativo"</p>
-    </div>
-    </div>
-    </div>
-
-    <script>
-    const FIREBASE_CARPETAS_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaCarpetas.json";
-    const FIREBASE_COMENTARIOS_URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/datosIncorea.json";
-
-    window.onload = function() {
-        obtenerCarpetasServidor();
-    };
-
-    // Sincronizar y cargar las carpetas reales activas desde la base de datos
-    async function obtenerCarpetasServidor() {
-        const selectCarpetas = document.getElementById('select-carpetas');
-        try {
-            const respuesta = await fetch(FIREBASE_CARPETAS_URL);
-            const datos = await respuesta.json();
-            
-            let sistemaCarpetas = [];
-            if (datos) {
-                sistemaCarpetas = Object.keys(datos).map(key => ({
-                    idFirebase: key,
-                    nombre: datos[key].nombre,
-                    archivos: datos[key].archivos || []
-                }));
-            }
-
-            // Guardamos localmente para alimentar el selector
-            localStorage.setItem('sistemaCarpetas', JSON.stringify(sistemaCarpetas));
-            cargarCarpetas(sistemaCarpetas);
-
-        } catch (error) {
-            console.error("Error cargando carpetas del servidor:", error);
-            // Respaldo local si no hay internet
-            const sistemaCarpetasLocales = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
-            cargarCarpetas(sistemaCarpetasLocales);
-        }
-    }
-
-    function cargarCarpetas(sistemaCarpetas) {
-        const selectCarpetas = document.getElementById('select-carpetas');
-        selectCarpetas.innerHTML = '<option value="">-- Selecciona una Carpeta --</option>';
-
-        if (sistemaCarpetas.length === 0) {
-            selectCarpetas.innerHTML = '<option value="">No hay carpetas creadas en el servidor</option>';
-            return;
-        }
-
-        sistemaCarpetas.forEach((carpeta, index) => {
-            let option = document.createElement('option');
-            option.value = index;
-            option.text = carpeta.nombre;
-            selectCarpetas.appendChild(option);
-        });
-    }
-
-    // Cargar documentos del dropdown secundario basándose en la carpeta seleccionada
-    function cargarDocumentosDeCarpeta() {
-        const selectCarpetas = document.getElementById('select-carpetas');
-        const selectDocs = document.getElementById('select-directorios');
-        const sistemaCarpetas = JSON.parse(localStorage.getItem('sistemaCarpetas')) || [];
-        
-        const indexCarpeta = selectCarpetas.value;
-
-        selectDocs.innerHTML = "";
-
-        if (indexCarpeta === "") {
-            selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
-            selectDocs.disabled = true;
-            return;
-        }
-
-        const carpetaSeleccionada = sistemaCarpetas[indexCarpeta];
-
-        if (!carpetaSeleccionada.archivos || carpetaSeleccionada.archivos.length === 0) {
-            selectDocs.innerHTML = '<option value="">Esta carpeta no contiene archivos</option>';
-            selectDocs.disabled = true;
-            return;
-        }
-
-        selectDocs.disabled = false;
-        carpetaSeleccionada.archivos.forEach((doc) => {
-            let option = document.createElement('option');
-            option.value = doc.nombre;
-            option.text = doc.nombre;
-            selectDocs.appendChild(option);
-        });
-    }
-
-    // Registrar la sugerencia directamente en la Base de Datos Firebase
-    document.getElementById('form-contacto').onsubmit = async function(e) {
-        e.preventDefault();
-        
-        const selectCarpetas = document.getElementById('select-carpetas');
-        const selectDocs = document.getElementById('select-directorios');
-        const nombreUsuario = this.nombre.value.trim();
-        const mensaje = this.mensaje.value.trim();
-
-        if (selectCarpetas.selectedIndex === 0 || selectCarpetas.value === "") {
-            return alert("Por favor, selecciona una carpeta.");
-        }
-        if (selectDocs.disabled || selectDocs.value === "") {
-            return alert("Por favor, selecciona un documento.");
-        }
-        if (!nombreUsuario || !mensaje) {
-            return alert("Por favor, completa tu nombre y el detalle de la mejora.");
-        }
-
-        const nombreCarpeta = selectCarpetas.options[selectCarpetas.selectedIndex].text;
-        const nombreDocumento = selectDocs.value;
-
-        // Creamos la etiqueta de ruta: "[Carpeta] Documento"
-        const rutaCompleta = `[${nombreCarpeta}] ${nombreDocumento}`;
-
-        const nuevoComentario = {
-            usuario: nombreUsuario,
-            area: rutaCompleta, 
-            mensaje: mensaje,
-            estado: 'RECIBIDO'
-        };
-
-        try {
-            // Guardar directamente en la base de datos de comentarios
-            const respuesta = await fetch(FIREBASE_COMENTARIOS_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(nuevoComentario)
+async function load() {
+    const res = await fetch(`${URL}.json`);
+    const data = await res.json();
+    const v = document.getElementById('visor'), s = document.getElementById('rd'), g = document.getElementById('listaG');
+    v.innerHTML = ""; g.innerHTML = ""; s.innerHTML = '<option value="">Carpeta...</option>';
+    if(!data) return;
+    Object.keys(data).forEach(idR => {
+        const r = data[idR];
+        s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
+        let fHtml = "";
+        if(r.archivos) {
+            Object.keys(r.archivos).forEach(idF => {
+                const f = r.archivos[idF];
+                const dL = f.link.includes("onedrive") ? f.link.split('?')[0].replace("redir", "download") + "?download=1" : f.link;
+                fHtml += `<div class="archivo"><a href="${dL}" target="_blank"> ${f.nombre}</a></div>`;
+                g.innerHTML += `<div class="edit-item"><span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">${f.nombre}</span><button class="btn-x" onclick="delF('${idR}','${idF}')">x</button></div>`;
             });
-
-            if (respuesta.ok) {
-                alert('¡Sugerencia registrada exitosamente en el sistema de control para: ' + nombreDocumento + '!');
-                this.reset();
-                
-                // Resetear selectores tras guardar
-                selectDocs.innerHTML = '<option value="">-- Primero selecciona una carpeta --</option>';
-                selectDocs.disabled = true;
-            } else {
-                throw new Error("No se pudo escribir en la base de datos.");
-            }
-
-        } catch (error) {
-            console.error("Error al registrar sugerencia:", error);
-            alert("No se pudo enviar la sugerencia al servidor. Verifica tu conexión de red.");
         }
-    };
-    </script>
+        v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
+        g.innerHTML += `<div class="edit-item"><b class="clic-edit" onclick="upR('${idR}','${r.nombre}')"> ${r.nombre}</b><button class="btn-x" onclick="delR('${idR}')">Borrar</button></div>`;
+    });
+}
 
-    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
-    <p>INCOREA-CABLES</p>
-    </div>
-    </div>
+function val() { return prompt("Clave:") === KEY; }
+function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
+function upR(id, n) { document.getElementById('editIdR').value = id; document.getElementById('rn').value = n; window.scrollTo(0,document.body.scrollHeight); }
+function upF(idR, idF, n, l) { document.getElementById('rd').value = idR; document.getElementById('editIdF').value = idF; document.getElementById('fn').value = n; document.getElementById('fl').value = l; window.scrollTo(0,document.body.scrollHeight); }
+
+async function saveR() {
+    const id = document.getElementById('editIdR').value, n = document.getElementById('rn').value;
+    if(!n || !val()) return;
+    await fetch(id ? `${URL}/${id}.json` : `${URL}.json`, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n}) });
+    reset(); load();
+}
+
+async function saveF() {
+    const idR = document.getElementById('rd').value, idF = document.getElementById('editIdF').value, n = document.getElementById('fn').value, l = document.getElementById('fl').value;
+    if(!idR || !n || !l || !val()) return;
+    await fetch(idF ? `${URL}/${idR}/archivos/${idF}.json` : `${URL}/${idR}/archivos.json`, { method: idF ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
+    reset(); load();
+}
+
+function reset() { document.getElementById('editIdR').value = ""; document.getElementById('editIdF').value = ""; document.getElementById('rn').value = ""; document.getElementById('fn').value = ""; document.getElementById('fl').value = ""; }
+async function delR(id) { if(confirm("�Borrar?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
+async function delF(idR, idF) { if(confirm("�Borrar?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
+</script>
 </body>
 </html>
-
