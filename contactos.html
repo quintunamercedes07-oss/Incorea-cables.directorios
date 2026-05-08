@@ -4,15 +4,16 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>CONTACTOS - INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
     
-    /* ESTILO DEL FORMULARIO PARA EL MEDIO */
+    /* EL MEDIO: FORMULARIO + REDES */
     .contacto-wrapper { 
         display: flex; 
         max-width: 1000px; 
         margin: 40px auto; 
-        padding: 20px; 
+        padding: 30px; 
         gap: 50px;
         background: rgba(255,255,255,0.02);
         border-radius: 8px;
@@ -20,6 +21,7 @@
     .form-side { flex: 2; }
     .info-side { flex: 1; border-left: 1px solid #1abc9c33; padding-left: 30px; }
 
+    /* Estilo Inputs */
     .input-group { margin-bottom: 20px; }
     .input-group label { display: block; font-size: 11px; color: #1abc9c; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
     .input-group input, .input-group textarea { 
@@ -29,13 +31,20 @@
     .input-group input:focus, .input-group textarea:focus { border-color: #1abc9c; }
     
     .btn-submit { 
-        background: #1abc9c; color: #0e161d; border: none; padding: 12px 30px; 
-        text-transform: uppercase; font-weight: bold; cursor: pointer; border-radius: 4px;
+        background: #1abc9c; color: #0e161d; border: none; padding: 15px 30px; 
+        text-transform: uppercase; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;
     }
     .btn-submit:hover { background: #16a085; }
 
+    /* Redes Sociales e Info */
     .info-side h3 { color: #1abc9c; font-size: 16px; margin-bottom: 15px; }
-    .info-side p { font-size: 14px; color: #aaa; line-height: 1.6; margin-bottom: 20px; }
+    .info-side p { font-size: 14px; color: #aaa; line-height: 1.6; margin-bottom: 25px; }
+    
+    .social-icons { display: flex; gap: 15px; margin-top: 10px; }
+    .social-icons a { 
+        color: white; font-size: 24px; text-decoration: none; transition: 0.3s; 
+    }
+    .social-icons a:hover { color: #1abc9c; transform: translateY(-3px); }
 </style>
 </head>
 
@@ -61,11 +70,11 @@
     <div class="contacto-wrapper">
         <div class="form-side">
             <div class="input-group">
-                <label>Nombre *</label>
+                <label>Nombre Completo *</label>
                 <input type="text" id="nom">
             </div>
             <div class="input-group">
-                <label>Email *</label>
+                <label>Correo Electrónico *</label>
                 <input type="email" id="eml">
             </div>
             <div class="input-group">
@@ -76,15 +85,23 @@
                 <label>Mensaje *</label>
                 <textarea id="msg" rows="5"></textarea>
             </div>
-            <button class="btn-submit" onclick="enviar()">ENVIAR MENSAJE</button>
+            <button class="btn-submit" onclick="enviar()">Enviar Mensaje</button>
         </div>
 
         <div class="info-side">
-            <h3>INCOREA CABLES</h3>
-            <p>Dirección:<br>Quito, Ecuador</p>
+            <h3>NUESTRA UBICACIÓN</h3>
+            <p>Quito, Ecuador<br>Edificio Incorea Cables</p>
             
-            <h3>NEGOCIOS</h3>
-            <p>ventas@incorea.com<br>+593 99 999 9999</p>
+            <h3>SÍGUENOS</h3>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/incoreacablesec/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.instagram.com/incoreacables/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@incoreacables/" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+              
+            </div>
+
+            <h3 style="margin-top:30px;">TELÉFONO</h3>
+            <p>+593 99 999 9999<br>info@incorea.com</p>
         </div>
     </div>
     
@@ -93,7 +110,9 @@
 
 <script>
     function enviar() {
-        alert("Mensaje enviado. Nos pondremos en contacto pronto.");
+        const n = document.getElementById('nom').value;
+        if(!n) return alert("Completa el formulario.");
+        alert("¡Gracias " + n + "! Hemos recibido tu mensaje.");
         location.reload();
     }
 </script>
