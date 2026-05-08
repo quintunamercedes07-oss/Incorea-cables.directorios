@@ -2,61 +2,52 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>CONTACTO - INCOREA CABLES</title>
+<title>CONTACTOS - INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* COLORES CORPORATIVOS SEGUN TU IMAGEN */
-    body { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; background: #0a0f14; color: #ffffff; margin: 0; }
+    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
     
-    /* ENCABEZADO CON TU ESTILO */
-    .hero-contact {
-        background: linear-gradient(rgba(10, 15, 20, 0.7), rgba(10, 15, 20, 0.7)), url('image_19f99f.jpg');
-        background-size: cover;
-        background-position: center;
-        height: 380px;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        border-bottom: 3px solid #d4af37; /* Línea dorada divisoria */
+    /* ESTILO DEL FORMULARIO PARA EL MEDIO */
+    .contacto-wrapper { 
+        display: flex; 
+        max-width: 1000px; 
+        margin: 40px auto; 
+        padding: 20px; 
+        gap: 50px;
+        background: rgba(255,255,255,0.02);
+        border-radius: 8px;
     }
-    .hero-contact h1 { font-size: 55px; margin: 0; letter-spacing: 8px; font-weight: bold; color: #ffffff; text-shadow: 2px 2px 10px rgba(0,0,0,0.5); }
-    .hero-contact p { font-size: 16px; max-width: 600px; line-height: 1.6; color: #d4af37; font-weight: bold; margin-top: 10px; }
-
-    /* CONTENEDOR FORMULARIO */
-    .contact-wrapper { display: flex; max-width: 1100px; margin: 60px auto; padding: 0 30px; gap: 60px; }
     .form-side { flex: 2; }
-    .info-side { flex: 1; border-left: 1px solid #1a252f; padding-left: 40px; }
+    .info-side { flex: 1; border-left: 1px solid #1abc9c33; padding-left: 30px; }
 
-    .input-group { margin-bottom: 25px; }
-    .input-group label { display: block; font-size: 11px; font-weight: bold; margin-bottom: 10px; color: #d4af37; text-transform: uppercase; letter-spacing: 1px; }
-    
+    .input-group { margin-bottom: 20px; }
+    .input-group label { display: block; font-size: 11px; color: #1abc9c; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
     .input-group input, .input-group textarea { 
-        width: 100%; border: 1px solid #1a252f; background: #141d26; padding: 16px; 
-        box-sizing: border-box; outline: none; transition: 0.3s; color: white; border-radius: 4px;
+        width: 100%; border: 1px solid #333; background: #0a0f14; padding: 12px; 
+        box-sizing: border-box; outline: none; color: white; border-radius: 4px;
     }
-    .input-group input:focus, .input-group textarea:focus { border-color: #d4af37; background: #1a252f; }
+    .input-group input:focus, .input-group textarea:focus { border-color: #1abc9c; }
     
     .btn-submit { 
-        background: #d4af37; color: #0a0f14; border: none; padding: 18px 50px; 
-        text-transform: uppercase; letter-spacing: 3px; font-weight: bold; cursor: pointer; 
-        transition: 0.4s; width: 100%; border-radius: 4px;
+        background: #1abc9c; color: #0e161d; border: none; padding: 12px 30px; 
+        text-transform: uppercase; font-weight: bold; cursor: pointer; border-radius: 4px;
     }
-    .btn-submit:hover { background: #ffffff; transform: translateY(-3px); }
+    .btn-submit:hover { background: #16a085; }
 
-    .info-side h3 { color: #d4af37; font-size: 18px; margin-bottom: 25px; text-transform: uppercase; }
-    .info-side p { margin-bottom: 25px; color: #bdc3c7; line-height: 1.8; font-size: 15px; }
-    .info-side a { color: #ffffff; text-decoration: none; border-bottom: 1px solid #d4af37; padding-bottom: 2px; }
-    
-    /* NAV INTEGRADO */
-    #nav { background: #070a0e; padding: 20px 0; text-align: center; border-bottom: 1px solid #1a252f; }
-    #nav a { color: #ffffff; text-decoration: none; margin: 0 20px; font-size: 13px; letter-spacing: 1px; font-weight: bold; }
-    #nav a:hover { color: #d4af37; }
+    .info-side h3 { color: #1abc9c; font-size: 16px; margin-bottom: 15px; }
+    .info-side p { font-size: 14px; color: #aaa; line-height: 1.6; margin-bottom: 20px; }
 </style>
 </head>
 
 <body>
+<div id="wrapper">
+    <div id="header">
+        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
+        <div id="titulo-container">
+            <h1>INCOREA CABLES</h1>
+            <p id="sub-txt">CONTACTOS</p>
+        </div>
+    </div>
 
     <div id="nav">
         <a href="index.html">INICIO</a>
@@ -64,60 +55,47 @@
         <a href="servicios.html">SERVICIOS</a>
         <a href="sugerencias.html">SUGERENCIAS</a>
         <a href="comentarios.html">COMENTARIOS</a>
-        <a href="contactos.html" style="color:#d4af37">CONTACTO</a>
+        <a href="contactos.html">CONTACTOS</a>
     </div>
 
-    <div class="hero-contact">
-        <h1>CONTACTO</h1>
-        <p>Expertos en Soluciones Eléctricas y Cableado Estructural</p>
-    </div>
-
-    <div class="contact-wrapper">
+    <div class="contacto-wrapper">
         <div class="form-side">
             <div class="input-group">
-                <label>Nombre Completo *</label>
-                <input type="text" id="nombre" placeholder="Ej: Juan Pérez">
+                <label>Nombre *</label>
+                <input type="text" id="nom">
             </div>
             <div class="input-group">
-                <label>Correo Electrónico *</label>
-                <input type="email" id="email" placeholder="correo@empresa.com">
+                <label>Email *</label>
+                <input type="email" id="eml">
             </div>
             <div class="input-group">
-                <label>Asunto / Empresa</label>
-                <input type="text" id="empresa" placeholder="Nombre de su organización">
+                <label>Empresa</label>
+                <input type="text" id="emp">
             </div>
             <div class="input-group">
                 <label>Mensaje *</label>
-                <textarea id="mensaje" rows="5" placeholder="Cuéntenos sobre su proyecto..."></textarea>
+                <textarea id="msg" rows="5"></textarea>
             </div>
-            <button class="btn-submit" onclick="enviarForm()">Enviar Mensaje</button>
+            <button class="btn-submit" onclick="enviar()">ENVIAR MENSAJE</button>
         </div>
 
         <div class="info-side">
-            <h3>NUESTRAS OFICINAS</h3>
-            <p><strong>Ubicación:</strong><br>Av. Principal, Edificio Incorea<br>Quito, Ecuador</p>
-            <p><a href="#">Ver en Google Maps ></a></p>
+            <h3>INCOREA CABLES</h3>
+            <p>Dirección:<br>Quito, Ecuador</p>
             
-            <h3>ATENCIÓN AL CLIENTE</h3>
-            <p>ventas@incorea.com<br>info@incorea.com<br>+593 99 999 9999</p>
-            
-            <h3>HORARIOS</h3>
-            <p>Lunes a Viernes: 8:00 AM - 6:00 PM<br>Sábado: 9:00 AM - 1:00 PM</p>
+            <h3>NEGOCIOS</h3>
+            <p>ventas@incorea.com<br>+593 99 999 9999</p>
         </div>
     </div>
+    
+    <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
+</div>
 
-    <script>
-        function enviarForm() {
-            const nom = document.getElementById('nombre').value;
-            const msg = document.getElementById('mensaje').value;
-            if(!nom || !msg) {
-                alert("Por favor complete los campos obligatorios.");
-                return;
-            }
-            alert("Solicitud enviada correctamente. Un asesor de INCOREA se contactará con usted.");
-            location.reload();
-        }
-    </script>
-
+<script>
+    function enviar() {
+        alert("Mensaje enviado. Nos pondremos en contacto pronto.");
+        location.reload();
+    }
+</script>
 </body>
 </html>
