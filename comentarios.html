@@ -1,208 +1,135 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-<title>INCOREA CABLES-comentarios</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<title>Comentarios - INCOREA CABLES</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    .tabla-gestion {
-        width: 100%;
-        border-collapse: collapse;
-        color: #ecf0f1;
-        font-family: 'Segoe UI', Roboto, sans-serif;
+    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
+    .container { margin: 20px 5%; min-height: 400px; }
+    
+    /* ESTILO DE COMENTARIOS INDIVIDUALES */
+    .comentario-box { 
+        background: rgba(255, 255, 255, 0.03); 
+        padding: 15px; 
+        border-radius: 8px; 
+        margin-bottom: 15px; 
+        border-left: 3px solid #1abc9c;
     }
-    .tabla-gestion th {
-        background: #1c2b3a;
-        color: #1abc9c;
-        padding: 18px;
-        text-transform: uppercase;
-        font-size: 13px;
-        letter-spacing: 1px;
-        border-bottom: 2px solid #1abc9c;
-        text-align: left;
+    .comentario-texto { font-size: 15px; color: #eee; line-height: 1.4; }
+    .comentario-fecha { font-size: 10px; color: #555; margin-top: 8px; text-transform: uppercase; }
+
+    /* AREA DE ENVÃO */
+    .enviar-zona { 
+        background: #0a0f14; 
+        padding: 30px 5%; 
+        border-top: 1px solid #1abc9c33; 
+        text-align: center; 
     }
-    .tabla-gestion td {
-        padding: 18px;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        vertical-align: middle;
+    textarea { 
+        width: 100%; max-width: 600px; height: 80px; 
+        background: #111; border: 1px solid #333; 
+        color: white; padding: 12px; border-radius: 6px; 
+        font-family: inherit; margin-bottom: 10px; outline: none;
     }
-    .fila-dinamica {
-        transition: background 0.3s ease;
+    textarea:focus { border-color: #1abc9c; }
+    
+    .btn-enviar { 
+        background: #1abc9c; color: #0e161d; border: none; 
+        padding: 10px 25px; border-radius: 4px; font-weight: bold; 
+        cursor: pointer; transition: 0.3s; 
     }
-    .fila-dinamica:hover {
-        background: rgba(26, 188, 156, 0.05);
-    }
-    .badge {
-        padding: 6px 14px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: bold;
-        letter-spacing: 1px;
-        display: inline-block;
-    }
-    .recibido { 
-        background: rgba(241, 196, 15, 0.15); 
-        color: #f1c40f; 
-        border: 1px solid #f1c40f;
-    }
-    .visto { 
-        background: rgba(46, 204, 113, 0.15); 
-        color: #2ecc71; 
-        border: 1px solid #2ecc71;
-    }
-    .btn-ver {
-        background: #1abc9c;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 12px;
-        transition: all 0.3s ease;
-        text-decoration: none;
-        display: inline-flex;
-        align-items: center;
-        gap: 5px;
-    }
-    .btn-ver:hover {
-        background: #17d3ad;
-        box-shadow: 0 4px 12px rgba(26, 188, 156, 0.3);
-        transform: translateY(-1px);
-    }
-    .btn-borrar {
-        background: transparent;
-        color: #e74c3c;
-        border: 1px solid #e74c3c;
-        padding: 8px 16px;
-        border-radius: 6px;
-        cursor: pointer;
-        font-weight: bold;
-        font-size: 12px;
-        transition: all 0.3s ease;
-    }
-    .btn-borrar:hover {
-        background: #e74c3c;
-        color: white;
-        box-shadow: 0 4px 12px rgba(231, 76, 60, 0.2);
-    }
+    .btn-enviar:hover { background: #16a085; }
+
+    /* ADMIN DISCRETO */
+    .admin-del { color: #e74c3c; font-size: 10px; cursor: pointer; margin-top: 10px; display: inline-block; }
+    .admin-del:hover { text-decoration: underline; }
 </style>
 </head>
+
 <body>
 <div id="wrapper">
     <div id="header">
-        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
+        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
         <div id="titulo-container">
-            <h1>Calidad que conecta tus proyectos</h1>
-            <p>Estamos para ayudarte</p>
+            <h1>INCOREA CABLES</h1>
+            <p>Muro de Comentarios</p>
         </div>
     </div>
-    
+
     <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">DIRECTORIO</a>
         <a href="servicios.html">SERVICIOS</a>
         <a href="sugerencias.html">SUGERENCIAS</a>
-        <a href="comentarios.html">COMENTARIO</a>
+        <a href="comentarios.html">COMENTARIOS</a>
     </div>
 
-    <div id="comentarios-container" style="padding: 60px 5%;">
-        <div class="comentarios-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; border-bottom: 2px solid #1c2b3a; padding-bottom: 20px;">
-            <h2 style="color: #ffffff; letter-spacing: 1px; margin: 0; font-family: 'Segoe UI', sans-serif; font-weight: 800; font-size: 28px;">BANDEJA DE CONTROL</h2>
-            <button onclick="borrarHistorial()" class="btn-borrar">LIMPIAR REGISTROS</button>
-        </div>
+    <div class="container" id="muro"></div>
 
-        <div class="tabla-wrapper" style="background: rgba(44, 62, 80, 0.2); backdrop-filter: blur(12px); border-radius: 16px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05);">
-            <table class="tabla-gestion">
-                <thead>
-                    <tr>
-                        <th>ÁREA / REMITENTE</th>
-                        <th>DETALLE OPERATIVO</th>
-                        <th>ESTADO</th>
-                        <th style="width: 150px; text-align: center;">ACCIÓN</th>
-                    </tr>
-                </thead>
-                <tbody id="tabla-body">
-                </tbody>
-            </table>
-        </div>
+    <div class="enviar-zona">
+        <textarea id="msg" placeholder="Escribe tu comentario aquÃ­..."></textarea>
+        <br>
+        <button class="btn-enviar" onclick="enviarComentario()">PUBLICAR COMENTARIO</button>
     </div>
-
-    <script>
-        const CLAVE_ADMIN_COMENTARIOS = "12345";
-
-        function cargarComentariosDinamicos() {
-            const datos = localStorage.getItem('datosIncorea');
-            let lista = JSON.parse(datos) || [];
-            const cuerpoTabla = document.getElementById('tabla-body');    
-            if (!cuerpoTabla) return;
-            cuerpoTabla.innerHTML = '';
-            
-            if (lista.length === 0) {
-                cuerpoTabla.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 100px; color: #bdc3c7; font-style: italic; font-size: 14px;">No existen nuevas solicitudes o reportes en la bandeja de control.</td></tr>';
-                return;    
-            }
-            
-            lista.forEach((item, index) => {
-                let fila = document.createElement('tr');
-                fila.className = 'fila-dinamica';
-                
-                const claseBadge = item.estado === 'RECIBIDO' ? 'recibido' : 'visto';
-                
-                // Extraer el nombre real del documento omitiendo la etiqueta de la carpeta para redirigir con precisión
-                let archivoBuscado = item.area;
-                if (item.area.includes(']')) {
-                    archivoBuscado = item.area.split(']')[1].trim();
-                }
-
-                fila.innerHTML = `
-                    <td>
-                        <strong style="color: #ffffff; font-size: 15px; font-weight: 700;">${item.area}</strong><br>
-                        <small style="color: #1abc9c; font-weight: 600; letter-spacing: 0.5px;">${item.usuario}</small>
-                    </td>
-                    <td style="color: #bdc3c7; font-size: 14px; line-height: 1.5;">"${item.mensaje}"</td>
-                    <td><span class="badge ${claseBadge}">${item.estado}</span></td>
-                    <td style="text-align: center;">
-                        <button onclick="marcarYRedirigir(${index}, '${encodeURIComponent(archivoBuscado)}')" class="btn-ver">
-                             VER TARJETA
-                        </button>
-                    </td>
-                `;
-                cuerpoTabla.appendChild(fila);
-            });
-        }
-
-        function marcarYRedirigir(index, documentoCodificado) {
-            const datos = localStorage.getItem('datosIncorea');
-            let lista = JSON.parse(datos) || [];
-            
-            // Cambiar estado a VISTO
-            lista[index].estado = 'VISTO'; 
-            localStorage.setItem('datosIncorea', JSON.stringify(lista));
-            
-            // Redirigir a directorio pasando el nombre específico del archivo para resaltar
-            window.location.href = 'directorio.html?resaltar=' + documentoCodificado;
-        }
-
-        function borrarHistorial() {
-            const password = prompt("Ingresa la clave de administrador para limpiar la bandeja:");
-            if (password === CLAVE_ADMIN_COMENTARIOS) {
-                if (confirm('¿Confirmas que deseas vaciar todos los registros del sistema?')) {
-                    localStorage.removeItem('datosIncorea');
-                    cargarComentariosDinamicos(); 
-                    alert("Bandeja vaciada correctamente.");
-                }
-            } else {
-                alert("Clave incorrecta. Acción cancelada.");
-            }
-        }
-        
-        window.onload = cargarComentariosDinamicos; 
-    </script>
-
-    <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
-        <p>INCOREA-CABLES</p>
-    </div>
+    
+    <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
 </div>
+
+<script>
+const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/solo_comentarios";
+const KEY = "1234";
+
+window.onload = cargarComentarios;
+
+async function cargarComentarios() {
+    const res = await fetch(`${URL}.json`);
+    const data = await res.json();
+    const muro = document.getElementById('muro');
+    muro.innerHTML = "";
+
+    if(!data) {
+        muro.innerHTML = "<p style='color:#444; text-align:center;'>No hay comentarios aÃºn. Â¡SÃ© el primero!</p>";
+        return;
+    }
+
+    // Mostrar de mÃ¡s nuevo a mÃ¡s viejo
+    Object.keys(data).reverse().forEach(id => {
+        const c = data[id];
+        muro.innerHTML += `
+            <div class="comentario-box">
+                <div class="comentario-texto">${c.texto}</div>
+                <div class="comentario-fecha">${c.fecha}</div>
+                <span class="admin-del" onclick="borrarComentario('${id}')">[ Eliminar ]</span>
+            </div>
+        `;
+    });
+}
+
+async function enviarComentario() {
+    const txt = document.getElementById('msg').value;
+    if(!txt.trim()) return alert("Escribe algo antes de enviar.");
+
+    const nuevoComentario = {
+        texto: txt,
+        fecha: new Date().toLocaleString()
+    };
+
+    await fetch(`${URL}.json`, {
+        method: 'POST',
+        body: JSON.stringify(nuevoComentario)
+    });
+
+    document.getElementById('msg').value = "";
+    cargarComentarios();
+}
+
+async function borrarComentario(id) {
+    if(prompt("Clave de administrador:") === KEY) {
+        await fetch(`${URL}/${id}.json`, { method: 'DELETE' });
+        cargarComentarios();
+    }
+}
+</script>
 </body>
 </html>
