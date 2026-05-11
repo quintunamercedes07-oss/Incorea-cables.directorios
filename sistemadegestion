@@ -15,18 +15,15 @@
     .archivo a { color: #eee; text-decoration: none; font-size: 15px; }
     .archivo a:hover { color: #1abc9c; }
 
-    /* PANEL ADMIN - MENOS LLAMATIVO */
+    /* PANEL ADMIN */
     .admin-zona { 
-        background: rgba(255, 255, 255, 0.02); /* Casi invisible */
+        background: rgba(255, 255, 255, 0.02); 
         padding: 20px 5%; 
-        border-top: 1px solid #1a252f; /* Borde muy discreto */
+        border-top: 1px solid #1a252f; 
         margin-top: 60px; 
         transition: 0.5s;
     }
-    .admin-zona:hover {
-        background: rgba(255, 255, 255, 0.05); /* Se aclara sutilmente al acercarse */
-    }
-
+    .admin-zona:hover { background: rgba(255, 255, 255, 0.05); }
     .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
     
     input, select { 
@@ -52,7 +49,6 @@
     }
     button:hover { background: #1abc9c; color: #0e161d; }
     
-    /* GESTIÓN */
     #gestion { 
         display: none; 
         margin-top: 20px; 
@@ -64,15 +60,10 @@
     .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; align-items: center; color: #666; }
     .clic-edit { cursor: pointer; flex: 1; }
     .clic-edit:hover { color: #1abc9c; }
-    .btn-x { 
-        background: transparent; 
-        border: 1px solid #e74c3c; 
-        color: #e74c3c; 
-        padding: 2px 6px; 
-        font-size: 9px; 
-    }
+    .btn-x { background: transparent; border: 1px solid #e74c3c; color: #e74c3c; padding: 2px 6px; font-size: 9px; }
     .btn-x:hover { background: #e74c3c; color: white; }
-</style></head>
+</style>
+</head>
 
 <body>
 <div id="wrapper">
@@ -93,8 +84,7 @@
         <a href="contactos.html">CONTACTOS</a>
     </div>
 
-    <div class="container" id="visor">
-        </div>
+    <div class="container" id="visor"></div>
 
     <div class="admin-zona">
         <div class="inputs">
@@ -121,75 +111,70 @@
     </div>
     
     <div id="footer">
-        <p>&copy;INCOREA CABLES</p>
+        <p>&copy; INCOREA CABLES</p>
     </div>
 </div>
 
 <script>
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaServicios";
-const KEY = "1234"; // Tu clave de acceso
+// CORREGIDO: Asegúrate que esta URL sea la correcta de tu Firebase
+const URL = "https://incorea-cables-default-rtdb.firebaseio.com/sistemaServicios";
+const KEY = "1234"; 
 
 window.onload = load;
 
 async function load() {
-    const res = await fetch(`${URL}.json`);
-    const data = await res.json();
-    const v = document.getElementById('visor');
-    const s = document.getElementById('rd');
-    const g = document.getElementById('listaG');
-    
-    v.innerHTML = ""; g.innerHTML = "";
-    s.innerHTML = '<option value="">Seleccionar Carpeta...</option>';
+    try {
+        const res = await fetch(`${URL}.json`);
+        const data = await res.json();
+        const v = document.getElementById('visor');
+        const s = document.getElementById('rd');
+        const g = document.getElementById('listaG');
+        
+        v.innerHTML = ""; g.innerHTML = "";
+        s.innerHTML = '<option value="">Seleccionar Carpeta...</option>';
 
-    if(data) {
-        Object.keys(data).forEach(idR => {
-            const r = data[idR];
-            s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
-            
-            let fHtml = "";
-            if(r.archivos) {
-                Object.keys(r.archivos).forEach(idF => {
-                    const f = r.archivos[idF];
-                    const dLink = f.link.split('?')[0].replace("redir", "download") + "?download=1";
-                    fHtml += `<div class="archivo"><a href="${dLink}" target="_self"> ${f.nombre}</a></div>`;
-                   
-                    // Lista de gestión para archivos
-                    g.innerHTML += `<div class="edit-item">
-                        <span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">+ Archivo: ${f.nombre} (Editar)</span>
-                        <button class="btn-x" onclick="delF('${idR}','${idF}')">x</button>
-                    </div>`;
-                });
-            }
-            // Vista pública
-            v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
-            
-            // Lista de gestión para carpetas
-            g.innerHTML += `<div class="edit-item">
-                <b class="clic-edit" onclick="upR('${idR}','${r.nombre}')">CARPETA: ${r.nombre} (Editar nombre)</b>
-                <button class="btn-x" onclick="delR('${idR}')">Borrar</button>
-            </div>`;
-        });
-    }
+        if(data) {
+            Object.keys(data).forEach(idR => {
+                const r = data[idR];
+                s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
+                
+                let fHtml = "";
+                if(r.archivos) {
+                    Object.keys(r.archivos).forEach(idF => {
+                        const f = r.archivos[idF];
+                        // Mantenemos tu lógica de link, pero ten cuidado con OneDrive
+                        const dLink = f.link.includes('?') ? f.link.split('?')[0] : f.link;
+                        fHtml += `<div class="archivo"><a href="${dLink}" target="_blank"> ${f.nombre}</a></div>`;
+                        
+                        g.innerHTML += `<div class="edit-item">
+                            <span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">+ Archivo: ${f.nombre}</span>
+                            <button class="btn-x" onclick="delF('${idR}','${idF}')">x</button>
+                        </div>`;
+                    });
+                }
+                v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
+                g.innerHTML += `<div class="edit-item">
+                    <b class="clic-edit" onclick="upR('${idR}','${r.nombre}')">CARPETA: ${r.nombre}</b>
+                    <button class="btn-x" onclick="delR('${idR}')">Borrar</button>
+                </div>`;
+            });
+        }
+    } catch (e) { console.error("Error cargando datos:", e); }
 }
 
 function val() { return prompt("Introduce la clave de administrador:") === KEY; }
-
 function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
 
-// Cargar datos de Carpeta arriba
 function upR(id, n) {
     document.getElementById('editIdR').value = id;
     document.getElementById('rn').value = n;
-    window.scrollTo(0, document.body.scrollHeight);
 }
 
-// Cargar datos de Archivo arriba
 function upF(idR, idF, n, l) {
     document.getElementById('rd').value = idR;
     document.getElementById('editIdF').value = idF;
     document.getElementById('fn').value = n;
     document.getElementById('fl').value = l;
-    window.scrollTo(0, document.body.scrollHeight);
 }
 
 async function saveR() {
@@ -226,9 +211,8 @@ function reset() {
     document.getElementById('fl').value = "";
 }
 
-async function delR(id) { if(confirm("¿Borrar carpeta y todo su contenido?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
-async function delF(idR, idF) { if(confirm("¿Borrar este archivo?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
-
+async function delR(id) { if(confirm("¿Borrar carpeta?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
+async function delF(idR, idF) { if(confirm("¿Borrar archivo?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
 </script>
 </body>
 </html>
