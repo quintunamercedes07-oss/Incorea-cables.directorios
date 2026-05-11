@@ -8,7 +8,7 @@
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
     .container { margin: 20px 5%; min-height: 300px; }
     
-    /* VISTA PÚBLICA */
+    /* VISTA PÃšBLICA */
     .rama { margin-bottom: 25px; }
     .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; }
     .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
@@ -71,14 +71,14 @@
         <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
         <div id="titulo-container">
             <h1>INCOREA CABLES</h1>
-            <p>Directorio de Documentación</p>
+            <p>Directorio de DocumentaciÃ³n</p>
         </div>
     </div>
 
     <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">DIRECTORIO</a>
-        <a href="sistema.html">SISTEMA DE GESTIÓN</a>
+        <a href="sistemadegestion.html">SISTEMA DE GESTIÃ“N</a>
         <a href="sugerencias.html">SUGERENCIAS</a>
         <a href="comentarios.html">COMENTARIOS</a>
         <a href="contactos.html">CONTACTOS</a>
@@ -118,7 +118,7 @@
 </div>
 
 <script>
-// Asegúrate de que la URL termine SIN barra "/"
+// AsegÃºrate de que la URL termine SIN barra "/"
 const URL_BASE = "https://incorea-cables-default-rtdb.firebaseio.com/sistemaServicios";
 const KEY = "1234"; 
 
@@ -144,7 +144,7 @@ async function load() {
                 if(r.archivos) {
                     Object.keys(r.archivos).forEach(idF => {
                         const f = r.archivos[idF];
-                        // Limpieza simple de link para visualización
+                        // Limpieza simple de link para visualizaciÃ³n
                         const dLink = f.link;
                         fHtml += `<div class="archivo"><a href="${dLink}" target="_blank">?? ${f.nombre}</a></div>`;
                         
@@ -227,14 +227,14 @@ function reset() {
 }
 
 async function delR(id) { 
-    if(confirm("¿Borrar carpeta y todo su contenido?") && val()) { 
+    if(confirm("Â¿Borrar carpeta y todo su contenido?") && val()) { 
         await fetch(`${URL_BASE}/${id}.json`, { method:'DELETE' }); 
         load(); 
     } 
 }
 
 async function delF(idR, idF) { 
-    if(confirm("¿Borrar este archivo?") && val()) { 
+    if(confirm("Â¿Borrar este archivo?") && val()) { 
         await fetch(`${URL_BASE}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); 
         load(); 
     } 
