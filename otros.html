@@ -2,65 +2,101 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>VISOR TOTAL - INCOREA CABLES</title>
+<title>INCOREA CABLES - VISOR</title>
 <style>
-    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; padding: 0; }
+    /* Diseño según tu imagen */
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0e161d; color: white; margin: 0; padding: 0; }
     
-    /* Estructura de Cabecera Original */
-    #header { padding: 20px 5%; display: flex; align-items: center; background: #0a0f14; border-bottom: 1px solid #1abc9c; }
-    #logo-container img { height: 60px; margin-right: 20px; }
-    #titulo-container h1 { margin: 0; font-size: 24px; color: #1abc9c; }
+    #header { 
+        background: linear-gradient(to right, #0e161d, #16212b); 
+        padding: 30px 5%; 
+        display: flex; 
+        justify-content: space-between; 
+        align-items: center;
+        border-bottom: 2px solid #1abc9c;
+    }
+    .logo-box img { height: 80px; }
+    .slogan-box { text-align: right; }
+    .slogan-box h2 { margin: 0; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
+    .slogan-box p { margin: 0; color: #1abc9c; font-size: 14px; }
 
-    #nav { background: #16212b; padding: 10px 5%; display: flex; gap: 15px; }
-    #nav a { color: #eee; text-decoration: none; font-size: 13px; font-weight: bold; }
+    #nav { 
+        background: #16212b; 
+        padding: 12px 5%; 
+        text-align: right; 
+        border-bottom: 1px solid #333;
+    }
+    #nav a { color: #eee; text-decoration: none; font-size: 12px; font-weight: bold; margin-left: 20px; transition: 0.3s; }
     #nav a:hover { color: #1abc9c; }
 
-    /* CONTENEDOR TOTAL: Abarca el 100% para que no existan cuadros pequeños */
-    .container-full { width: 100%; margin: 0; padding: 0; }
+    /* Contenedor que NO abarca todo el ancho (más elegante) */
+    .main-content { 
+        width: 85%; 
+        max-width: 1000px; 
+        margin: 30px auto; 
+    }
 
-    .item-documento { width: 100%; margin-bottom: 0; border-bottom: 2px solid #1abc9c; }
+    .doc-card { 
+        background: #16212b; 
+        border-radius: 8px; 
+        margin-bottom: 40px; 
+        overflow: hidden; 
+        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
     
-    /* Título discreto sobre el documento */
-    .titulo-doc { 
-        background: rgba(26, 188, 156, 0.1); 
-        padding: 15px 5%; 
-        display: block; 
-        font-size: 18px; 
-        color: #1abc9c; 
+    .doc-header { 
+        padding: 12px 20px; 
+        background: rgba(26, 188, 156, 0.1);
+        border-bottom: 1px solid #1abc9c33;
+        font-size: 14px;
+        color: #1abc9c;
         font-weight: bold;
     }
 
-    /* VISOR: Sin límites de altura para que se vea todo hacia abajo */
-    .visor-contenido { width: 100%; line-height: 0; }
-    .visor-contenido img { 
+    /* Visor sólido para PDF e Imágenes */
+    .viewer { width: 100%; line-height: 0; }
+    .viewer img { width: 100%; height: auto; display: block; }
+    
+    /* Forma sólida de ver PDF: usamos <object> en lugar de iframe para que sea más nativo */
+    .viewer object, .viewer iframe { 
         width: 100%; 
-        height: auto; /* La imagen dicta el largo hacia abajo */
-        display: block; 
-    }
-    .visor-contenido iframe { 
-        width: 100%; 
-        height: 1500px; /* Altura muy grande para documentos PDF */
+        height: 800px; 
         border: none; 
-        background: white;
     }
 
-    /* PANEL ADMIN AL FINAL */
-    .admin-zona { background: #070b0f; padding: 40px 5%; border-top: 1px solid #1abc9c; margin-top: 50px; }
-    .inputs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-    input { background: #16212b; border: 1px solid #333; color: white; padding: 12px; border-radius: 4px; flex: 1; }
-    button { background: #1abc9c; border: none; color: #0e161d; padding: 12px 25px; cursor: pointer; border-radius: 4px; font-weight: bold; }
-    
-    #gestion { display: none; margin-top: 20px; max-width: 600px; }
-    .fila-edit { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #1a252f; font-size: 14px; }
-    .btn-del { background: #e74c3c; color: white; border: none; padding: 5px 10px; cursor: pointer; }
+    /* Panel Admin más pequeño y discreto al final */
+    .admin-mini { 
+        background: #0a0f14; 
+        padding: 20px; 
+        border-top: 1px solid #1abc9c; 
+        font-size: 11px;
+    }
+    .inputs-mini { display: flex; gap: 8px; max-width: 800px; margin: 0 auto; }
+    .inputs-mini input { 
+        background: #0e161d; border: 1px solid #333; color: #888; 
+        padding: 6px; border-radius: 3px; flex: 1; font-size: 11px;
+    }
+    .inputs-mini button { 
+        background: transparent; border: 1px solid #1abc9c; color: #1abc9c; 
+        padding: 5px 15px; cursor: pointer; border-radius: 3px; font-size: 10px;
+    }
+    .inputs-mini button:hover { background: #1abc9c; color: #0e161d; }
+
+    #listaG { max-width: 800px; margin: 10px auto; display: none; }
+    .item-g { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #222; color: #666; }
 </style>
 </head>
 
 <body>
 
 <div id="header">
-    <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
-    <div id="titulo-container"><h1>INCOREA CABLES</h1></div>
+    <div class="logo-box">
+        <img src="logo de la empresa.png" alt="Incorea Cables">
+    </div>
+    <div class="slogan-box">
+        <h2>CALIDAD QUE CONECTA TUS PROYECTOS</h2>
+        <p>Estamos para ayudarte</p>
+    </div>
 </div>
 
 <div id="nav">
@@ -68,26 +104,26 @@
     <a href="directorio.html">DIRECTORIO</a>
     <a href="sistemadegestion.html">SISTEMA DE GESTIÓN</a>
     <a href="global.html">GLOBAL</a>
+    <a href="otros.html">OTROS</a>
     <a href="contactos.html">CONTACTOS</a>
 </div>
 
-<div class="container-full" id="visor-principal"></div>
+<div class="main-content" id="contenedor-docs">
+    </div>
 
-<div class="admin-zona">
-    <div class="inputs">
+<div class="admin-mini">
+    <div class="inputs-mini">
         <input type="hidden" id="editId">
-        <input type="text" id="fn" placeholder="Nombre del Archivo">
-        <input type="text" id="fl" placeholder="Link Directo (Imagen o PDF)">
-        <button onclick="save()">PUBLICAR DOCUMENTO</button>
-        <button onclick="verG()" style="background:#333; color:#eee;">EDITAR LISTA</button>
+        <input type="text" id="fn" placeholder="Nombre">
+        <input type="text" id="fl" placeholder="Link (PDF o Imagen)">
+        <button onclick="save()">GUARDAR</button>
+        <button onclick="verG()" style="border-color:#444; color:#555">EDITAR</button>
     </div>
-    <div id="gestion">
-        <div id="listaG"></div>
-    </div>
+    <div id="listaG"></div>
 </div>
 
 <script>
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_visor_directo";
+const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_documentos_solidos";
 const KEY = "1234";
 
 window.onload = load;
@@ -95,7 +131,7 @@ window.onload = load;
 async function load() {
     const res = await fetch(`${URL}.json`);
     const data = await res.json();
-    const v = document.getElementById('visor-principal');
+    const v = document.getElementById('contenedor-docs');
     const g = document.getElementById('listaG');
     v.innerHTML = ""; g.innerHTML = "";
     
@@ -105,39 +141,41 @@ async function load() {
         const d = data[id];
         let media = "";
         
-        // Detección de imagen para flujo vertical total
+        // Convertir links para que se vean directo
+        let linkMod = d.link;
+        if(d.link.includes("onedrive")) linkMod = d.link.replace("redir", "embed");
+        if(d.link.includes("drive.google.com")) linkMod = d.link.replace("/view", "/preview");
+
         if (d.link.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-            media = `<img src="${d.link}">`;
+            media = `<img src="${linkMod}">`;
         } else {
-            // Iframe para documentos
-            let linkMod = d.link;
-            if(d.link.includes("onedrive")) linkMod = d.link.replace("redir", "embed");
-            if(d.link.includes("drive.google.com")) linkMod = d.link.replace("/view", "/preview");
-            media = `<iframe src="${linkMod}"></iframe>`;
+            // El tag <object> es más sólido para PDFs que el iframe simple
+            media = `<object data="${linkMod}" type="application/pdf">
+                        <iframe src="${linkMod}"></iframe>
+                     </object>`;
         }
 
         v.innerHTML += `
-            <div class="item-documento">
-                <span class="titulo-doc">FILE: ${d.nombre}</span>
-                <div class="visor-contenido">${media}</div>
+            <div class="doc-card">
+                <div class="doc-header">${d.nombre.toUpperCase()}</div>
+                <div class="viewer">${media}</div>
             </div>`;
 
         g.innerHTML += `
-            <div class="fila-edit">
-                <span onclick="preEdit('${id}','${d.nombre}','${d.link}')" style="cursor:pointer; color:#1abc9c">✎ ${d.nombre}</span>
-                <button class="btn-del" onclick="del('${id}')">Borrar</button>
+            <div class="item-g">
+                <span onclick="preEdit('${id}','${d.nombre}','${d.link}')" style="cursor:pointer">✎ ${d.nombre}</span>
+                <button onclick="del('${id}')" style="color:red; background:none; border:none; cursor:pointer">x</button>
             </div>`;
     });
 }
 
 function val() { return prompt("Clave:") === KEY; }
-function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
+function verG() { if(val()) document.getElementById('listaG').style.display = "block"; }
 
 function preEdit(id, n, l) {
     document.getElementById('editId').value = id;
     document.getElementById('fn').value = n;
     document.getElementById('fl').value = l;
-    window.scrollTo(0, document.body.scrollHeight);
 }
 
 async function save() {
@@ -146,14 +184,12 @@ async function save() {
     if(!n || !l || !val()) return;
     const path = id ? `${URL}/${id}.json` : `${URL}.json`;
     await fetch(path, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
-    document.getElementById('editId').value = "";
-    document.getElementById('fn').value = "";
-    document.getElementById('fl').value = "";
+    document.getElementById('editId').value = ""; document.getElementById('fn').value = ""; document.getElementById('fl').value = "";
     load();
 }
 
 async function del(id) {
-    if(confirm("¿Eliminar archivo?") && val()) {
+    if(confirm("Eliminar?") && val()) {
         await fetch(`${URL}/${id}.json`, { method: 'DELETE' });
         load();
     }
