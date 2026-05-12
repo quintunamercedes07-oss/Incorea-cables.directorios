@@ -2,97 +2,81 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>INCOREA CABLES - VISOR</title>
+<title>INCOREA CABLES - VISOR SOLIDO</title>
 <style>
-    /* Diseño según tu imagen */
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0e161d; color: white; margin: 0; padding: 0; }
+    body { font-family: 'Helvetica', Arial, sans-serif; background: #0e161d; color: white; margin: 0; padding: 0; }
     
+    /* Encabezado Estilo Imagen */
     #header { 
-        background: linear-gradient(to right, #0e161d, #16212b); 
-        padding: 30px 5%; 
+        background: #0e161d; 
+        padding: 25px 5%; 
         display: flex; 
         justify-content: space-between; 
         align-items: center;
         border-bottom: 2px solid #1abc9c;
     }
-    .logo-box img { height: 80px; }
+    .logo-box img { height: 75px; }
     .slogan-box { text-align: right; }
-    .slogan-box h2 { margin: 0; font-size: 24px; letter-spacing: 1px; text-transform: uppercase; }
-    .slogan-box p { margin: 0; color: #1abc9c; font-size: 14px; }
+    .slogan-box h2 { margin: 0; font-size: 22px; letter-spacing: 1px; color: white; text-shadow: 0 0 10px rgba(26,188,156,0.5); }
+    .slogan-box p { margin: 0; color: #1abc9c; font-size: 13px; font-weight: bold; }
 
     #nav { 
         background: #16212b; 
         padding: 12px 5%; 
-        text-align: right; 
-        border-bottom: 1px solid #333;
+        text-align: right;
     }
-    #nav a { color: #eee; text-decoration: none; font-size: 12px; font-weight: bold; margin-left: 20px; transition: 0.3s; }
-    #nav a:hover { color: #1abc9c; }
-
-    /* Contenedor que NO abarca todo el ancho (más elegante) */
-    .main-content { 
-        width: 85%; 
-        max-width: 1000px; 
-        margin: 30px auto; 
+    #nav a { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: bold; margin-left: 25px; text-transform: uppercase; }
+    
+    /* Contenedor Principal (No abarca todo, queda centrado y elegante) */
+    .main-container { 
+        width: 90%; 
+        max-width: 1100px; 
+        margin: 40px auto; 
     }
 
-    .doc-card { 
+    .archivo-seccion { 
         background: #16212b; 
-        border-radius: 8px; 
-        margin-bottom: 40px; 
-        overflow: hidden; 
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    
-    .doc-header { 
-        padding: 12px 20px; 
-        background: rgba(26, 188, 156, 0.1);
-        border-bottom: 1px solid #1abc9c33;
-        font-size: 14px;
-        color: #1abc9c;
-        font-weight: bold;
+        margin-bottom: 50px; 
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    /* Visor sólido para PDF e Imágenes */
-    .viewer { width: 100%; line-height: 0; }
-    .viewer img { width: 100%; height: auto; display: block; }
+    .nombre-archivo { 
+        padding: 10px 20px; 
+        background: #1abc9c; 
+        color: #0e161d; 
+        font-weight: bold; 
+        font-size: 14px; 
+    }
+
+    /* Visor Limpio */
+    .visor-limpio { width: 100%; background: #fff; line-height: 0; }
     
-    /* Forma sólida de ver PDF: usamos <object> en lugar de iframe para que sea más nativo */
-    .viewer object, .viewer iframe { 
+    /* Configuración para que el PDF se vea sólido y sin barras de herramientas */
+    .visor-limpio embed, .visor-limpio iframe { 
         width: 100%; 
-        height: 800px; 
-        border: none; 
+        height: 900px; /* Altura para ver casi todo el doc */
+        border: none;
     }
 
-    /* Panel Admin más pequeño y discreto al final */
-    .admin-mini { 
-        background: #0a0f14; 
-        padding: 20px; 
-        border-top: 1px solid #1abc9c; 
-        font-size: 11px;
-    }
-    .inputs-mini { display: flex; gap: 8px; max-width: 800px; margin: 0 auto; }
-    .inputs-mini input { 
-        background: #0e161d; border: 1px solid #333; color: #888; 
-        padding: 6px; border-radius: 3px; flex: 1; font-size: 11px;
-    }
-    .inputs-mini button { 
-        background: transparent; border: 1px solid #1abc9c; color: #1abc9c; 
-        padding: 5px 15px; cursor: pointer; border-radius: 3px; font-size: 10px;
-    }
-    .inputs-mini button:hover { background: #1abc9c; color: #0e161d; }
+    .visor-limpio img { width: 100%; height: auto; display: block; }
 
-    #listaG { max-width: 800px; margin: 10px auto; display: none; }
-    .item-g { display: flex; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid #222; color: #666; }
+    /* Admin discreto al final */
+    .admin-footer { background: #070b0f; padding: 20px 5%; margin-top: 60px; border-top: 1px solid #1abc9c; }
+    .mini-form { display: flex; gap: 10px; max-width: 900px; margin: 0 auto; }
+    .mini-form input { background: #16212b; border: 1px solid #333; color: #ccc; padding: 8px; border-radius: 3px; flex: 1; font-size: 12px; }
+    .mini-form button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 8px 20px; cursor: pointer; font-size: 11px; border-radius: 3px; }
+    
+    #listaG { max-width: 900px; margin: 15px auto; display: none; border-top: 1px solid #222; padding-top: 10px; }
+    .edit-row { display: flex; justify-content: space-between; font-size: 12px; color: #666; padding: 4px 0; }
 </style>
 </head>
 
 <body>
 
 <div id="header">
-    <div class="logo-box">
-        <img src="logo de la empresa.png" alt="Incorea Cables">
-    </div>
+    <div class="logo-box"><img src="logo de la empresa.png"></div>
     <div class="slogan-box">
         <h2>CALIDAD QUE CONECTA TUS PROYECTOS</h2>
         <p>Estamos para ayudarte</p>
@@ -108,14 +92,13 @@
     <a href="contactos.html">CONTACTOS</a>
 </div>
 
-<div class="main-content" id="contenedor-docs">
-    </div>
+<div class="main-container" id="visor-dinamico"></div>
 
-<div class="admin-mini">
-    <div class="inputs-mini">
+<div class="admin-footer">
+    <div class="mini-form">
         <input type="hidden" id="editId">
-        <input type="text" id="fn" placeholder="Nombre">
-        <input type="text" id="fl" placeholder="Link (PDF o Imagen)">
+        <input type="text" id="fn" placeholder="Nombre del documento">
+        <input type="text" id="fl" placeholder="Pegar Link aquí">
         <button onclick="save()">GUARDAR</button>
         <button onclick="verG()" style="border-color:#444; color:#555">EDITAR</button>
     </div>
@@ -131,40 +114,37 @@ window.onload = load;
 async function load() {
     const res = await fetch(`${URL}.json`);
     const data = await res.json();
-    const v = document.getElementById('contenedor-docs');
+    const v = document.getElementById('visor-dinamico');
     const g = document.getElementById('listaG');
     v.innerHTML = ""; g.innerHTML = "";
-    
     if(!data) return;
 
     Object.keys(data).forEach(id => {
         const d = data[id];
-        let media = "";
+        let visorHtml = "";
         
-        // Convertir links para que se vean directo
-        let linkMod = d.link;
-        if(d.link.includes("onedrive")) linkMod = d.link.replace("redir", "embed");
-        if(d.link.includes("drive.google.com")) linkMod = d.link.replace("/view", "/preview");
+        // Limpiamos el link para visualización directa
+        let link = d.link;
+        if(link.includes("onedrive")) link = link.replace("redir", "embed");
+        if(link.includes("drive.google.com")) link = link.replace("/view", "/preview");
 
-        if (d.link.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-            media = `<img src="${linkMod}">`;
+        if (link.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+            visorHtml = `<img src="${link}">`;
         } else {
-            // El tag <object> es más sólido para PDFs que el iframe simple
-            media = `<object data="${linkMod}" type="application/pdf">
-                        <iframe src="${linkMod}"></iframe>
-                     </object>`;
+            // "toolbar=0&navpanes=0" elimina la barra de herramientas del PDF en la mayoría de navegadores
+            visorHtml = `<embed src="${link}#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">`;
         }
 
         v.innerHTML += `
-            <div class="doc-card">
-                <div class="doc-header">${d.nombre.toUpperCase()}</div>
-                <div class="viewer">${media}</div>
+            <div class="archivo-seccion">
+                <div class="nombre-archivo">${d.nombre}</div>
+                <div class="visor-limpio">${visorHtml}</div>
             </div>`;
 
         g.innerHTML += `
-            <div class="item-g">
+            <div class="edit-row">
                 <span onclick="preEdit('${id}','${d.nombre}','${d.link}')" style="cursor:pointer">✎ ${d.nombre}</span>
-                <button onclick="del('${id}')" style="color:red; background:none; border:none; cursor:pointer">x</button>
+                <button onclick="del('${id}')" style="background:none; border:none; color:red; cursor:pointer">x</button>
             </div>`;
     });
 }
@@ -179,8 +159,7 @@ function preEdit(id, n, l) {
 }
 
 async function save() {
-    const id = document.getElementById('editId').value;
-    const n = document.getElementById('fn').value, l = document.getElementById('fl').value;
+    const id = document.getElementById('editId').value, n = document.getElementById('fn').value, l = document.getElementById('fl').value;
     if(!n || !l || !val()) return;
     const path = id ? `${URL}/${id}.json` : `${URL}.json`;
     await fetch(path, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
@@ -195,6 +174,5 @@ async function del(id) {
     }
 }
 </script>
-
 </body>
 </html>
