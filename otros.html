@@ -2,64 +2,92 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>VISOR DIRECTO - INCOREA CABLES</title>
+<title>VISOR TOTAL - INCOREA CABLES</title>
 <style>
-    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; padding-bottom: 100px; }
-    #header { padding: 30px 5%; border-bottom: 1px solid #1abc9c33; text-align: center; }
+    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; padding: 0; }
     
-    /* Contenedor de Documentos */
-    .container { margin: 20px auto; max-width: 900px; padding: 0 20px; }
-    
-    .item-documento { margin-bottom: 50px; border-bottom: 1px solid #222; padding-bottom: 30px; }
-    .titulo-doc { font-size: 18px; color: #1abc9c; font-weight: bold; margin-bottom: 15px; display: block; }
-    
-    /* Visor de contenido */
-    .visor-marco { width: 100%; background: #16212b; border-radius: 8px; overflow: hidden; border: 1px solid #333; }
-    .visor-marco img { width: 100%; height: auto; display: block; }
-    .visor-marco iframe { width: 100%; height: 800px; border: none; background: white; }
+    /* Estructura de Cabecera Original */
+    #header { padding: 20px 5%; display: flex; align-items: center; background: #0a0f14; border-bottom: 1px solid #1abc9c; }
+    #logo-container img { height: 60px; margin-right: 20px; }
+    #titulo-container h1 { margin: 0; font-size: 24px; color: #1abc9c; }
 
-    /* Panel de administración al final */
-    .admin-zona { background: #070b0f; padding: 40px 5%; margin-top: 50px; border-top: 2px solid #1abc9c; }
-    .inputs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; align-items: center; }
-    input { background: #16212b; border: 1px solid #333; color: white; padding: 10px; border-radius: 4px; flex: 1; min-width: 200px; }
-    button { background: #1abc9c; border: none; color: #0e161d; padding: 10px 20px; cursor: pointer; border-radius: 4px; font-weight: bold; transition: 0.3s; }
-    button:hover { background: #148f77; }
+    #nav { background: #16212b; padding: 10px 5%; display: flex; gap: 15px; }
+    #nav a { color: #eee; text-decoration: none; font-size: 13px; font-weight: bold; }
+    #nav a:hover { color: #1abc9c; }
+
+    /* CONTENEDOR TOTAL: Abarca el 100% para que no existan cuadros pequeños */
+    .container-full { width: 100%; margin: 0; padding: 0; }
+
+    .item-documento { width: 100%; margin-bottom: 0; border-bottom: 2px solid #1abc9c; }
     
-    #gestion { display: none; margin-top: 30px; border-top: 1px dashed #333; padding-top: 20px; }
-    .edit-row { display: flex; justify-content: space-between; padding: 10px; background: rgba(255,255,255,0.03); margin-bottom: 5px; border-radius: 4px; font-size: 13px; }
-    .btn-del { background: #e74c3c; color: white; padding: 4px 8px; font-size: 11px; }
+    /* Título discreto sobre el documento */
+    .titulo-doc { 
+        background: rgba(26, 188, 156, 0.1); 
+        padding: 15px 5%; 
+        display: block; 
+        font-size: 18px; 
+        color: #1abc9c; 
+        font-weight: bold;
+    }
+
+    /* VISOR: Sin límites de altura para que se vea todo hacia abajo */
+    .visor-contenido { width: 100%; line-height: 0; }
+    .visor-contenido img { 
+        width: 100%; 
+        height: auto; /* La imagen dicta el largo hacia abajo */
+        display: block; 
+    }
+    .visor-contenido iframe { 
+        width: 100%; 
+        height: 1500px; /* Altura muy grande para documentos PDF */
+        border: none; 
+        background: white;
+    }
+
+    /* PANEL ADMIN AL FINAL */
+    .admin-zona { background: #070b0f; padding: 40px 5%; border-top: 1px solid #1abc9c; margin-top: 50px; }
+    .inputs { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+    input { background: #16212b; border: 1px solid #333; color: white; padding: 12px; border-radius: 4px; flex: 1; }
+    button { background: #1abc9c; border: none; color: #0e161d; padding: 12px 25px; cursor: pointer; border-radius: 4px; font-weight: bold; }
+    
+    #gestion { display: none; margin-top: 20px; max-width: 600px; }
+    .fila-edit { display: flex; justify-content: space-between; padding: 10px; border-bottom: 1px solid #1a252f; font-size: 14px; }
+    .btn-del { background: #e74c3c; color: white; border: none; padding: 5px 10px; cursor: pointer; }
 </style>
 </head>
 
 <body>
 
 <div id="header">
-    <img src="logo de la empresa.png" style="height:60px; margin-bottom:10px;">
-    <h1>INCOREA CABLES</h1>
-    <p style="color:#888;">Documentación en Tiempo Real</p>
+    <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
+    <div id="titulo-container"><h1>INCOREA CABLES</h1></div>
 </div>
 
-<div class="container" id="lista-documentos">
-    </div>
+<div id="nav">
+    <a href="index.html">INICIO</a>
+    <a href="directorio.html">DIRECTORIO</a>
+    <a href="sistemadegestion.html">SISTEMA DE GESTIÓN</a>
+    <a href="global.html">GLOBAL</a>
+    <a href="contactos.html">CONTACTOS</a>
+</div>
+
+<div class="container-full" id="visor-principal"></div>
 
 <div class="admin-zona">
-    <h3 style="color:#1abc9c;">Administrar Contenido</h3>
     <div class="inputs">
         <input type="hidden" id="editId">
-        <input type="text" id="fn" placeholder="Nombre del documento o imagen">
-        <input type="text" id="fl" placeholder="Link (URL de Imagen o PDF)">
-        <button onclick="save()">PUBLICAR / ACTUALIZAR</button>
-        <button onclick="verG()" style="background:#333; color:#aaa;">EDITAR LISTA</button>
+        <input type="text" id="fn" placeholder="Nombre del Archivo">
+        <input type="text" id="fl" placeholder="Link Directo (Imagen o PDF)">
+        <button onclick="save()">PUBLICAR DOCUMENTO</button>
+        <button onclick="verG()" style="background:#333; color:#eee;">EDITAR LISTA</button>
     </div>
-
     <div id="gestion">
         <div id="listaG"></div>
     </div>
 </div>
 
 <script>
-// Usamos una ruta directa sin subcarpetas para simplificar
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_documentos_unica";
+const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_visor_directo";
 const KEY = "1234";
 
 window.onload = load;
@@ -67,55 +95,43 @@ window.onload = load;
 async function load() {
     const res = await fetch(`${URL}.json`);
     const data = await res.json();
-    const v = document.getElementById('lista-documentos');
+    const v = document.getElementById('visor-principal');
     const g = document.getElementById('listaG');
+    v.innerHTML = ""; g.innerHTML = "";
     
-    v.innerHTML = ""; 
-    g.innerHTML = "";
-    
-    if(!data) {
-        v.innerHTML = "<p style='text-align:center; color:#555;'>No hay documentos publicados.</p>";
-        return;
-    }
+    if(!data) return;
 
     Object.keys(data).forEach(id => {
-        const doc = data[id];
-        const link = doc.link;
-
-        // Determinar si es imagen o documento para el visor
-        let visorHtml = "";
-        if (link.match(/\.(jpeg|jpg|gif|png|webp|bmp)$/i)) {
-            visorHtml = `<img src="${link}" loading="lazy">`;
+        const d = data[id];
+        let media = "";
+        
+        // Detección de imagen para flujo vertical total
+        if (d.link.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+            media = `<img src="${d.link}">`;
         } else {
-            let embed = link;
-            if(link.includes("onedrive.live.com")) embed = link.replace("redir", "embed");
-            if(link.includes("drive.google.com")) embed = link.replace("/view", "/preview");
-            visorHtml = `<iframe src="${embed}"></iframe>`;
+            // Iframe para documentos
+            let linkMod = d.link;
+            if(d.link.includes("onedrive")) linkMod = d.link.replace("redir", "embed");
+            if(d.link.includes("drive.google.com")) linkMod = d.link.replace("/view", "/preview");
+            media = `<iframe src="${linkMod}"></iframe>`;
         }
 
-        // Agregar al visor principal (Para abajo)
         v.innerHTML += `
             <div class="item-documento">
-                <span class="titulo-doc">📄 ${doc.nombre}</span>
-                <div class="visor-marco">${visorHtml}</div>
-            </div>
-        `;
+                <span class="titulo-doc">FILE: ${d.nombre}</span>
+                <div class="visor-contenido">${media}</div>
+            </div>`;
 
-        // Agregar a la lista de gestión
         g.innerHTML += `
-            <div class="edit-row">
-                <span style="cursor:pointer; color:#1abc9c" onclick="preEdit('${id}','${doc.nombre}','${doc.link}')">✎ ${doc.nombre}</span>
-                <button class="btn-del" onclick="del('${id}')">Eliminar</button>
-            </div>
-        `;
+            <div class="fila-edit">
+                <span onclick="preEdit('${id}','${d.nombre}','${d.link}')" style="cursor:pointer; color:#1abc9c">✎ ${d.nombre}</span>
+                <button class="btn-del" onclick="del('${id}')">Borrar</button>
+            </div>`;
     });
 }
 
-function val() { return prompt("Clave de acceso:") === KEY; }
-
-function verG() { 
-    if(val()) document.getElementById('gestion').style.display = "block"; 
-}
+function val() { return prompt("Clave:") === KEY; }
+function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
 
 function preEdit(id, n, l) {
     document.getElementById('editId').value = id;
@@ -126,32 +142,18 @@ function preEdit(id, n, l) {
 
 async function save() {
     const id = document.getElementById('editId').value;
-    const n = document.getElementById('fn').value;
-    const l = document.getElementById('fl').value;
-
-    if(!n || !l) { alert("Llena todos los campos"); return; }
-    if(!val()) return;
-
-    const metodo = id ? 'PATCH' : 'POST';
-    const finalURL = id ? `${URL}/${id}.json` : `${URL}.json`;
-
-    await fetch(finalURL, {
-        method: metodo,
-        body: JSON.stringify({ nombre: n, link: l })
-    });
-
-    reset();
-    load();
-}
-
-function reset() {
+    const n = document.getElementById('fn').value, l = document.getElementById('fl').value;
+    if(!n || !l || !val()) return;
+    const path = id ? `${URL}/${id}.json` : `${URL}.json`;
+    await fetch(path, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
     document.getElementById('editId').value = "";
     document.getElementById('fn').value = "";
     document.getElementById('fl').value = "";
+    load();
 }
 
 async function del(id) {
-    if(confirm("¿Seguro que quieres eliminar este documento?") && val()) {
+    if(confirm("¿Eliminar archivo?") && val()) {
         await fetch(`${URL}/${id}.json`, { method: 'DELETE' });
         load();
     }
