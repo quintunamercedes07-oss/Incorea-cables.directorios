@@ -7,8 +7,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 <style>
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
-    
-    /* EL MEDIO: FORMULARIO + REDES */
     .contacto-wrapper { 
         display: flex; 
         max-width: 1000px; 
@@ -20,8 +18,6 @@
     }
     .form-side { flex: 2; }
     .info-side { flex: 1; border-left: 1px solid #1abc9c33; padding-left: 30px; }
-
-    /* Estilo Inputs */
     .input-group { margin-bottom: 20px; }
     .input-group label { display: block; font-size: 11px; color: #1abc9c; font-weight: bold; margin-bottom: 8px; text-transform: uppercase; }
     .input-group input, .input-group textarea { 
@@ -29,17 +25,13 @@
         box-sizing: border-box; outline: none; color: white; border-radius: 4px;
     }
     .input-group input:focus, .input-group textarea:focus { border-color: #1abc9c; }
-    
-    .btn-submit { 
+     .btn-submit { 
         background: #1abc9c; color: #0e161d; border: none; padding: 15px 30px; 
         text-transform: uppercase; font-weight: bold; cursor: pointer; border-radius: 4px; width: 100%;
     }
     .btn-submit:hover { background: #16a085; }
-
-    /* Redes Sociales e Info */
     .info-side h3 { color: #1abc9c; font-size: 16px; margin-bottom: 15px; }
     .info-side p { font-size: 14px; color: #aaa; line-height: 1.6; margin-bottom: 25px; }
-    
     .social-icons { display: flex; gap: 15px; margin-top: 10px; }
     .social-icons a { 
         color: white; font-size: 24px; text-decoration: none; transition: 0.3s; 
@@ -47,7 +39,6 @@
     .social-icons a:hover { color: #1abc9c; transform: translateY(-3px); }
 </style>
 </head>
-
 <body>
 <div id="wrapper">
     <div id="header">
@@ -57,7 +48,6 @@
             <p id="sub-txt">CONTACTOS</p>
         </div>
     </div>
-
     <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">DIRECTORIO</a>
@@ -66,7 +56,6 @@
         <a href="otros.html">OTROS</a>
         <a href="contactos.html">CONTACTOS</a>
     </div>
-
     <div class="contacto-wrapper">
         <div class="form-side">
             <div class="input-group">
@@ -87,27 +76,21 @@
             </div>
             <button class="btn-submit" onclick="enviar()">Enviar Mensaje</button>
         </div>
-
         <div class="info-side">
             <h3>NUESTRA UBICACIÓN</h3>
             <p>Quito, Ecuador<br>Edificio Incorea Cables</p>
-            
             <h3>SÍGUENOS</h3>
             <div class="social-icons">
                 <a href="https://www.facebook.com/incoreacablesec/" target="_blank" title="Facebook"><i class="fab fa-facebook"></i></a>
                 <a href="https://www.instagram.com/incoreacables/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.tiktok.com/@incoreacables/" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-              
-            </div>
-
-            <h3 style="margin-top:30px;">TELÉFONO</h3>
+               </div>
+ <h3 style="margin-top:30px;">TELÉFONO</h3>
             <p>+593 989290517<br>info@incorea.com</p>
         </div>
     </div>
-    
-    <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
+     <div id="footer"><p>&copy; 2026 INCOREA CABLES</p></div>
 </div>
-
 <script>
     function enviar() {
         const n = document.getElementById('nom').value;
