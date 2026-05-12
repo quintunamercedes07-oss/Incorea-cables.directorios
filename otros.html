@@ -2,177 +2,100 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>INCOREA CABLES - VISOR SOLIDO</title>
+<title>INCOREA - VISOR SÓLIDO</title>
+<link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    body { font-family: 'Helvetica', Arial, sans-serif; background: #0e161d; color: white; margin: 0; padding: 0; }
-    
-    /* Encabezado Estilo Imagen */
-    #header { 
-        background: #0e161d; 
-        padding: 25px 5%; 
-        display: flex; 
-        justify-content: space-between; 
-        align-items: center;
-        border-bottom: 2px solid #1abc9c;
-    }
-    .logo-box img { height: 75px; }
-    .slogan-box { text-align: right; }
-    .slogan-box h2 { margin: 0; font-size: 22px; letter-spacing: 1px; color: white; text-shadow: 0 0 10px rgba(26,188,156,0.5); }
-    .slogan-box p { margin: 0; color: #1abc9c; font-size: 13px; font-weight: bold; }
-
-    #nav { 
-        background: #16212b; 
-        padding: 12px 5%; 
-        text-align: right;
-    }
-    #nav a { color: #ffffff; text-decoration: none; font-size: 11px; font-weight: bold; margin-left: 25px; text-transform: uppercase; }
-    
-    /* Contenedor Principal (No abarca todo, queda centrado y elegante) */
-    .main-container { 
-        width: 90%; 
-        max-width: 1100px; 
-        margin: 40px auto; 
+    /* ELIMINAMOS TODO EL AIRE Y MARCOS */
+    body, html {
+        margin: 0; 
+        padding: 0;
+        background-color: #0f171e; /* Color de tu fondo */
+        overflow-x: hidden;
     }
 
-    .archivo-seccion { 
-        background: #16212b; 
-        margin-bottom: 50px; 
-        border-radius: 4px;
-        overflow: hidden;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-    }
-
-    .nombre-archivo { 
-        padding: 10px 20px; 
-        background: #1abc9c; 
-        color: #0e161d; 
-        font-weight: bold; 
-        font-size: 14px; 
-    }
-
-    /* Visor Limpio */
-    .visor-limpio { width: 100%; background: #fff; line-height: 0; }
-    
-    /* Configuración para que el PDF se vea sólido y sin barras de herramientas */
-    .visor-limpio embed, .visor-limpio iframe { 
-        width: 100%; 
-        height: 900px; /* Altura para ver casi todo el doc */
+    /* VISOR PEGADO A LOS BORDES (SÓLIDO) */
+    .visor-pro-solido {
+        width: 100vw;
+        height: 200vh; /* Altura grande para que baje todo recto */
         border: none;
+        display: block;
+        background: #000;
     }
 
-    .visor-limpio img { width: 100%; height: auto; display: block; }
-
-    /* Admin discreto al final */
-    .admin-footer { background: #070b0f; padding: 20px 5%; margin-top: 60px; border-top: 1px solid #1abc9c; }
-    .mini-form { display: flex; gap: 10px; max-width: 900px; margin: 0 auto; }
-    .mini-form input { background: #16212b; border: 1px solid #333; color: #ccc; padding: 8px; border-radius: 3px; flex: 1; font-size: 12px; }
-    .mini-form button { background: transparent; border: 1px solid #1abc9c; color: #1abc9c; padding: 8px 20px; cursor: pointer; font-size: 11px; border-radius: 3px; }
+    /* BOTÓN ADMIN MUY PEQUEÑO AL FINAL */
+    .admin-fix {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        opacity: 0.3;
+        transition: 0.3s;
+        z-index: 100;
+    }
+    .admin-fix:hover { opacity: 1; }
     
-    #listaG { max-width: 900px; margin: 15px auto; display: none; border-top: 1px solid #222; padding-top: 10px; }
-    .edit-row { display: flex; justify-content: space-between; font-size: 12px; color: #666; padding: 4px 0; }
+    .input-link {
+        background: #1a252f;
+        border: 1px solid #1abc9c;
+        color: white;
+        padding: 8px;
+        border-radius: 5px;
+    }
 </style>
 </head>
 
 <body>
-
-<div id="header">
-    <div class="logo-box"><img src="logo de la empresa.png"></div>
-    <div class="slogan-box">
-        <h2>CALIDAD QUE CONECTA TUS PROYECTOS</h2>
-        <p>Estamos para ayudarte</p>
+<div id="wrapper">
+    <div id="header">
+        <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen"></div>
+        <div id="titulo-container">
+            <h1>CALIDAD QUE CONECTA TUS PROYECTOS</h1>
+            <p>Estamos para ayudarte</p>
+        </div>
     </div>
-</div>
 
-<div id="nav">
-    <a href="index.html">INICIO</a>
-    <a href="directorio.html">DIRECTORIO</a>
-    <a href="sistemadegestion.html">SISTEMA DE GESTIÓN</a>
-    <a href="global.html">GLOBAL</a>
-    <a href="otros.html">OTROS</a>
-    <a href="contactos.html">CONTACTOS</a>
-</div>
-
-<div class="main-container" id="visor-dinamico"></div>
-
-<div class="admin-footer">
-    <div class="mini-form">
-        <input type="hidden" id="editId">
-        <input type="text" id="fn" placeholder="Nombre del documento">
-        <input type="text" id="fl" placeholder="Pegar Link aquí">
-        <button onclick="save()">GUARDAR</button>
-        <button onclick="verG()" style="border-color:#444; color:#555">EDITAR</button>
+    <div id="nav">
+        <a href="index.html">INICIO</a>
+        <a href="directorio.html">DIRECTORIO</a>
+        <a href="servicios.html">SERVICIOS</a>
+        <a href="sugerencias.html">SUGERENCIAS</a>
+        <a href="comentario.html">COMENTARIO</a>
     </div>
-    <div id="listaG"></div>
+
+    <iframe id="doc-solido" class="visor-pro-solido" src="" scrolling="no"></iframe>
+
+    <div class="admin-fix">
+        <input type="text" id="l-in" class="input-link" placeholder="Link aquí">
+        <button onclick="save()" class="btn-brillante" style="padding: 5px 10px;">OK</button>
+    </div>
 </div>
 
 <script>
-const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/db_documentos_solidos";
-const KEY = "1234";
+    const DB = "https://httpsincorea-cables-default-rtdb.firebaseio.com/solido.json";
+    const KEY = "1234";
 
-window.onload = load;
-
-async function load() {
-    const res = await fetch(`${URL}.json`);
-    const data = await res.json();
-    const v = document.getElementById('visor-dinamico');
-    const g = document.getElementById('listaG');
-    v.innerHTML = ""; g.innerHTML = "";
-    if(!data) return;
-
-    Object.keys(data).forEach(id => {
-        const d = data[id];
-        let visorHtml = "";
-        
-        // Limpiamos el link para visualización directa
-        let link = d.link;
-        if(link.includes("onedrive")) link = link.replace("redir", "embed");
-        if(link.includes("drive.google.com")) link = link.replace("/view", "/preview");
-
-        if (link.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-            visorHtml = `<img src="${link}">`;
-        } else {
-            // "toolbar=0&navpanes=0" elimina la barra de herramientas del PDF en la mayoría de navegadores
-            visorHtml = `<embed src="${link}#toolbar=0&navpanes=0&scrollbar=0" type="application/pdf">`;
+    window.onload = async () => {
+        const res = await fetch(DB);
+        const data = await res.json();
+        if(data && data.link) {
+            let url = data.link;
+            // Limpieza radical de barras de OneDrive/Google
+            if(url.includes("onedrive")) {
+                url = url.replace("redir", "embed").replace("view.aspx", "embedread.aspx") + "&wdAr=1.77&wdSmallView=1&wdHideHeaders=1&wdHideGridlines=1";
+            } else if(url.includes("drive.google.com")) {
+                url = url.replace("/view", "/preview");
+            }
+            document.getElementById('doc-solido').src = url;
         }
+    };
 
-        v.innerHTML += `
-            <div class="archivo-seccion">
-                <div class="nombre-archivo">${d.nombre}</div>
-                <div class="visor-limpio">${visorHtml}</div>
-            </div>`;
-
-        g.innerHTML += `
-            <div class="edit-row">
-                <span onclick="preEdit('${id}','${d.nombre}','${d.link}')" style="cursor:pointer">✎ ${d.nombre}</span>
-                <button onclick="del('${id}')" style="background:none; border:none; color:red; cursor:pointer">x</button>
-            </div>`;
-    });
-}
-
-function val() { return prompt("Clave:") === KEY; }
-function verG() { if(val()) document.getElementById('listaG').style.display = "block"; }
-
-function preEdit(id, n, l) {
-    document.getElementById('editId').value = id;
-    document.getElementById('fn').value = n;
-    document.getElementById('fl').value = l;
-}
-
-async function save() {
-    const id = document.getElementById('editId').value, n = document.getElementById('fn').value, l = document.getElementById('fl').value;
-    if(!n || !l || !val()) return;
-    const path = id ? `${URL}/${id}.json` : `${URL}.json`;
-    await fetch(path, { method: id ? 'PATCH' : 'POST', body: JSON.stringify({nombre: n, link: l}) });
-    document.getElementById('editId').value = ""; document.getElementById('fn').value = ""; document.getElementById('fl').value = "";
-    load();
-}
-
-async function del(id) {
-    if(confirm("Eliminar?") && val()) {
-        await fetch(`${URL}/${id}.json`, { method: 'DELETE' });
-        load();
+    async function save() {
+        const l = document.getElementById('l-in').value;
+        if(!l) return;
+        if(prompt("Clave:") === KEY) {
+            await fetch(DB, { method: 'PUT', body: JSON.stringify({ link: l }) });
+            location.reload();
+        }
     }
-}
 </script>
 </body>
 </html>
