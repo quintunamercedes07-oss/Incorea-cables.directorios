@@ -7,151 +7,61 @@
 <style>
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
     .container { margin: 20px 5%; min-height: 300px; }
-    
-    /* VISTA PÚBLICA - GALERÍA EN FILA DE 3 (DISEÑO MOSAICO FLOATING) */
-    .seccion-header {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        margin: 30px 0 20px 0;
-    }
-    .seccion-header h2 {
-        font-size: 16px;
-        color: #1abc9c;
-        margin: 0;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-    .seccion-header .linea {
-        flex: 1;
-        height: 1px;
-        background: linear-gradient(90deg, #1abc9c 0%, transparent 100%);
-    }
 
-    /* CONTENEDOR GRID DE 3 COLUMNAS */
-    .galeria-mosaico {
+    /* SECCIÓN PRODUCTOS EN CUADROS (3 COLUMNAS) */
+    .grid-productos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
-        margin-bottom: 40px;
+        margin: 30px 0;
     }
 
-    /* ÍTEM DE PRODUCTO (NUEVO ESTILO) */
-    .item-producto {
-        position: relative;
+    .cuadro-producto {
         background: #121c26;
-        border-radius: 8px;
-        padding: 10px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        transition: all 0.3s ease;
-        border: 1px solid rgba(26, 188, 156, 0.1);
-    }
-    .item-producto:hover {
-        border-color: #1abc9c;
-        box-shadow: 0 0 20px rgba(26, 188, 156, 0.2);
-        transform: translateY(-5px);
-    }
-
-    .marco-foto {
-        width: 100%;
-        height: 170px;
+        border: 1px solid #1abc9c33;
         border-radius: 6px;
-        overflow: hidden;
-        background: #090e13;
-    }
-    .marco-foto img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.4s ease;
-    }
-    .item-producto:hover .marco-foto img {
-        transform: scale(1.08);
-    }
-
-    .pie-producto {
-        padding-top: 10px;
+        padding: 12px;
         text-align: center;
+        transition: 0.3s;
     }
-    .pie-producto .nombre-prod {
-        font-size: 14px;
+    .cuadro-producto:hover {
+        border-color: #1abc9c;
+        transform: translateY(-3px);
+    }
+    .cuadro-producto img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 4px;
+        background-color: #000;
+    }
+    .cuadro-titulo {
+        font-size: 15px;
         font-weight: bold;
         color: #ffffff;
+        margin-top: 10px;
     }
-    .pie-producto .tag-prod {
-        display: inline-block;
-        margin-top: 6px;
-        font-size: 11px;
+    .cuadro-desc {
+        font-size: 12px;
         color: #1abc9c;
-        background: rgba(26, 188, 156, 0.1);
-        padding: 3px 10px;
-        border-radius: 12px;
+        margin-top: 4px;
     }
 
-    /* ARCHIVOS Y DOCUMENTOS */
-    .archivo { padding: 8px 0 8px 20px; border-left: 2px solid #1abc9c; margin: 8px 0; background: rgba(255,255,255,0.01); }
-    .archivo a { color: #eee; text-decoration: none; font-size: 14px; }
+    /* ARCHIVOS DE DOCUMENTACIÓN */
+    .seccion-titulo {
+        color: #1abc9c;
+        font-size: 18px;
+        font-weight: bold;
+        border-bottom: 1px solid #333;
+        padding-bottom: 5px;
+        margin-top: 40px;
+    }
+    .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
+    .archivo a { color: #eee; text-decoration: none; font-size: 15px; }
     .archivo a:hover { color: #1abc9c; }
 
-    /* PANEL ADMIN */
-    .admin-zona { 
-        background: rgba(255, 255, 255, 0.02); 
-        padding: 20px 5%; 
-        border-top: 1px solid #1a252f; 
-        margin-top: 60px; 
-        transition: 0.5s;
-    }
-    .admin-zona:hover { background: rgba(255, 255, 255, 0.05); }
-
-    .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
-    
-    input, select { 
-        background: transparent; 
-        border: 1px solid #333; 
-        color: #888; 
-        padding: 6px 10px; 
-        border-radius: 4px; 
-        font-size: 11px; 
-        outline: none; 
-    }
-    input:focus { border-color: #1abc9c; color: white; }
-
-    button { 
-        background: transparent; 
-        border: 1px solid #1abc9c; 
-        color: #1abc9c; 
-        padding: 6px 12px; 
-        cursor: pointer; 
-        border-radius: 4px; 
-        font-size: 10px; 
-        transition: 0.3s; 
-    }
-    button:hover { background: #1abc9c; color: #0e161d; }
-    
-    /* GESTIÓN */
-    #gestion { 
-        display: none; 
-        margin-top: 20px; 
-        border-top: 1px dashed #222; 
-        padding-top: 15px; 
-        max-width: 800px; 
-        margin: 20px auto; 
-    }
-    .edit-item { display: flex; justify-content: space-between; padding: 6px 0; font-size: 11px; border-bottom: 1px solid #1a252f; align-items: center; color: #666; }
-    .clic-edit { cursor: pointer; flex: 1; }
-    .clic-edit:hover { color: #1abc9c; }
-    .btn-x { 
-        background: transparent; 
-        border: 1px solid #e74c3c; 
-        color: #e74c3c; 
-        padding: 2px 6px; 
-        font-size: 9px; 
-    }
-    .btn-x:hover { background: #e74c3c; color: white; }
-
-    /* Responsivo para celulares */
     @media (max-width: 768px) {
-        .galeria-mosaico { grid-template-columns: 1fr; }
+        .grid-productos { grid-template-columns: 1fr; }
     }
 </style>
 </head>
@@ -176,49 +86,40 @@
     </div>
 
     <div class="container">
-        <!-- SECCIÓN DE PRODUCTOS EN 3 COLUMNAS -->
-        <div class="seccion-header">
-            <h2>Muestrario de Productos</h2>
-            <div class="linea"></div>
-        </div>
-        <div class="galeria-mosaico" id="galeriaProd"></div>
+        <!-- SECCIÓN DE PRODUCTOS EN CUADROS (EDITABLES DESDE CÓDIGO) -->
+        <div class="seccion-titulo">PRODUCTOS</div>
+        <div class="grid-productos">
+            
+            <!-- CUADRO 1 -->
+            <div class="cuadro-producto">
+                <img src="URL_DE_TU_IMAGEN_1.jpg" alt="Producto 1">
+                <div class="cuadro-titulo">Nombre del Producto 1</div>
+                <div class="cuadro-desc">Descripción o código</div>
+            </div>
 
-        <!-- SECCIÓN DE DOCUMENTOS -->
-        <div class="seccion-header">
-            <h2>Documentación disponible</h2>
-            <div class="linea"></div>
+            <!-- CUADRO 2 -->
+            <div class="cuadro-producto">
+                <img src="URL_DE_TU_IMAGEN_2.jpg" alt="Producto 2">
+                <div class="cuadro-titulo">Nombre del Producto 2</div>
+                <div class="cuadro-desc">Descripción o código</div>
+            </div>
+
+            <!-- CUADRO 3 -->
+            <div class="cuadro-producto">
+                <img src="URL_DE_TU_IMAGEN_3.jpg" alt="Producto 3">
+                <div class="cuadro-titulo">Nombre del Producto 3</div>
+                <div class="cuadro-desc">Descripción o código</div>
+            </div>
+
+            <!-- Puedes copiar y pegar más cuadros aquí si necesitas más filas -->
+
         </div>
+
+        <!-- SECCIÓN DOCUMENTOS -->
+        <div class="seccion-titulo">DOCUMENTACIÓN</div>
         <div id="visor"></div>
     </div>
 
-    <!-- PANEL ADMINISTRATIVO -->
-    <div class="admin-zona">
-        <!-- CREAR/EDITAR PRODUCTO -->
-        <div class="inputs">
-            <input type="hidden" id="editIdP"> 
-            <input type="text" id="pn" placeholder="Título del Producto/Imagen">
-            <input type="text" id="pi" placeholder="URL de la Imagen">
-            <input type="text" id="pd" placeholder="Descripción corta / Código">
-            <button onclick="saveProducto()">GUARDAR PRODUCTO</button>
-            <button onclick="verG()" style="background:#444">GESTIONAR / EDITAR</button>
-        </div>
-        
-        <!-- CREAR/EDITAR ARCHIVO -->
-        <div class="inputs">
-            <input type="hidden" id="editIdF"> 
-            <input type="text" id="fn" placeholder="Nombre del Archivo">
-            <input type="text" id="fl" placeholder="Link de OneDrive">
-            <button onclick="saveF()">GUARDAR ARCHIVO</button>
-        </div>
-
-        <div id="gestion">
-            <p style="color:#1abc9c; font-size: 11px; text-align: center; margin-bottom: 10px;">
-                TOCA UN ELEMENTO PARA CARGARLO Y EDITARLO
-            </p>
-            <div id="listaG"></div>
-        </div>
-    </div>
-    
     <div id="footer">
         <p>&copy;INCOREA CABLES</p>
     </div>
@@ -226,121 +127,28 @@
 
 <script>
 const URL = "https://httpsincorea-cables-default-rtdb.firebaseio.com/sistemaServicios";
-const KEY = "1234";
 
 window.onload = load;
 
 async function load() {
     const res = await fetch(`${URL}.json`);
-    const data = await res.json() || {};
-    
-    const gP = document.getElementById('galeriaProd');
+    const data = await res.json();
     const v = document.getElementById('visor');
-    const g = document.getElementById('listaG');
-    
-    gP.innerHTML = ""; v.innerHTML = ""; g.innerHTML = "";
+    v.innerHTML = "";
 
-    // 1. Mostrar Productos (3 columnas con animación)
-    if(data.productos) {
-        Object.keys(data.productos).forEach(idP => {
-            const p = data.productos[idP];
-            gP.innerHTML += `
-                <div class="item-producto">
-                    <div class="marco-foto">
-                        <img src="${p.img || 'https://via.placeholder.com/300x180?text=Sin+Imagen'}" alt="${p.nombre}">
-                    </div>
-                    <div class="pie-producto">
-                        <div class="nombre-prod">${p.nombre}</div>
-                        ${p.desc ? `<span class="tag-prod">${p.desc}</span>` : ''}
-                    </div>
-                </div>
-            `;
-            
-            g.innerHTML += `
-                <div class="edit-item">
-                    <span class="clic-edit" onclick="upP('${idP}','${p.nombre}','${p.img || ''}','${p.desc || ''}')">🖼️ Producto: ${p.nombre} (Editar)</span>
-                    <button class="btn-x" onclick="delP('${idP}')">x</button>
-                </div>
-            `;
-        });
-    }
-
-    // 2. Mostrar Archivos
-    if(data.archivos) {
-        Object.keys(data.archivos).forEach(idF => {
-            const f = data.archivos[idF];
-            const dLink = f.link.split('?')[0].replace("redir", "download") + "?download=1";
-            
-            v.innerHTML += `<div class="archivo"><a href="${dLink}" target="_self">📂 ${f.nombre}</a></div>`;
-            
-            g.innerHTML += `
-                <div class="edit-item">
-                    <span class="clic-edit" onclick="upF('${idF}','${f.nombre}','${f.link}')">📄 Archivo: ${f.nombre} (Editar)</span>
-                    <button class="btn-x" onclick="delF('${idF}')">x</button>
-                </div>
-            `;
+    if(data) {
+        Object.keys(data).forEach(idR => {
+            const r = data[idR];
+            if(r.archivos) {
+                Object.keys(r.archivos).forEach(idF => {
+                    const f = r.archivos[idF];
+                    const dLink = f.link.split('?')[0].replace("redir", "download") + "?download=1";
+                    v.innerHTML += `<div class="archivo"><a href="${dLink}" target="_self">${f.nombre}</a></div>`;
+                });
+            }
         });
     }
 }
-
-function val() { return prompt("Introduce la clave de administrador:") === KEY; }
-
-function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
-
-function upP(idP, n, i, d) {
-    document.getElementById('editIdP').value = idP;
-    document.getElementById('pn').value = n;
-    document.getElementById('pi').value = i;
-    document.getElementById('pd').value = d;
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-function upF(idF, n, l) {
-    document.getElementById('editIdF').value = idF;
-    document.getElementById('fn').value = n;
-    document.getElementById('fl').value = l;
-    window.scrollTo(0, document.body.scrollHeight);
-}
-
-async function saveProducto() {
-    const id = document.getElementById('editIdP').value;
-    const n = document.getElementById('pn').value;
-    const i = document.getElementById('pi').value;
-    const d = document.getElementById('pd').value;
-    if(!n) return alert("Ingresa un nombre para el producto");
-    if(!val()) return;
-
-    const met = id ? 'PATCH' : 'POST';
-    const url = id ? `${URL}/productos/${id}.json` : `${URL}/productos.json`;
-    await fetch(url, { method: met, body: JSON.stringify({nombre: n, img: i, desc: d}) });
-    reset(); load();
-}
-
-async function saveF() {
-    const idF = document.getElementById('editIdF').value;
-    const n = document.getElementById('fn').value;
-    const l = document.getElementById('fl').value;
-    if(!n || !l) return alert("Completa los datos del archivo");
-    if(!val()) return;
-
-    const met = idF ? 'PATCH' : 'POST';
-    const url = idF ? `${URL}/archivos/${idF}.json` : `${URL}/archivos.json`;
-    await fetch(url, { method: met, body: JSON.stringify({nombre: n, link: l}) });
-    reset(); load();
-}
-
-function reset() {
-    document.getElementById('editIdP').value = "";
-    document.getElementById('editIdF').value = "";
-    document.getElementById('pn').value = "";
-    document.getElementById('pi').value = "";
-    document.getElementById('pd').value = "";
-    document.getElementById('fn').value = "";
-    document.getElementById('fl').value = "";
-}
-
-async function delP(id) { if(confirm("¿Borrar este producto?") && val()) { await fetch(`${URL}/productos/${id}.json`, { method:'DELETE' }); load(); } }
-async function delF(idF) { if(confirm("¿Borrar este archivo?") && val()) { await fetch(`${URL}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
 </script>
 </body>
 </html>
