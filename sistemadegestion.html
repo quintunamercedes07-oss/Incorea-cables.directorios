@@ -8,23 +8,77 @@
     body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
     .container { margin: 20px 5%; min-height: 300px; }
     
-    /* VISTA PÚBLICA */
-    .rama { margin-bottom: 25px; }
-    .rama-t { color: #1abc9c; font-size: 18px; font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; }
+    /* VISTA PÚBLICA - SECCIÓN PRODUCTOS EN 3 COLUMNAS */
+    .seccion-titulo { 
+        color: #1abc9c; 
+        font-size: 20px; 
+        font-weight: bold; 
+        border-bottom: 2px solid #1abc9c; 
+        padding-bottom: 8px; 
+        margin-bottom: 20px;
+    }
+
+    .grid-productos {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    /* Tarjetas de Productos */
+    .card-producto {
+        background: #16222f;
+        border: 1px solid #1a252f;
+        border-radius: 6px;
+        overflow: hidden;
+        transition: transform 0.3s, border-color 0.3s;
+        display: flex;
+        flex-direction: column;
+    }
+    .card-producto:hover {
+        transform: translateY(-4px);
+        border-color: #1abc9c;
+    }
+    .card-producto img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        background-color: #0b1117;
+    }
+    .card-info {
+        padding: 12px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+    .card-titulo {
+        font-size: 15px;
+        font-weight: bold;
+        color: #ffffff;
+        margin-bottom: 6px;
+    }
+    .card-desc {
+        font-size: 13px;
+        color: #1abc9c;
+        margin-bottom: 8px;
+    }
+
+    /* ARCHIVOS Y DOCUMENTOS */
     .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
     .archivo a { color: #eee; text-decoration: none; font-size: 15px; }
     .archivo a:hover { color: #1abc9c; }
 
-    /* PANEL ADMIN - MENOS LLAMATIVO */
+    /* PANEL ADMIN */
     .admin-zona { 
-        background: rgba(255, 255, 255, 0.02); /* Casi invisible */
+        background: rgba(255, 255, 255, 0.02);
         padding: 20px 5%; 
-        border-top: 1px solid #1a252f; /* Borde muy discreto */
+        border-top: 1px solid #1a252f; 
         margin-top: 60px; 
         transition: 0.5s;
     }
     .admin-zona:hover {
-        background: rgba(255, 255, 255, 0.05); /* Se aclara sutilmente al acercarse */
+        background: rgba(255, 255, 255, 0.05);
     }
 
     .inputs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; justify-content: center; }
@@ -72,7 +126,15 @@
         font-size: 9px; 
     }
     .btn-x:hover { background: #e74c3c; color: white; }
-</style></head>
+
+    /* Adaptabilidad a pantallas pequeñas (móviles) */
+    @media (max-width: 768px) {
+        .grid-productos {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+</head>
 
 <body>
 <div id="wrapper">
@@ -80,7 +142,7 @@
         <div id="logo-container"><img src="logo de la empresa.png" id="logo-imagen" alt="Logo"></div>
         <div id="titulo-container">
             <h1>INCOREA CABLES</h1>
-            <p>Directorio de Documentación</p>
+            <p>Directorio de Documentación y Productos</p>
         </div>
     </div>
 
@@ -93,20 +155,33 @@
         <a href="contactos.html">CONTACTOS</a>
     </div>
 
-    <div class="container" id="visor">
+    <div class="container">
+        <!-- VISTA DE PRODUCTOS EN FILA DE 3 -->
+        <div class="seccion-titulo">CATÁLOGO DE PRODUCTOS</div>
+        <div class="grid-productos" id="gridProductos">
+            <!-- Los productos se cargarán dinámicamente aquí -->
         </div>
 
+        <!-- VISOR DE DOCUMENTOS -->
+        <div class="seccion-titulo">DOCUMENTOS Y ARCHIVOS</div>
+        <div id="visor"></div>
+    </div>
+
+    <!-- PANEL ADMIN (Sin opción de carpetas) -->
     <div class="admin-zona">
+        <!-- AGREGAR PRODUCTO -->
         <div class="inputs">
-            <input type="hidden" id="editIdR"> 
-            <input type="text" id="rn" placeholder="Nombre de Rama/Carpeta">
-            <button onclick="saveR()">GUARDAR CARPETA</button>
+            <input type="hidden" id="editIdProd">
+            <input type="text" id="pNombre" placeholder="Nombre del Producto">
+            <input type="text" id="pImg" placeholder="Link de Imagen (URL)">
+            <input type="text" id="pDetalle" placeholder="Detalle / Precio">
+            <button onclick="saveProducto()">GUARDAR PRODUCTO</button>
             <button onclick="verG()" style="background:#444">GESTIONAR / EDITAR</button>
         </div>
         
+        <!-- AGREGAR ARCHIVO -->
         <div class="inputs">
             <input type="hidden" id="editIdF"> 
-            <select id="rd"></select>
             <input type="text" id="fn" placeholder="Nombre del Archivo">
             <input type="text" id="fl" placeholder="Link de OneDrive">
             <button onclick="saveF()">GUARDAR ARCHIVO</button>
@@ -114,7 +189,7 @@
 
         <div id="gestion">
             <p style="color:#1abc9c; font-size: 11px; text-align: center; margin-bottom: 10px;">
-                TOCA UN NOMBRE PARA CARGARLO EN LOS CUADROS DE ARRIBA Y EDITARLO
+                TOCA UN ELEMENTO PARA EDITARLO
             </p>
             <div id="listaG"></div>
         </div>
@@ -133,42 +208,63 @@ window.onload = load;
 
 async function load() {
     const res = await fetch(`${URL}.json`);
-    const data = await res.json();
+    const data = await res.json() || {};
+    
+    const gridProd = document.getElementById('gridProductos');
     const v = document.getElementById('visor');
-    const s = document.getElementById('rd');
     const g = document.getElementById('listaG');
     
-    v.innerHTML = ""; g.innerHTML = "";
-    s.innerHTML = '<option value="">Seleccionar Carpeta...</option>';
+    gridProd.innerHTML = "";
+    v.innerHTML = ""; 
+    g.innerHTML = "";
 
-    if(data) {
-        Object.keys(data).forEach(idR => {
-            const r = data[idR];
-            s.innerHTML += `<option value="${idR}">${r.nombre}</option>`;
+    // 1. Cargar Productos (Fila de 3)
+    if(data.productos) {
+        Object.keys(data.productos).forEach(idP => {
+            const p = data.productos[idP];
+            gridProd.innerHTML += `
+                <div class="card-producto">
+                    <img src="${p.imagen || 'https://via.placeholder.com/300x180?text=Sin+Imagen'}" alt="${p.nombre}">
+                    <div class="card-info">
+                        <div class="card-titulo">${p.nombre}</div>
+                        <div class="card-desc">${p.detalle || ''}</div>
+                    </div>
+                </div>
+            `;
             
-            let fHtml = "";
-            if(r.archivos) {
-                Object.keys(r.archivos).forEach(idF => {
-                    const f = r.archivos[idF];
-                    const dLink = f.link.split('?')[0].replace("redir", "download") + "?download=1";
-                    fHtml += `<div class="archivo"><a href="${dLink}" target="_self"> ${f.nombre}</a></div>`;
-                   
-                    // Lista de gestión para archivos
-                    g.innerHTML += `<div class="edit-item">
-                        <span class="clic-edit" onclick="upF('${idR}','${idF}','${f.nombre}','${f.link}')">+ Archivo: ${f.nombre} (Editar)</span>
-                        <button class="btn-x" onclick="delF('${idR}','${idF}')">x</button>
-                    </div>`;
-                });
-            }
-            // Vista pública
-            v.innerHTML += `<div class="rama"><div class="rama-t">${r.nombre}</div>${fHtml}</div>`;
-            
-            // Lista de gestión para carpetas
-            g.innerHTML += `<div class="edit-item">
-                <b class="clic-edit" onclick="upR('${idR}','${r.nombre}')">CARPETA: ${r.nombre} (Editar nombre)</b>
-                <button class="btn-x" onclick="delR('${idR}')">Borrar</button>
-            </div>`;
+            // Item para el panel de gestión
+            g.innerHTML += `
+                <div class="edit-item">
+                    <span class="clic-edit" onclick="upProducto('${idP}','${p.nombre}','${p.imagen || ''}','${p.detalle || ''}')">
+                        📦 Producto: ${p.nombre} (Editar)
+                    </span>
+                    <button class="btn-x" onclick="delProducto('${idP}')">x</button>
+                </div>
+            `;
         });
+    } else {
+        gridProd.innerHTML = "<p style='color:#666; grid-column: 1/-1;'>No hay productos registrados.</p>";
+    }
+
+    // 2. Cargar Archivos
+    if(data.archivos) {
+        Object.keys(data.archivos).forEach(idF => {
+            const f = data.archivos[idF];
+            const dLink = f.link.split('?')[0].replace("redir", "download") + "?download=1";
+            
+            v.innerHTML += `<div class="archivo"><a href="${dLink}" target="_self">📄 ${f.nombre}</a></div>`;
+           
+            g.innerHTML += `
+                <div class="edit-item">
+                    <span class="clic-edit" onclick="upF('${idF}','${f.nombre}','${f.link}')">
+                        📄 Archivo: ${f.nombre} (Editar)
+                    </span>
+                    <button class="btn-x" onclick="delF('${idF}')">x</button>
+                </div>
+            `;
+        });
+    } else {
+        v.innerHTML = "<p style='color:#666;'>No hay archivos registrados.</p>";
     }
 }
 
@@ -176,59 +272,77 @@ function val() { return prompt("Introduce la clave de administrador:") === KEY; 
 
 function verG() { if(val()) document.getElementById('gestion').style.display = "block"; }
 
-// Cargar datos de Carpeta arriba
-function upR(id, n) {
-    document.getElementById('editIdR').value = id;
-    document.getElementById('rn').value = n;
+// Guardar/Actualizar Producto
+async function saveProducto() {
+    const idP = document.getElementById('editIdProd').value;
+    const nombre = document.getElementById('pNombre').value;
+    const imagen = document.getElementById('pImg').value;
+    const detalle = document.getElementById('pDetalle').value;
+
+    if(!nombre) return alert("Escribe el nombre del producto");
+    if(!val()) return;
+
+    const met = idP ? 'PATCH' : 'POST';
+    const url = idP ? `${URL}/productos/${idP}.json` : `${URL}/productos.json`;
+    await fetch(url, { method: met, body: JSON.stringify({ nombre, imagen, detalle }) });
+    reset(); load();
+}
+
+// Guardar/Actualizar Archivo
+async function saveF() {
+    const idF = document.getElementById('editIdF').value;
+    const n = document.getElementById('fn').value;
+    const l = document.getElementById('fl').value;
+
+    if(!n || !l) return alert("Completa los datos del archivo");
+    if(!val()) return;
+
+    const met = idF ? 'PATCH' : 'POST';
+    const url = idF ? `${URL}/archivos/${idF}.json` : `${URL}/archivos.json`;
+    await fetch(url, { method: met, body: JSON.stringify({ nombre: n, link: l }) });
+    reset(); load();
+}
+
+// Cargar Producto arriba para editar
+function upProducto(id, nombre, imagen, detalle) {
+    document.getElementById('editIdProd').value = id;
+    document.getElementById('pNombre').value = nombre;
+    document.getElementById('pImg').value = imagen;
+    document.getElementById('pDetalle').value = detalle;
     window.scrollTo(0, document.body.scrollHeight);
 }
 
-// Cargar datos de Archivo arriba
-function upF(idR, idF, n, l) {
-    document.getElementById('rd').value = idR;
+// Cargar Archivo arriba para editar
+function upF(idF, n, l) {
     document.getElementById('editIdF').value = idF;
     document.getElementById('fn').value = n;
     document.getElementById('fl').value = l;
     window.scrollTo(0, document.body.scrollHeight);
 }
 
-async function saveR() {
-    const id = document.getElementById('editIdR').value;
-    const n = document.getElementById('rn').value;
-    if(!n) return alert("Escribe un nombre");
-    if(!val()) return;
-    
-    const met = id ? 'PATCH' : 'POST';
-    const url = id ? `${URL}/${id}.json` : `${URL}.json`;
-    await fetch(url, { method: met, body: JSON.stringify({nombre: n}) });
-    reset(); load();
-}
-
-async function saveF() {
-    const idR = document.getElementById('rd').value;
-    const idF = document.getElementById('editIdF').value;
-    const n = document.getElementById('fn').value;
-    const l = document.getElementById('fl').value;
-    if(!idR || !n || !l) return alert("Completa todos los campos");
-    if(!val()) return;
-
-    const met = idF ? 'PATCH' : 'POST';
-    const url = idF ? `${URL}/${idR}/archivos/${idF}.json` : `${URL}/${idR}/archivos.json`;
-    await fetch(url, { method: met, body: JSON.stringify({nombre: n, link: l}) });
-    reset(); load();
-}
-
 function reset() {
-    document.getElementById('editIdR').value = ""; 
+    document.getElementById('editIdProd').value = "";
+    document.getElementById('pNombre').value = "";
+    document.getElementById('pImg').value = "";
+    document.getElementById('pDetalle').value = "";
     document.getElementById('editIdF').value = "";
-    document.getElementById('rn').value = ""; 
-    document.getElementById('fn').value = ""; 
+    document.getElementById('fn').value = "";
     document.getElementById('fl').value = "";
 }
 
-async function delR(id) { if(confirm("¿Borrar carpeta y todo su contenido?") && val()) { await fetch(`${URL}/${id}.json`, { method:'DELETE' }); load(); } }
-async function delF(idR, idF) { if(confirm("¿Borrar este archivo?") && val()) { await fetch(`${URL}/${idR}/archivos/${idF}.json`, { method:'DELETE' }); load(); } }
+async function delProducto(id) { 
+    if(confirm("¿Borrar este producto?") && val()) { 
+        await fetch(`${URL}/productos/${id}.json`, { method:'DELETE' }); 
+        load(); 
+    } 
+}
 
+async function delF(idF) { 
+    if(confirm("¿Borrar este archivo?") && val()) { 
+        await fetch(`${URL}/archivos/${idF}.json`, { method:'DELETE' }); 
+        load(); 
+    } 
+}
 </script>
 </body>
 </html>
