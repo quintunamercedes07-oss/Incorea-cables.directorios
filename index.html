@@ -2,19 +2,73 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<title>DAILY MENÚ</title></title>
+<title>DAILY MENÚ</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #0e161d; color: white; margin: 0; overflow-x: hidden; }
+    /* MODIFICACIÓN: Fondo general negro puro */
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #000000; color: white; margin: 0; overflow-x: hidden; }
+
+    /* ESTILOS EXCLUSIVOS PARA EL HEADER EN NEGRO */
+    #header {
+        background: #000000;
+        padding: 20px 5%;
+        display: flex;
+        align-items: center;
+        border-bottom: 1px solid #1a252f;
+    }
+
+    #logo-imagen {
+        max-height: 70px;
+        width: auto;
+    }
+
+    #titulo-container {
+        margin-left: 20px;
+    }
+
+    #titulo-container h1 {
+        color: #ffffff;
+        margin: 0;
+        font-size: 26px;
+        letter-spacing: 2px;
+    }
+
+    #titulo-container p {
+        color: #1abc9c;
+        margin: 5px 0 0 0;
+        font-size: 13px;
+        letter-spacing: 1px;
+    }
+
+    /* BARRA DE NAVEGACIÓN EN NEGRO CON TOQUE TURQUESA */
+    #nav {
+        background: #000000;
+        padding: 15px 5%;
+        display: flex;
+        gap: 30px;
+        border-bottom: 2px solid #1abc9c;
+    }
+
+    #nav a {
+        color: #ffffff;
+        text-decoration: none;
+        font-weight: bold;
+        font-size: 14px;
+        letter-spacing: 1px;
+        transition: color 0.3s;
+    }
+
+    #nav a:hover {
+        color: #1abc9c;
+    }
 
     /* --- HERO DINÁMICO CON FORMA --- */
     .hero-dinamico {
         position: relative;
         height: 600px;
         width: 100%;
-        background: #0e161d;
+        background: #000000;
         overflow: hidden;
-        /* Esta es la forma diagonal que pediste */
         clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
     }
 
@@ -23,7 +77,7 @@
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
-        background-image: linear-gradient(rgba(14, 22, 29, 0.6), rgba(14, 22, 29, 0.8)), url('fondo verde.jpg');
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('fondo verde.jpg');
         background-size: cover;
         background-position: center;
         animation: zoomHero 20s infinite alternate;
@@ -51,7 +105,7 @@
         font-size: 60px; 
         letter-spacing: 10px; 
         margin: 0; 
-        text-shadow: 2px 2px 20px rgba(0,0,0,0.7);
+        text-shadow: 2px 2px 20px rgba(0,0,0,0.9);
         animation: fadeInUp 1s ease-out;
     }
 
@@ -67,7 +121,7 @@
         margin-top: 30px;
         padding: 15px 40px;
         background: #1abc9c;
-        color: #0e161d;
+        color: #000000;
         text-decoration: none;
         font-weight: bold;
         border-radius: 50px;
@@ -94,12 +148,20 @@
         margin-top: 20px;
         border: 2px solid #1abc9c;
     }
+
+    #footer {
+        background: #000000;
+        color: #888;
+        text-align: center;
+        padding: 40px;
+        border-top: 1px solid #1a252f;
+    }
 </style>
 </head>
 <body>
 <div id="wrapper">
     <div id="header">
-        <div id="logo-container"><img src="1792723651205.png" id="logo-imagen" alt="Logo"></div>
+        <div id="logo-container"><img src="emprendimiento.jpeg" id="logo-imagen" alt="Logo"></div>
         <div id="titulo-container">
             <h1>DAILY MENÚ</h1>
             <p>Más salud en tu plato, más energía en tu vida</p>
@@ -109,31 +171,30 @@
     <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">NOSOTROS</a>
-           <a href="sistemadegestion.html">NUESTROS PLATOS </a>
-        
+        <a href="sistemadegestion.html">NUESTROS PLATOS</a>
         <a href="contactos.html">CONTACTOS</a>
     </div>
 
     <div class="hero-dinamico">
-        <div class="hero-bg"></div> <div class="hero-overlay">
-            <h2>cambia tu vida</h2>
-            <p>salud y bienestar</p>
-            <img src="grupo.jfif" class="img-hero-pequena" alt="grupo.jfif">
+        <div class="hero-bg"></div> 
+        <div class="hero-overlay">
+            <h2>CAMBIA TU VIDA</h2>
+            <p>SALUD Y BIENESTAR</p>
+            <img src="grupo.jfif" class="img-hero-pequena" alt="grupo">
             <br>
             <a href="contactos.html" class="btn-brillante">DESCUBRIR MÁS</a>
         </div>
     </div>
 
     <div id="main-container" style="padding: 80px 5%; text-align: center;">
-        <h2 style="color:#1abc9c; font-size: 32px; letter-spacing: 2px;">tu mejor opción</h2>
-        <p style="color:#888; margin-bottom: 40px;">cambia ahora tu alimentación.</p>
+        <h2 style="color:#1abc9c; font-size: 32px; letter-spacing: 2px;">TU MEJOR OPCIÓN</h2>
+        <p style="color:#888; margin-bottom: 40px;">Cambia ahora tu alimentación.</p>
         
-        <div class="servicios-grid">
-            </div>
+        <div class="servicios-grid"></div>
     </div>
 
     <div id="footer">
-        <p>&copy;DAILY_MENÚ </p>
+        <p>&copy; DAILY_MENÚ</p>
     </div>
 </div>
 </body>
