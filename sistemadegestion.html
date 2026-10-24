@@ -1,60 +1,119 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>DAILY MENÚ</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    body { font-family: sans-serif; background: #0e161d; color: white; margin: 0; }
-    .container { margin: 20px 5%; min-height: 300px; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #0e161d; color: white; margin: 0; overflow-x: hidden; }
+
+    /* Encabezado del logo en negro puro */
+    #header {
+        background-color: #000000 !important;
+        padding: 20px 5%;
+        display: flex;
+        align-items: center;
+    }
+
+    /* Logo más grande */
+    #logo-imagen {
+        max-height: 120px !important;
+        width: auto !important;
+    }
+
+    .container { margin: 30px 5%; min-height: 300px; }
 
     /* SECCIÓN PRODUCTOS EN CUADROS (3 COLUMNAS) */
     .grid-productos {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+        gap: 25px;
         margin: 30px 0;
     }
 
     .cuadro-producto {
         background: #121c26;
         border: 1px solid #1abc9c33;
-        border-radius: 6px;
-        padding: 12px;
-        text-align: center;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: left;
         transition: 0.3s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
     }
     .cuadro-producto:hover {
         border-color: #1abc9c;
         transform: translateY(-3px);
+        box-shadow: 0 5px 20px rgba(26, 188, 156, 0.2);
     }
     .cuadro-producto img {
         width: 100%;
         height: 180px;
         object-fit: cover;
-        border-radius: 4px;
+        border-radius: 6px;
         background-color: #000;
     }
     .cuadro-titulo {
-        font-size: 15px;
+        font-size: 17px;
         font-weight: bold;
         color: #ffffff;
-        margin-top: 10px;
+        margin-top: 12px;
     }
     .cuadro-desc {
+        font-size: 13px;
+        color: #a0aec0;
+        margin-top: 6px;
+        line-height: 1.4;
+        flex-grow: 1;
+    }
+
+    /* PRECIO Y BOTÓN DE PEDIR */
+    .info-precio-pedido {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-top: 15px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .precio-badge {
+        background: #f1c40f;
+        color: #000000;
+        font-weight: 800;
+        font-size: 16px;
+        padding: 4px 10px;
+        border-radius: 20px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    }
+
+    .btn-pedir {
+        background: #1abc9c;
+        color: #0e161d;
+        text-decoration: none;
+        font-weight: bold;
         font-size: 12px;
-        color: #1abc9c;
-        margin-top: 4px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        transition: 0.3s;
+        box-shadow: 0 0 10px rgba(26, 188, 156, 0.4);
+    }
+    .btn-pedir:hover {
+        background: #ffffff;
+        color: #000000;
+        transform: scale(1.05);
     }
 
     /* ARCHIVOS DE DOCUMENTACIÓN */
     .seccion-titulo {
         color: #1abc9c;
-        font-size: 18px;
+        font-size: 20px;
         font-weight: bold;
-        border-bottom: 1px solid #333;
-        padding-bottom: 5px;
+        border-bottom: 2px solid #1abc9c;
+        padding-bottom: 8px;
         margin-top: 40px;
+        letter-spacing: 1px;
     }
     .archivo { padding: 8px 0 8px 20px; border-left: 1px solid #1abc9c33; margin: 5px 0; }
     .archivo a { color: #eee; text-decoration: none; font-size: 15px; }
@@ -72,64 +131,112 @@
         <div id="logo-container"><img src="1792723651205.png" id="logo-imagen" alt="Logo"></div>
         <div id="titulo-container">
             <h1>DAILY MENÚ</h1>
-            <p>Directorio de Documentación</p>
+            <p>Más salud en tu plato, más energía en tu vida</p>
         </div>
     </div>
 
     <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">NOSOTROS</a>
-        <a href="sistemadegestion.html">NUESTROS PLATOS </a>
+        <a href="sistemadegestion.html">NUESTROS PLATOS</a>
         <a href="contactos.html">CONTACTOS</a>
     </div>
 
     <div class="container">
-        <!-- SECCIÓN DE PRODUCTOS EN CUADROS (EDITABLES DESDE CÓDIGO) -->
-        <div class="seccion-titulo">PRODUCTOS</div>
+        <!-- SECCIÓN DE PRODUCTOS CON PRECIOS Y BOTÓN DE PEDIR -->
+        <div class="seccion-titulo">NUESTROS PLATOS Y MENÚ</div>
         <div class="grid-productos">
             
-            <!-- CUADRO 1 -->
+            <!-- HAMBURGUESAS -->
             <div class="cuadro-producto">
-                <img src="hambu.1.jfif" alt="Producto 1">
-                <div class="cuadro-titulo">Nombre del Producto 1</div>
-                <div class="cuadro-desc">Descripción o código</div>
+                <img src="hambu.1.jfif" alt="Hamburguesa de pollo">
+                <div>
+                    <div class="cuadro-titulo">Hamburguesa de pollo a la parrilla</div>
+                    <div class="cuadro-desc">Pan integral, pollo a la parrilla, lechuga, tomate, cebolla, aguacate y salsa de yogurt. (Alta en proteína)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$4.50</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20la%20Hamburguesa%20de%20pollo%20a%20la%20parrilla%20($4.50)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
             </div>
 
-            <!-- CUADRO 2 -->
+            <!-- WRAPS -->
             <div class="cuadro-producto">
-                <img src="bebidas.1.jfif" alt="Producto 2">
-                <div class="cuadro-titulo">Nombre del Producto 2</div>
-                <div class="cuadro-desc">Descripción o código</div>
+                <img src="wraps.1.jfif" alt="Wrap de pollo">
+                <div>
+                    <div class="cuadro-titulo">Wrap de pollo y vegetales</div>
+                    <div class="cuadro-desc">Tortilla integral, pollo a la parrilla, lechuga, tomate, pepino, zanahoria y hummus. (Rico en fibra)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$4.00</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20el%20Wrap%20de%20pollo%20y%20vegetales%20($4.00)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
             </div>
 
-            <!-- CUADRO 3 -->
+            <!-- BOWLS -->
             <div class="cuadro-producto">
-                <img src="ensaladas.1.jfif" alt="Producto 3">
-                <div class="cuadro-titulo">Nombre del Producto 3</div>
-                <div class="cuadro-desc">Descripción o código</div>
+                <img src="bowls.1.jfif" alt="Bowl de quinoa">
+                <div>
+                    <div class="cuadro-titulo">Bowl de quinoa</div>
+                    <div class="cuadro-desc">Quínoa, pollo a la parrilla, aguacate, tomate cherry, zanahoria, espinaca y semillas. (Fuente de nutrientes)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$4.75</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20el%20Bowl%20de%20quinoa%20($4.75)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
             </div>
-  <!-- CUADRO 3 -->
+
+            <!-- ENSALADAS -->
             <div class="cuadro-producto">
-                <img src="snacks.jfif" alt="Producto 3">
-                <div class="cuadro-titulo">Nombre del Producto 3</div>
-                <div class="cuadro-desc">Descripción o código</div>
-            </div>  <!-- CUADRO 3 -->
-            <div class="cuadro-producto">
-                <img src="postre.1.jfif" alt="Producto 3">
-                <div class="cuadro-titulo">Nombre del Producto 3</div>
-                <div class="cuadro-desc">Descripción o código</div>
-            </div>  <!-- CUADRO 3 -->
-            <div class="cuadro-producto">
-                <img src="bowls.1.jfif" alt="Producto 3">
-                <div class="cuadro-titulo">Nombre del Producto 3</div>
-                <div class="cuadro-desc">Descripción o código</div>
-            </div>  <!-- CUADRO 3 -->
-            <div class="cuadro-producto">
-                <img src="wraps.1.jfif" alt="Producto 3">
-                <div class="cuadro-titulo">Nombre del Producto 3</div>
-                <div class="cuadro-desc">Descripción o código</div>
+                <img src="ensaladas.1.jfif" alt="Ensalada fresca de atún">
+                <div>
+                    <div class="cuadro-titulo">Ensalada fresca de atún</div>
+                    <div class="cuadro-desc">Lechuga, atún, aguacate, tomate cherry, pepino, zanahoria y semillas. (Omega 3)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$4.25</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20la%20Ensalada%20fresca%20de%20atún%20($4.25)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
             </div>
-            <!-- Puedes copiar y pegar más cuadros aquí si necesitas más filas -->
+
+            <!-- SNACKS -->
+            <div class="cuadro-producto">
+                <img src="snacks.jfif" alt="Papas de camote">
+                <div>
+                    <div class="cuadro-titulo">Papas de camote</div>
+                    <div class="cuadro-desc">Crujientes, horneadas y bajas en grasa. Acompañadas con salsa de aguacate. (Ricas en antioxidantes)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$2.50</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20las%20Papas%20de%20camote%20($2.50)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
+            </div>
+
+            <!-- BEBIDAS -->
+            <div class="cuadro-producto">
+                <img src="bebidas.1.jfif" alt="Smoothie verde">
+                <div>
+                    <div class="cuadro-titulo">Smoothie verde</div>
+                    <div class="cuadro-desc">Espinaca, piña, manzana y jengibre. (Energía natural)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$2.75</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20el%20Smoothie%20verde%20($2.75)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
+            </div>
+
+            <!-- POSTRES -->
+            <div class="cuadro-producto">
+                <img src="postre.1.jfif" alt="Yogur con granola">
+                <div>
+                    <div class="cuadro-titulo">Yogur con granola</div>
+                    <div class="cuadro-desc">Yogur natural, granola integral y frutas frescas. (Probióticos)</div>
+                </div>
+                <div class="info-precio-pedido">
+                    <span class="precio-badge">$2.50</span>
+                    <a href="https://wa.me/593900000000?text=Hola,%20quiero%20pedir%20el%20Yogur%20con%20granola%20($2.50)" target="_blank" class="btn-pedir">🛒 PEDIR</a>
+                </div>
+            </div>
 
         </div>
 
@@ -139,7 +246,7 @@
     </div>
 
     <div id="footer">
-        <p>&copy;DAILY_MENÚ</p>
+        <p>&copy; DAILY_MENÚ</p>
     </div>
 </div>
 
