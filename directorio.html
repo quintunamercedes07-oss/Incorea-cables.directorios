@@ -5,32 +5,87 @@
 <title>DAILY MENÚ</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    .visor-directo-container {
+    /* NUEVA SECCIÓN DIRECTORIO (Doble columna: Imagen + Texto) */
+    .seccion-directorio {
         margin: 30px 5%;
         background: rgba(17, 29, 40, 0.75);
         backdrop-filter: blur(16px);
         -webkit-backdrop-filter: blur(16px);
         border: 2px solid rgba(26, 188, 156, 0.4);
         border-radius: 12px;
-        padding: 10px;
+        padding: 30px;
         box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        overflow: hidden; /* Esto es clave para recortar la barra superior */
-    }
-    .iframe-responsivo {
-        position: relative;
-        width: 100%;
-        height: 75vh;
-        border-radius: 8px;
-        overflow: hidden;
+        display: flex;
+        align-items: center;
+        gap: 30px;
     }
 
-    .iframe-responsivo iframe {
-        position: absolute;
-        top: -36px; /* Empuja el iframe hacia arriba para tapar la barra "Modo Lectura" */
-        left: 0;
+    .directorio-col-imagen {
+        flex: 1;
+        max-width: 50%;
+    }
+
+    .directorio-col-imagen img {
         width: 100%;
-        height: calc(100% + 36px); /* Le suma el tamaño que empujamos arriba para que no quede un hueco abajo */
-        border: none;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid rgba(26, 188, 156, 0.3);
+        box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+    }
+
+    .directorio-col-texto {
+        flex: 1;
+        color: #ffffff;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .directorio-col-texto h3 {
+        color: #1abc9c;
+        font-size: 24px;
+        margin-top: 0;
+        margin-bottom: 15px;
+        letter-spacing: 1px;
+    }
+
+    .directorio-col-texto p {
+        color: #d1d5db;
+        font-size: 15px;
+        line-height: 1.6;
+        margin-bottom: 15px;
+    }
+
+    .directorio-col-texto ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .directorio-col-texto ul li {
+        padding: 6px 0;
+        color: #eee;
+        font-size: 14px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .directorio-col-texto ul li span {
+        color: #1abc9c;
+        font-weight: bold;
+    }
+
+    /* Adaptación para pantallas pequeñas / teléfonos */
+    @media (max-width: 768px) {
+        .seccion-directorio {
+            flex-direction: column;
+            padding: 20px;
+        }
+        .directorio-col-imagen {
+            max-width: 100%;
+            width: 100%;
+        }
+        .directorio-col-imagen img {
+            height: 250px;
+        }
     }
 </style>
 </head>
@@ -47,7 +102,7 @@
     <div id="nav">
         <a href="index.html">INICIO</a>
         <a href="directorio.html">NOSOTROS</a>
-           <a href="sistemadegestion.html">NUESTROS PLATOS</a>
+        <a href="sistemadegestion.html">NUESTROS PLATOS</a>
         <a href="contactos.html">CONTACTOS</a>
     </div>
 
@@ -58,17 +113,32 @@
         </div>
     </div>
 
-    <div class="visor-directo-container">
-        <div class="iframe-responsivo">
-            <iframe 
-                src="https://1drv.ms/x/c/8ad1b5577dde8d52/IQBIMkIlwwmSS6m2tLrkLS-iAcOJWA6NPVSlQkVQpkdC4fg?e=mHgaYz&wdAllowInteractivity=False&action=embedview" 
-                allowfullscreen>
-            </iframe>
+    <!-- NUEVA ESTRUCTURA DE DIRECTORIO: IMAGEN A UN LADO Y TEXTO AL OTRO -->
+    <div class="seccion-directorio">
+        
+        <!-- COLUMNA IZQUIERDA: IMAGEN -->
+        <div class="directorio-col-imagen">
+            <img src="URL_DE_TU_IMAGEN.jpg" alt="Imagen Directorio">
         </div>
+
+        <!-- COLUMNA DERECHA: TEXTO -->
+        <div class="directorio-col-texto">
+            <h3>Información del Directorio</h3>
+            <p>
+                Bienvenido a nuestro directorio de servicios para el año 2026. Aquí encontrarás todos los detalles y especificaciones necesarios para conocer más sobre nuestra oferta gastronómica y de atención.
+            </p>
+            <ul>
+                <li><span>Categoría:</span> Menú Diario y Especiales</li>
+                <li><span>Disponibilidad:</span> Lunes a Sábado</li>
+                <li><span>Horario de Atención:</span> 08:00 AM - 08:00 PM</li>
+                <li><span>Atención al Cliente:</span> Soporte Directo</li>
+            </ul>
+        </div>
+
     </div>
 
     <div id="footer" style="clear: both; padding: 40px; text-align: center; background: #0e161d; border-top: 4px solid #1abc9c;">
-        <p>DAILY_MENÚ</p>
+        <p>&copy; DAILY_MENÚ</p>
     </div>
 </div>
 </body>
