@@ -3,66 +3,26 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>DAILY MENÚ</title>
-<link href="estilos.css" rel="stylesheet" type="test/css">
+<link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* Fondo general negro puro */
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #000000; color: white; margin: 0; overflow-x: hidden; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #0e161d; color: white; margin: 0; overflow-x: hidden; }
 
-    #wrapper {
-        background: #000000;
-    }
-
+    /* Forzamos el fondo negro puro solo en el header y nav manteniendo intacto el diseño */
     #header {
-        background: #000000 !important;
-        padding: 25px 5%;
+        background-color: #000000 !important;
+        padding: 20px 5%;
         display: flex;
         align-items: center;
-        border-bottom: 1px solid #1a252f;
-    }
-
-    /* LOGO MÁS GRANDE */
-    #logo-imagen {
-        max-height: 110px; /* Aumentado de 70px a 110px */
-        width: auto;
-    }
-
-    #titulo-container {
-        margin-left: 25px;
-    }
-
-    #titulo-container h1 {
-        color: #ffffff;
-        margin: 0;
-        font-size: 30px;
-        letter-spacing: 2px;
-    }
-
-    #titulo-container p {
-        color: #1abc9c;
-        margin: 5px 0 0 0;
-        font-size: 14px;
-        letter-spacing: 1px;
     }
 
     #nav {
-        background: #000000 !important;
-        padding: 15px 5%;
-        display: flex;
-        gap: 30px;
-        border-bottom: 2px solid #1abc9c;
+        background-color: #000000 !important;
     }
 
-    #nav a {
-        color: #ffffff;
-        text-decoration: none;
-        font-weight: bold;
-        font-size: 14px;
-        letter-spacing: 1px;
-        transition: color 0.3s;
-    }
-
-    #nav a:hover {
-        color: #1abc9c;
+    /* Logo más grande */
+    #logo-imagen {
+        max-height: 120px !important;
+        width: auto !important;
     }
 
     /* --- HERO DINÁMICO CON FORMA --- */
@@ -70,7 +30,7 @@
         position: relative;
         height: 600px;
         width: 100%;
-        background: #000000;
+        background: #0e161d;
         overflow: hidden;
         clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
     }
@@ -79,7 +39,7 @@
         position: absolute;
         top: 0; left: 0;
         width: 100%; height: 100%;
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.9)), url('fondo verde.jpg');
+        background-image: linear-gradient(rgba(14, 22, 29, 0.6), rgba(14, 22, 29, 0.8)), url('fondo verde.jpg');
         background-size: cover;
         background-position: center;
         animation: zoomHero 20s infinite alternate;
@@ -107,7 +67,7 @@
         font-size: 60px; 
         letter-spacing: 10px; 
         margin: 0; 
-        text-shadow: 2px 2px 20px rgba(0,0,0,0.9);
+        text-shadow: 2px 2px 20px rgba(0,0,0,0.7);
         animation: fadeInUp 1s ease-out;
     }
 
@@ -123,7 +83,7 @@
         margin-top: 30px;
         padding: 15px 40px;
         background: #1abc9c;
-        color: #000000;
+        color: #0e161d;
         text-decoration: none;
         font-weight: bold;
         border-radius: 50px;
@@ -147,14 +107,6 @@
         border-radius: 10px;
         margin-top: 20px;
         border: 2px solid #1abc9c;
-    }
-
-    #footer {
-        background: #000000;
-        color: #888;
-        text-align: center;
-        padding: 40px;
-        border-top: 1px solid #1a252f;
     }
 </style>
 </head>
