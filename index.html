@@ -5,10 +5,14 @@
 <title>DAILY MENÚ</title>
 <link href="estilos.css" rel="stylesheet" type="text/css">
 <style>
-    /* MODIFICACIÓN: Fondo general negro puro */
+    /* Fondo general negro puro */
     body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #000000; color: white; margin: 0; overflow-x: hidden; }
 
-    /* ESTILOS EXCLUSIVOS PARA EL HEADER EN NEGRO */
+    /* CONTENEDOR PRINCIPAL Y HEADER EN NEGRO TOTAL */
+    #wrapper {
+        background: #000000;
+    }
+
     #header {
         background: #000000;
         padding: 20px 5%;
@@ -40,7 +44,7 @@
         letter-spacing: 1px;
     }
 
-    /* BARRA DE NAVEGACIÓN EN NEGRO CON TOQUE TURQUESA */
+    /* BARRA DE NAVEGACIÓN EN NEGRO */
     #nav {
         background: #000000;
         padding: 15px 5%;
@@ -72,7 +76,6 @@
         clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
     }
 
-    /* La imagen con animación de zoom */
     .hero-bg {
         position: absolute;
         top: 0; left: 0;
@@ -135,13 +138,11 @@
         transform: scale(1.05);
     }
 
-    /* Animaciones de entrada */
     @keyframes fadeInUp {
         from { opacity: 0; transform: translateY(30px); }
         to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Ajuste para la imagen pequeña del equipo */
     .img-hero-pequena {
         width: 150px;
         border-radius: 10px;
