@@ -7,7 +7,7 @@
 <style>
     body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #0e161d; color: white; margin: 0; overflow-x: hidden; }
 
-    /* SOLO EL HEADER (arriba del logo) SE PONE NEGRO */
+    /* Únicamente el header (arriba del logo) en negro puro */
     #header {
         background-color: #000000 !important;
         padding: 20px 5%;
@@ -15,18 +15,13 @@
         align-items: center;
     }
 
-    /* EL NAV (INICIO, NOSOTROS, ETC.) SE QUEDA CON SU COLOR ORIGINAL */
-    #nav {
-        /* No modificamos el fondo del nav para que respete tu diseño original */
-    }
-
-    /* Logo más grande */
+    /* Imagen del logo más grande */
     #logo-imagen {
         max-height: 120px !important;
         width: auto !important;
     }
 
-    /* --- HERO DINÁMICO CON FORMA --- */
+    /* --- HERO DINÁMICO (SIN NINGÚN EFECTO DE ZOOM EN LA IMAGEN) --- */
     .hero-dinamico {
         position: relative;
         height: 600px;
@@ -36,6 +31,7 @@
         clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
     }
 
+    /* Imagen estática sin animación */
     .hero-bg {
         position: absolute;
         top: 0; left: 0;
@@ -43,13 +39,7 @@
         background-image: linear-gradient(rgba(14, 22, 29, 0.6), rgba(14, 22, 29, 0.8)), url('fondo verde.jpg');
         background-size: cover;
         background-position: center;
-        animation: zoomHero 20s infinite alternate;
         z-index: 1;
-    }
-
-    @keyframes zoomHero {
-        from { transform: scale(1); }
-        to { transform: scale(1.2); }
     }
 
     .hero-overlay {
