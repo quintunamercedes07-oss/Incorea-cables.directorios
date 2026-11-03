@@ -3,319 +3,326 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voces Literarias - Mapa Mental</title>
-  <!-- Fuentes bonitas desde Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <title>Voces Literarias - Collage Interactivo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   
   <style>
-    /* VARIABLES DE COLOR */
-    :root {
-      --bg-color: #f4efe6;
-      --text-color: #2c2523;
-      --center-bg: #8c2d19;
-      --center-text: #ffffff;
-      /* Colores para las 11 nubes de los autores */
-      --color-1: #e74c3c;
-      --color-2: #27ae60;
-      --color-3: #f39c12;
-      --color-4: #2980b9;
-      --color-5: #8e44ad;
-      --color-6: #d35400;
-      --color-7: #16a085;
-      --color-8: #c0392b;
-      --color-9: #7f8c8d;
-      --color-10: #2c3e50;
-      --color-11: #9b59b6;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
       font-family: 'Poppins', sans-serif;
-      background-color: var(--bg-color);
-      color: var(--text-color);
+      background-color: #f7f3ed;
+      /* Fondo con textura artística suave */
+      background-image: radial-gradient(#d3c9b8 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: #2b2b2b;
       min-height: 100vh;
       overflow-x: hidden;
-    }
-
-    /* VISTA 1: MAPA MENTAL PRINCIPAL */
-    #mindmap-view {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      padding: 40px 20px;
-    }
-
-    .mindmap-container {
-      position: relative;
-      width: 100%;
-      max-width: 900px;
-      height: 700px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    /* NÚCLEO CENTRAL */
-    .center-node {
-      position: absolute;
-      width: 180px;
-      height: 180px;
-      background-color: var(--center-bg);
-      color: var(--center-text);
-      border-radius: 50%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
       padding: 20px;
-      z-index: 10;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      border: 4px solid #fff;
     }
 
-    .center-node h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem;
-      line-height: 1.2;
+    header {
+      text-align: center;
+      margin-bottom: 20px;
     }
 
-    /* NODOS / NUBES DE LOS 11 AUTORES */
-    .author-node {
-      position: absolute;
-      width: 130px;
-      height: 100px;
-      border-radius: 50px 30px 50px 30px;
+    header h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 3.5rem;
+      color: #8c2d19;
+      transform: rotate(-2deg);
+      text-shadow: 2px 2px 0px #fff;
+    }
+
+    header p {
+      font-size: 1rem;
+      color: #666;
+    }
+
+    /* CONTENEDOR TIPO CANVAS / COLLAGE */
+    .collage-board {
+      position: relative;
+      max-width: 1100px;
+      min-height: 750px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 25px;
+      padding: 30px 10px;
+    }
+
+    /* TARJETAS CON ESTILO "DESORGANIZADO DIVERTIRO" */
+    .author-card {
+      position: relative;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: space-between;
+      border: 3px solid rgba(255,255,255,0.8);
+      z-index: 1;
+    }
+
+    .author-card:hover {
+      transform: scale(1.08) rotate(0deg) !important;
+      z-index: 10;
+      box-shadow: 0 18px 30px rgba(0,0,0,0.18);
+    }
+
+    .author-card h3 {
+      font-family: 'Caveat', cursive;
+      font-size: 1.8rem;
+      color: #fff;
       text-align: center;
-      color: white;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .author-card .genre-tag {
+      background: rgba(255,255,255,0.25);
+      color: #fff;
+      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 12px;
       font-weight: 600;
-      cursor: pointer;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      padding: 10px;
-      z-index: 5;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      text-transform: uppercase;
     }
 
-    .author-node:hover {
-      transform: scale(1.15) rotate(2deg);
-      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    /* BOTÓN PARA SUBIR VIDEO EN LA TARJETA */
+    .upload-btn-wrapper {
+      margin-top: 12px;
+      width: 100%;
     }
 
-    .author-node span {
-      font-size: 0.85rem;
-      margin-top: 4px;
-      opacity: 0.9;
-    }
-
-    /* POSICIONES RADIALES DE LOS 11 AUTORES */
-    .node-1  { background-color: var(--color-1);  top: 5%;   left: 50%; transform: translateX(-50%); }
-    .node-2  { background-color: var(--color-2);  top: 15%;  left: 75%; }
-    .node-3  { background-color: var(--color-3);  top: 32%;  left: 88%; }
-    .node-4  { background-color: var(--color-4);  top: 55%;  left: 85%; }
-    .node-5  { background-color: var(--color-5);  top: 75%;  left: 70%; }
-    .node-6  { background-color: var(--color-6);  top: 85%;  left: 45%; }
-    .node-7  { background-color: var(--color-7);  top: 75%;  left: 18%; }
-    .node-8  { background-color: var(--color-8);  top: 55%;  left: 4%;  }
-    .node-9  { background-color: var(--color-9);  top: 32%;  left: 2%;  }
-    .node-10 { background-color: var(--color-10); top: 15%;  left: 15%; }
-    .node-11 { background-color: var(--color-11); top: 38%;  left: 50%; transform: translate(-50%, -180px); }
-
-    /* VISTA 2: PÁGINA INDIVIDUAL DEL AUTOR */
-    #author-view {
+    .upload-btn-wrapper input[type=file] {
       display: none;
-      min-height: 100vh;
-      padding: 40px 20px;
-      max-width: 900px;
-      margin: 0 auto;
     }
 
-    .back-btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background-color: #2c2523;
-      color: white;
-      border: none;
-      border-radius: 20px;
+    .custom-upload-btn {
+      display: block;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      text-align: center;
+      padding: 6px 12px;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
       cursor: pointer;
-      font-weight: 600;
-      margin-bottom: 30px;
       transition: background 0.2s;
     }
 
-    .back-btn:hover { background-color: #555; }
-
-    .author-header {
-      margin-bottom: 25px;
+    .custom-upload-btn:hover {
+      background: #ffffff;
     }
 
-    .author-header h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: 2.5rem;
-    }
+    /* COLORES Y FORMAS INDIVIDUALES DESORGANIZADAS */
+    .card-1  { background: #e74c3c; width: 220px; height: 180px; transform: rotate(-5deg);  border-radius: 35px 15px 30px 20px; }
+    .card-2  { background: #27ae60; width: 190px; height: 210px; transform: rotate(4deg);   border-radius: 15px 40px 20px 35px; }
+    .card-3  { background: #f39c12; width: 240px; height: 170px; transform: rotate(-3deg);  border-radius: 30px 20px 40px 15px; }
+    .card-4  { background: #2980b9; width: 200px; height: 190px; transform: rotate(6deg);   border-radius: 20px 30px 15px 40px; }
+    .card-5  { background: #8e44ad; width: 210px; height: 200px; transform: rotate(-6deg);  border-radius: 40px 25px 20px 30px; }
+    .card-6  { background: #d35400; width: 230px; height: 175px; transform: rotate(3deg);   border-radius: 25px 35px 30px 15px; }
+    .card-7  { background: #16a085; width: 195px; height: 205px; transform: rotate(-4deg);  border-radius: 30px 15px 35px 25px; }
+    .card-8  { background: #c0392b; width: 225px; height: 185px; transform: rotate(5deg);   border-radius: 20px 40px 15px 30px; }
+    .card-9  { background: #d4ac0d; width: 205px; height: 195px; transform: rotate(-7deg);  border-radius: 35px 20px 30px 25px; }
+    .card-10 { background: #2c3e50; width: 235px; height: 180px; transform: rotate(2deg);   border-radius: 15px 30px 25px 40px; }
+    .card-11 { background: #9b59b6; width: 215px; height: 190px; transform: rotate(-3deg);  border-radius: 30px 35px 20px 20px; }
 
-    /* REPRODUCTOR DE VIDEO EMBEBIDO */
-    .video-container {
-      position: relative;
-      width: 100%;
-      padding-bottom: 56.25%; /* Relación 16:9 */
-      height: 0;
-      background-color: #000;
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    .video-container iframe {
-      position: absolute;
+    /* VISTA DE EXPANSIÓN DINÁMICA (EN LA MISMA PÁGINA) */
+    .overlay {
+      position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
-      border: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(5px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
     }
 
-    /* ADAPTACIÓN A CELULARES */
-    @media (max-width: 768px) {
-      .mindmap-container {
-        height: auto;
-        flex-direction: column;
-        gap: 15px;
-      }
-      .center-node, .author-node {
-        position: static !important;
-        transform: none !important;
-        width: 100%;
-        max-width: 300px;
-        height: auto;
-        padding: 15px;
-        border-radius: 12px;
-      }
+    .overlay.active {
+      display: flex;
+      opacity: 1;
+    }
+
+    .expanded-card {
+      background: #fff;
+      width: 90%;
+      max-width: 700px;
+      border-radius: 28px;
+      padding: 30px;
+      position: relative;
+      transform: scale(0.7);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+    }
+
+    .overlay.active .expanded-card {
+      transform: scale(1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      font-size: 2rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+    }
+
+    .expanded-title {
+      font-family: 'Caveat', cursive;
+      font-size: 2.8rem;
+      margin-bottom: 5px;
+    }
+
+    .expanded-genre {
+      font-weight: 600;
+      color: #777;
+      margin-bottom: 15px;
+    }
+
+    .video-player-box {
+      width: 100%;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #000;
+      max-height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .video-player-box video {
+      width: 100%;
+      max-height: 400px;
+    }
+
+    .no-video-msg {
+      color: #fff;
+      padding: 40px;
+      text-align: center;
     }
   </style>
 </head>
 <body>
 
-  <!-- ==================== VISTA 1: MAPA MENTAL ==================== -->
-  <section id="mindmap-view">
-    <div class="mindmap-container">
+  <header>
+    <h1>✨ Voces Literarias ✨</h1>
+    <p>Haz clic en cada autor para reproducir su video o sube uno nuevo directamente.</p>
+  </header>
+
+  <!-- COLLAGE DE LOS 11 AUTORES -->
+  <main class="collage-board" id="collageBoard"></main>
+
+  <!-- VENTANA DINÁMICA DE REPRODUCCIÓN (EN LA MISMA PÁGINA) -->
+  <div class="overlay" id="videoOverlay">
+    <div class="expanded-card">
+      <button class="close-btn" onclick="closeVideo()">✕</button>
+      <h2 class="expanded-title" id="expTitle">Autor</h2>
+      <p class="expanded-genre" id="expGenre">Género</p>
       
-      <!-- NÚCLEO CENTRAL -->
-      <div class="center-node">
-        📖
-        <h1>Voces Literarias</h1>
-        <p style="font-size: 0.75rem;">11 Autores</p>
+      <div class="video-player-box" id="videoContainer">
+        <!-- El video subido se inserta aquí -->
       </div>
-
-      <!-- 11 AUTORES -->
-      <div class="author-node node-1" onclick="openAuthor(0)">
-        Gabriel G. M.
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-2" onclick="openAuthor(1)">
-        Isabel Allende
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-3" onclick="openAuthor(2)">
-        Jorge L. Borges
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-4" onclick="openAuthor(3)">
-        Julio Cortázar
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-5" onclick="openAuthor(4)">
-        Mario Vargas L.
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-6" onclick="openAuthor(5)">
-        Laura Esquivel
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-7" onclick="openAuthor(6)">
-        Octavio Paz
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-8" onclick="openAuthor(7)">
-        Pablo Neruda
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-9" onclick="openAuthor(8)">
-        Gabriela Mistral
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-10" onclick="openAuthor(9)">
-        Juan Rulfo
-        <span>▶ Ver Video</span>
-      </div>
-      <div class="author-node node-11" onclick="openAuthor(10)">
-        Carlos Fuentes
-        <span>▶ Ver Video</span>
-      </div>
-
     </div>
-  </section>
+  </div>
 
-  <!-- ==================== VISTA 2: PÁGINA DEL AUTOR ==================== -->
-  <section id="author-view">
-    <button class="back-btn" onclick="showMap()">← Volver al Mapa Principal</button>
-    
-    <div class="author-header">
-      <h2 id="author-name">Nombre del Autor</h2>
-      <p id="author-genre" style="color: #666;">Género Literario</p>
-    </div>
-
-    <div class="video-container">
-      <iframe id="video-iframe" src="" allowfullscreen></iframe>
-    </div>
-  </section>
-
-  <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
   <script>
-    // DATOS DE LOS 11 AUTORES (Reemplaza los enlaces de YouTube por los tuyos)
+    // DATOS DE LOS 11 AUTORES
     const authors = [
-      { name: "Gabriel García Márquez", genre: "Realismo Mágico", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Isabel Allende", genre: "Novela Contemporánea", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Jorge Luis Borges", genre: "Ficción & Filosofía", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Julio Cortázar", genre: "Cuento y Ficción", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Mario Vargas Llosa", genre: "Novela y Ensayo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Laura Esquivel", genre: "Literatura Romántica", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Octavio Paz", genre: "Poesía y Ensayo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Pablo Neruda", genre: "Poesía Lírica", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Gabriela Mistral", genre: "Poesía", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Juan Rulfo", genre: "Ficción Métrica", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
-      { name: "Carlos Fuentes", genre: "Narrativa Moderna", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+      { id: 1, name: "Gabriel García M.", genre: "Realismo Mágico", videoSrc: null },
+      { id: 2, name: "Isabel Allende", genre: "Novela Contemporánea", videoSrc: null },
+      { id: 3, name: "Jorge Luis Borges", genre: "Ficción & Ensayo", videoSrc: null },
+      { id: 4, name: "Julio Cortázar", genre: "Cuento Fantástico", videoSrc: null },
+      { id: 5, name: "Mario Vargas Llosa", genre: "Narrativa Moderna", videoSrc: null },
+      { id: 6, name: "Laura Esquivel", genre: "Literatura Romántica", videoSrc: null },
+      { id: 7, name: "Octavio Paz", genre: "Poesía & Filosofía", videoSrc: null },
+      { id: 8, name: "Pablo Neruda", genre: "Poesía Lírica", videoSrc: null },
+      { id: 9, name: "Gabriela Mistral", genre: "Poesía Educativa", videoSrc: null },
+      { id: 10, name: "Juan Rulfo", genre: "Ficción Mexicana", videoSrc: null },
+      { id: 11, name: "Carlos Fuentes", genre: "Ensayo & Novela", videoSrc: null }
     ];
 
-    // Función para abrir la página del autor
-    function openAuthor(index) {
-      const author = authors[index];
-      
-      // Actualizar información
-      document.getElementById('author-name').innerText = author.name;
-      document.getElementById('author-genre').innerText = author.genre;
-      document.getElementById('video-iframe').src = author.videoUrl;
+    const board = document.getElementById('collageBoard');
 
-      // Cambiar de vista
-      document.getElementById('mindmap-view').style.display = 'none';
-      document.getElementById('author-view').style.display = 'block';
-      window.scrollTo(0, 0);
+    // MOSTRAR LAS 11 TARJETAS EN EL COLLAGE
+    authors.forEach((author, index) => {
+      const card = document.createElement('div');
+      card.className = `author-card card-${index + 1}`;
+      
+      card.innerHTML = `
+        <div style="width: 100%; text-align: center;" onclick="playAuthorVideo(${index})">
+          <h3>${author.name}</h3>
+          <span class="genre-tag">${author.genre}</span>
+        </div>
+        
+        <div class="upload-btn-wrapper" onclick="event.stopPropagation();">
+          <label class="custom-upload-btn" for="file-upload-${index}">
+            📁 Subir Video
+          </label>
+          <input id="file-upload-${index}" type="file" accept="video/*" onchange="handleFileUpload(event, ${index})"/>
+        </div>
+      `;
+      
+      board.appendChild(card);
+    });
+
+    // GUARDAR EL VIDEO SUBIDO DESDE EL NAVEGADOR
+    function handleFileUpload(event, index) {
+      const file = event.target.files[0];
+      if (file) {
+        const fileURL = URL.createObjectURL(file);
+        authors[index].videoSrc = fileURL;
+        alert(`¡Video cargado con éxito para ${authors[index].name}! Haz clic en el cuadro para verlo.`);
+      }
     }
 
-    // Función para regresar al mapa principal
-    function showMap() {
-      // Detener el video al salir
-      document.getElementById('video-iframe').src = '';
+    // ABRIR REPRODUCCIÓN DINÁMICA
+    function playAuthorVideo(index) {
+      const author = authors[index];
+      document.getElementById('expTitle').innerText = author.name;
+      document.getElementById('expGenre').innerText = author.genre;
+
+      const container = document.getElementById('videoContainer');
       
-      // Cambiar de vista
-      document.getElementById('author-view').style.display = 'none';
-      document.getElementById('mindmap-view').style.display = 'flex';
+      if (author.videoSrc) {
+        container.innerHTML = `<video src="${author.videoSrc}" controls autoplay></video>`;
+      } else {
+        container.innerHTML = `
+          <div class="no-video-msg">
+            🎬 Aún no has subido un video para este autor.<br><br>
+            ¡Haz clic en el botón <b>"📁 Subir Video"</b> de su tarjeta para agregarlo!
+          </div>`;
+      }
+
+      const overlay = document.getElementById('videoOverlay');
+      overlay.classList.add('active');
+    }
+
+    // CERRAR VIDEO
+    function closeVideo() {
+      const overlay = document.getElementById('videoOverlay');
+      overlay.classList.remove('active');
+      document.getElementById('videoContainer').innerHTML = ''; // Detiene la reproducción
     }
   </script>
 </body>
