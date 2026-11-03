@@ -1,279 +1,322 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
-<html>
-
+<!DOCTYPE html>
+<html lang="es">
 <head>
-
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-
-<title>DAILY MENÚ</title></title>
-
-<link href="estilos.css" rel="stylesheet" type="text/css">
-
-<style>
-
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #0e161d; color: white; margin: 0; overflow-x: hidden; }
-
-
-
-    /* --- HERO DINÁMICO CON FORMA --- */
-
-    .hero-dinamico {
-
-        position: relative;
-
-        height: 600px;
-
-        width: 100%;
-
-        background: #0e161d;
-
-        overflow: hidden;
-
-        /* Esta es la forma diagonal que pediste */
-
-        clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voces Literarias - Mapa Mental</title>
+  <!-- Fuentes bonitas desde Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* VARIABLES DE COLOR */
+    :root {
+      --bg-color: #f4efe6;
+      --text-color: #2c2523;
+      --center-bg: #8c2d19;
+      --center-text: #ffffff;
+      /* Colores para las 11 nubes de los autores */
+      --color-1: #e74c3c;
+      --color-2: #27ae60;
+      --color-3: #f39c12;
+      --color-4: #2980b9;
+      --color-5: #8e44ad;
+      --color-6: #d35400;
+      --color-7: #16a085;
+      --color-8: #c0392b;
+      --color-9: #7f8c8d;
+      --color-10: #2c3e50;
+      --color-11: #9b59b6;
     }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-
-    /* La imagen con animación de zoom */
-
-    .hero-bg {
-
-        position: absolute;
-
-        top: 0; left: 0;
-
-        width: 100%; height: 100%;
-
-        background-image: linear-gradient(rgba(14, 22, 29, 0.6), rgba(14, 22, 29, 0.8)), url('fondo verde.jpg');
-
-        background-size: cover;
-
-        background-position: center;
-
-        animation: zoomHero 20s infinite alternate;
-
-        z-index: 1;
-
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-
-
-    @keyframes zoomHero {
-
-        from { transform: scale(1); }
-
-        to { transform: scale(1.2); }
-
+    /* VISTA 1: MAPA MENTAL PRINCIPAL */
+    #mindmap-view {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 40px 20px;
     }
 
+    .mindmap-container {
+      position: relative;
+      width: 100%;
+      max-width: 900px;
+      height: 700px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
+    /* NÚCLEO CENTRAL */
+    .center-node {
+      position: absolute;
+      width: 180px;
+      height: 180px;
+      background-color: var(--center-bg);
+      color: var(--center-text);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 20px;
+      z-index: 10;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      border: 4px solid #fff;
+    }
 
-    .hero-overlay {
+    .center-node h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      line-height: 1.2;
+    }
 
-        position: relative;
+    /* NODOS / NUBES DE LOS 11 AUTORES */
+    .author-node {
+      position: absolute;
+      width: 130px;
+      height: 100px;
+      border-radius: 50px 30px 50px 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: white;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      padding: 10px;
+      z-index: 5;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
 
-        z-index: 2;
+    .author-node:hover {
+      transform: scale(1.15) rotate(2deg);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
 
-        display: flex;
+    .author-node span {
+      font-size: 0.85rem;
+      margin-top: 4px;
+      opacity: 0.9;
+    }
 
+    /* POSICIONES RADIALES DE LOS 11 AUTORES */
+    .node-1  { background-color: var(--color-1);  top: 5%;   left: 50%; transform: translateX(-50%); }
+    .node-2  { background-color: var(--color-2);  top: 15%;  left: 75%; }
+    .node-3  { background-color: var(--color-3);  top: 32%;  left: 88%; }
+    .node-4  { background-color: var(--color-4);  top: 55%;  left: 85%; }
+    .node-5  { background-color: var(--color-5);  top: 75%;  left: 70%; }
+    .node-6  { background-color: var(--color-6);  top: 85%;  left: 45%; }
+    .node-7  { background-color: var(--color-7);  top: 75%;  left: 18%; }
+    .node-8  { background-color: var(--color-8);  top: 55%;  left: 4%;  }
+    .node-9  { background-color: var(--color-9);  top: 32%;  left: 2%;  }
+    .node-10 { background-color: var(--color-10); top: 15%;  left: 15%; }
+    .node-11 { background-color: var(--color-11); top: 38%;  left: 50%; transform: translate(-50%, -180px); }
+
+    /* VISTA 2: PÁGINA INDIVIDUAL DEL AUTOR */
+    #author-view {
+      display: none;
+      min-height: 100vh;
+      padding: 40px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #2c2523;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-weight: 600;
+      margin-bottom: 30px;
+      transition: background 0.2s;
+    }
+
+    .back-btn:hover { background-color: #555; }
+
+    .author-header {
+      margin-bottom: 25px;
+    }
+
+    .author-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+    }
+
+    /* REPRODUCTOR DE VIDEO EMBEBIDO */
+    .video-container {
+      position: relative;
+      width: 100%;
+      padding-bottom: 56.25%; /* Relación 16:9 */
+      height: 0;
+      background-color: #000;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    /* ADAPTACIÓN A CELULARES */
+    @media (max-width: 768px) {
+      .mindmap-container {
+        height: auto;
         flex-direction: column;
-
-        justify-content: center;
-
-        align-items: center;
-
-        height: 100%;
-
-        text-align: center;
-
-        padding: 0 20px;
-
+        gap: 15px;
+      }
+      .center-node, .author-node {
+        position: static !important;
+        transform: none !important;
+        width: 100%;
+        max-width: 300px;
+        height: auto;
+        padding: 15px;
+        border-radius: 12px;
+      }
     }
-
-
-
-    .hero-overlay h2 { 
-
-        font-size: 60px; 
-
-        letter-spacing: 10px; 
-
-        margin: 0; 
-
-        text-shadow: 2px 2px 20px rgba(0,0,0,0.7);
-
-        animation: fadeInUp 1s ease-out;
-
-    }
-
-
-
-    .hero-overlay p { 
-
-        font-size: 18px; 
-
-        color: #1abc9c; 
-
-        font-weight: bold; 
-
-        margin-top: 15px;
-
-        letter-spacing: 3px;
-
-    }
-
-
-
-    .btn-brillante {
-
-        margin-top: 30px;
-
-        padding: 15px 40px;
-
-        background: #1abc9c;
-
-        color: #0e161d;
-
-        text-decoration: none;
-
-        font-weight: bold;
-
-        border-radius: 50px;
-
-        transition: 0.3s;
-
-        box-shadow: 0 0 20px rgba(26, 188, 156, 0.4);
-
-    }
-
-
-
-    .btn-brillante:hover {
-
-        background: white;
-
-        box-shadow: 0 0 30px rgba(255, 255, 255, 0.6);
-
-        transform: scale(1.05);
-
-    }
-
-
-
-    /* Animaciones de entrada */
-
-    @keyframes fadeInUp {
-
-        from { opacity: 0; transform: translateY(30px); }
-
-        to { opacity: 1; transform: translateY(0); }
-
-    }
-
-
-
-    /* Ajuste para la imagen pequeña del equipo */
-
-    .img-hero-pequena {
-
-        width: 150px;
-
-        border-radius: 10px;
-
-        margin-top: 20px;
-
-        border: 2px solid #1abc9c;
-
-    }
-
-</style>
-
+  </style>
 </head>
-
 <body>
 
-<div id="wrapper">
+  <!-- ==================== VISTA 1: MAPA MENTAL ==================== -->
+  <section id="mindmap-view">
+    <div class="mindmap-container">
+      
+      <!-- NÚCLEO CENTRAL -->
+      <div class="center-node">
+        📖
+        <h1>Voces Literarias</h1>
+        <p style="font-size: 0.75rem;">11 Autores</p>
+      </div>
 
-    <div id="header">
-
-        <div id="logo-container"><img src="1792723651205.png" id="logo-imagen" alt="Logo"></div>
-
-        <div id="titulo-container">
-
-            <h1>DAILY MENÚ</h1>
-
-            <p>Más salud en tu plato, más energía en tu vida</p>
-
-        </div>
-
-    </div>
-
-
-
-    <div id="nav">
-
-        <a href="index.html">INICIO</a>
-
-        <a href="directorio.html">NOSOTROS</a>
-
-           <a href="sistemadegestion.html">NUESTROS PLATOS </a>
-
-        
-
-        <a href="contactos.html">CONTACTOS</a>
-
-    </div>
-
-
-
-    <div class="hero-dinamico">
-
-        <div class="hero-bg"></div> <div class="hero-overlay">
-
-            <h2>cambia tu vida</h2>
-
-            <p>salud y bienestar</p>
-
-            <img src="grupo.jfif" class="img-hero-pequena" alt="grupo.jfif">
-
-            <br>
-
-            <a href="contactos.html" class="btn-brillante">DESCUBRIR MÁS</a>
-
-        </div>
-
-    </div>
-
-
-
-    <div id="main-container" style="padding: 80px 5%; text-align: center;">
-
-        <h2 style="color:#1abc9c; font-size: 32px; letter-spacing: 2px;">tu mejor opción</h2>
-
-        <p style="color:#888; margin-bottom: 40px;">cambia ahora tu alimentación.</p>
-
-        
-
-        <div class="servicios-grid">
-
-            </div>
+      <!-- 11 AUTORES -->
+      <div class="author-node node-1" onclick="openAuthor(0)">
+        Gabriel G. M.
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-2" onclick="openAuthor(1)">
+        Isabel Allende
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-3" onclick="openAuthor(2)">
+        Jorge L. Borges
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-4" onclick="openAuthor(3)">
+        Julio Cortázar
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-5" onclick="openAuthor(4)">
+        Mario Vargas L.
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-6" onclick="openAuthor(5)">
+        Laura Esquivel
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-7" onclick="openAuthor(6)">
+        Octavio Paz
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-8" onclick="openAuthor(7)">
+        Pablo Neruda
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-9" onclick="openAuthor(8)">
+        Gabriela Mistral
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-10" onclick="openAuthor(9)">
+        Juan Rulfo
+        <span>▶ Ver Video</span>
+      </div>
+      <div class="author-node node-11" onclick="openAuthor(10)">
+        Carlos Fuentes
+        <span>▶ Ver Video</span>
+      </div>
 
     </div>
+  </section>
 
-
-
-    <div id="footer">
-
-        <p>&copy;DAILY_MENÚ </p>
-
+  <!-- ==================== VISTA 2: PÁGINA DEL AUTOR ==================== -->
+  <section id="author-view">
+    <button class="back-btn" onclick="showMap()">← Volver al Mapa Principal</button>
+    
+    <div class="author-header">
+      <h2 id="author-name">Nombre del Autor</h2>
+      <p id="author-genre" style="color: #666;">Género Literario</p>
     </div>
 
-</div>
+    <div class="video-container">
+      <iframe id="video-iframe" src="" allowfullscreen></iframe>
+    </div>
+  </section>
 
+  <!-- ==================== LÓGICA JAVASCRIPT ==================== -->
+  <script>
+    // DATOS DE LOS 11 AUTORES (Reemplaza los enlaces de YouTube por los tuyos)
+    const authors = [
+      { name: "Gabriel García Márquez", genre: "Realismo Mágico", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Isabel Allende", genre: "Novela Contemporánea", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Jorge Luis Borges", genre: "Ficción & Filosofía", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Julio Cortázar", genre: "Cuento y Ficción", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Mario Vargas Llosa", genre: "Novela y Ensayo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Laura Esquivel", genre: "Literatura Romántica", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Octavio Paz", genre: "Poesía y Ensayo", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Pablo Neruda", genre: "Poesía Lírica", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Gabriela Mistral", genre: "Poesía", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Juan Rulfo", genre: "Ficción Métrica", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" },
+      { name: "Carlos Fuentes", genre: "Narrativa Moderna", videoUrl: "https://www.youtube.com/embed/dQw4w9WgXcQ" }
+    ];
+
+    // Función para abrir la página del autor
+    function openAuthor(index) {
+      const author = authors[index];
+      
+      // Actualizar información
+      document.getElementById('author-name').innerText = author.name;
+      document.getElementById('author-genre').innerText = author.genre;
+      document.getElementById('video-iframe').src = author.videoUrl;
+
+      // Cambiar de vista
+      document.getElementById('mindmap-view').style.display = 'none';
+      document.getElementById('author-view').style.display = 'block';
+      window.scrollTo(0, 0);
+    }
+
+    // Función para regresar al mapa principal
+    function showMap() {
+      // Detener el video al salir
+      document.getElementById('video-iframe').src = '';
+      
+      // Cambiar de vista
+      document.getElementById('author-view').style.display = 'none';
+      document.getElementById('mindmap-view').style.display = 'flex';
+    }
+  </script>
 </body>
-
 </html>
