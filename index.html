@@ -85,31 +85,29 @@
       backdrop-filter: blur(4px);
     }
 
-    /* BOTÓN MODO CREADORA CON ANIMACIÓN DE MOVIMIENTO */
+    /* BOTÓN MODO CREADORA CASI INVISIBLE EN LA ESQUINA */
     .admin-toggle-btn {
-      position: absolute;
-      top: -10px;
-      right: 0;
-      background: #38312d;
-      color: #fff;
-      border: 1px solid #c9beaf;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-size: 0.75rem;
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      background: rgba(56, 49, 45, 0.15);
+      color: rgba(56, 49, 45, 0.4);
+      border: 1px solid rgba(201, 190, 175, 0.3);
+      padding: 4px 8px;
+      border-radius: 50px;
+      font-size: 0.7rem;
       cursor: pointer;
       font-weight: 600;
-      transition: all 0.25s ease;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.12);
-      animation: pulseBtn 2.5s infinite;
-    }
-
-    @keyframes pulseBtn {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); box-shadow: 0 6px 16px rgba(0,0,0,0.2); }
+      transition: all 0.3s ease;
+      z-index: 100;
+      backdrop-filter: blur(2px);
     }
 
     .admin-toggle-btn:hover {
-      background: #524741;
+      background: #38312d;
+      color: #fff;
+      opacity: 1;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
     }
 
     /* COLLAGE DESORGANIZADO */
@@ -368,8 +366,10 @@
 </head>
 <body>
 
+  <!-- BOTÓN DISCRETO EN LA ESQUINA -->
+  <button class="admin-toggle-btn" onclick="toggleAdminMode()" id="adminBtn" title="Modo Creadora">🔒 Admin</button>
+
   <header>
-    <button class="admin-toggle-btn" onclick="toggleAdminMode()" id="adminBtn">🔒 Modo Creadora</button>
     <span class="author-credit">Por: Jessica Nohemi Olivo Quintuña</span>
     <h1>Escuelas del Pensamiento Administrativo</h1>
     
@@ -462,6 +462,59 @@
       }
     ];
 
+    // BASE DE DATOS LOCAL EN EL NAVEGADOR (INDEXEDDB)
+    let db;
+    const dbRequest = indexedDB.open("AdminGalleryDB", 1);
+
+    dbRequest.onupgradeneeded = function(e) {
+      db = e.target.result;
+      if (!db.objectStoreNames.contains("videos")) {
+        db.createObjectStore("videos");
+      }
+    };
+
+    dbRequest.onsuccess = function(e) {
+      db = e.target.result;
+      loadStoredVideos();
+    };
+
+    dbRequest.onerror = function(e) {
+      console.error("Error al abrir IndexedDB", e);
+      renderBoard();
+    };
+
+    function saveVideoToDB(index, blob) {
+      const transaction = db.transaction(["videos"], "readwrite");
+      const store = transaction.objectStore("videos");
+      store.put(blob, index);
+    }
+
+    function loadStoredVideos() {
+      if (!db) { renderBoard(); return; }
+      const transaction = db.transaction(["videos"], "readonly");
+      const store = transaction.objectStore("videos");
+      
+      let loadedCount = 0;
+      authors.forEach((author, index) => {
+        const getReq = store.get(index);
+        getReq.onsuccess = function() {
+          if (getReq.result) {
+            author.videoSrc = URL.createObjectURL(getReq.result);
+          }
+          loadedCount++;
+          if (loadedCount === authors.length) {
+            renderBoard();
+          }
+        };
+        getReq.onerror = function() {
+          loadedCount++;
+          if (loadedCount === authors.length) {
+            renderBoard();
+          }
+        };
+      });
+    }
+
     const board = document.getElementById('collageBoard');
 
     // CREAR LAS TARJETAS CON VISTA PREVIA
@@ -505,20 +558,22 @@
       document.body.classList.toggle('admin-mode');
       const btn = document.getElementById('adminBtn');
       if (document.body.classList.contains('admin-mode')) {
-        btn.innerHTML = '🔓 Modo Creadora (Activo)';
+        btn.innerHTML = '🔓 Modo Creadora';
         btn.style.background = '#2b2522';
         btn.style.color = '#fff';
+        btn.style.opacity = '1';
       } else {
-        btn.innerHTML = '🔒 Modo Creadora';
-        btn.style.background = '#38312d';
-        btn.style.color = '#fff';
+        btn.innerHTML = '🔒 Admin';
+        btn.style.background = 'rgba(56, 49, 45, 0.15)';
+        btn.style.color = 'rgba(56, 49, 45, 0.4)';
       }
     }
 
-    // CARGAR ARCHIVO DE VIDEO LOCAL
+    // CARGAR ARCHIVO DE VIDEO LOCAL Y GUARDAR EN NAVEGADOR
     function handleFileUpload(event, index) {
       const file = event.target.files[0];
       if (file) {
+        saveVideoToDB(index, file);
         const fileURL = URL.createObjectURL(file);
         authors[index].videoSrc = fileURL;
         renderBoard();
@@ -552,9 +607,6 @@
       document.getElementById('videoOverlay').classList.remove('active');
       document.getElementById('videoContainer').innerHTML = '';
     }
-
-    // Inicializar la galería
-    renderBoard();
   </script>
 </body>
 </html>
