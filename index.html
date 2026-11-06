@@ -338,7 +338,7 @@
   </div>
 
   <script>
-    // DATOS CONECTADOS EXACTAMENTE CON LOS NOMBRES DE TUS VIDEOS EN GITHUB
+    // DATOS CONECTADOS A LOS VIDEOS DEL REPOSITORIO
     const authors = [
       { 
         id: 1, 
@@ -408,7 +408,7 @@
 
     const board = document.getElementById('collageBoard');
 
-    // CREAR LAS TARJETAS CON VISTA PREVIA
+    // CREAR LAS TARJETAS DINÁMICAMENTE
     function renderBoard() {
       board.innerHTML = '';
       authors.forEach((author, index) => {
