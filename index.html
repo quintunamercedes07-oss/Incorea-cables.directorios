@@ -85,31 +85,6 @@
       backdrop-filter: blur(4px);
     }
 
-    /* BOTÓN MODO CREADORA CASI INVISIBLE EN LA ESQUINA */
-    .admin-toggle-btn {
-      position: fixed;
-      top: 12px;
-      right: 12px;
-      background: rgba(56, 49, 45, 0.15);
-      color: rgba(56, 49, 45, 0.4);
-      border: 1px solid rgba(201, 190, 175, 0.3);
-      padding: 4px 8px;
-      border-radius: 50px;
-      font-size: 0.7rem;
-      cursor: pointer;
-      font-weight: 600;
-      transition: all 0.3s ease;
-      z-index: 100;
-      backdrop-filter: blur(2px);
-    }
-
-    .admin-toggle-btn:hover {
-      background: #38312d;
-      color: #fff;
-      opacity: 1;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    }
-
     /* COLLAGE DESORGANIZADO */
     .collage-board {
       max-width: 1200px;
@@ -239,34 +214,6 @@
     .card-7 { background: var(--c7); width: 245px; transform: rotate(-2deg); border-radius: 25px 15px 28px 20px; }
     .card-8 { background: var(--c8); width: 260px; transform: rotate(3deg);  border-radius: 18px 30px 15px 25px; }
 
-    /* MODO CREADORA: SUBIDA DE ARCHIVOS */
-    .admin-upload-section {
-      display: none;
-      margin-top: 8px;
-      width: 100%;
-    }
-
-    body.admin-mode .admin-upload-section {
-      display: block;
-    }
-
-    .admin-upload-section input[type=file] { display: none; }
-
-    .custom-upload-btn {
-      display: block;
-      background: #38312d;
-      color: #fff;
-      text-align: center;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 0.72rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .custom-upload-btn:hover { background: #524741; }
-
     /* REPRODUCTOR DINÁMICO POP-UP */
     .overlay {
       position: fixed;
@@ -366,15 +313,12 @@
 </head>
 <body>
 
-  <!-- BOTÓN DISCRETO EN LA ESQUINA -->
-  <button class="admin-toggle-btn" onclick="toggleAdminMode()" id="adminBtn" title="Modo Creadora">🔒 Admin</button>
-
   <header>
     <span class="author-credit">Por: Jessica Nohemi Olivo Quintuña</span>
     <h1>Escuelas del Pensamiento Administrativo</h1>
     
     <div class="intro-box">
-      Esta plataforma explora la evolución de la administración a través de sus autores más influyentes. Haz clic en la tarjeta de cada teórico para conocer su síntesis doctrinaria y reproducir su video explicativo en inteligencia artificial.
+      Esta plataforma explora la evolución de la administración a través de sus autores más influyentes. Haz clic en la tarjeta de cada teórico para conocer su síntesis doctrinaria y reproducir su video explicativo.
     </div>
   </header>
 
@@ -394,7 +338,7 @@
   </div>
 
   <script>
-    // DATOS DETALLADOS DE LOS 8 AUTORES
+    // DATOS CONECTADOS A LOS VIDEOS SUBIDOS EN EL REPOSITORIO[cite: 1]
     const authors = [
       { 
         id: 1, 
@@ -402,7 +346,7 @@
         school: "Escuela Científica", 
         concept: "Estandarización de tareas y estudio de tiempos y movimientos.",
         detail: "Padre de la Administración Científica. Enfocado en incrementar la eficiencia de la producción mediante la racionalización del trabajo operario.",
-        videoSrc: null 
+        videoSrc: "tylor.mp4"[cite: 1]
       },
       { 
         id: 2, 
@@ -410,7 +354,7 @@
         school: "Escuela Clásica / Operacional", 
         concept: "Principios de gestión y funciones directivas (PODCO).",
         detail: "Fundador de la Teoría Clásica. Concibió la organización desde la alta dirección y sistematizó las 5 funciones administrativas esenciales.",
-        videoSrc: null 
+        videoSrc: "henri.mp4"[cite: 1]
       },
       { 
         id: 3, 
@@ -418,7 +362,7 @@
         school: "Escuela de la Producción en Masa", 
         concept: "Línea de ensamblaje móvil y altos salarios para consumo.",
         detail: "Revolucionó el sector industrial al aplicar la cadena de montaje automatizada, reduciendo costos y masificando el acceso al automóvil.",
-        videoSrc: null 
+        videoSrc: "henrry.mp4"[cite: 1]
       },
       { 
         id: 4, 
@@ -426,7 +370,7 @@
         school: "Escuela Burocrática", 
         concept: "Estructura formal racional, jerarquía y reglas impersonales.",
         detail: "Sociólogo que definió el modelo de burocracia ideal como la forma más racional y objetiva de organizar la gestión organizativa.",
-        videoSrc: null 
+        videoSrc: "max.mp4"[cite: 1]
       },
       { 
         id: 5, 
@@ -434,7 +378,7 @@
         school: "Escuela Neoclásica / Comportamiento", 
         concept: "Teoría de la Racionalidad Limitada y toma de decisiones.",
         detail: "Premio Nobel de Economía. Demostró que el ser humano toma decisiones 'satisfactorias' y no perfectamente 'óptimas' debido a sus límites cognitivos.",
-        videoSrc: null 
+        videoSrc: "herbete.mp4"[cite: 1]
       },
       { 
         id: 6, 
@@ -442,7 +386,7 @@
         school: "Escuela Cuantitativa / Inv. Operativa", 
         concept: "Método Simplex y Programación Lineal para optimizar.",
         detail: "Matemático clave de la investigación operativa. Formuló el método Simplex para resolver modelos complejos de optimización de recursos.",
-        videoSrc: null 
+        videoSrc: "George Dantzig Retrato Educativo.mp4"[cite: 1]
       },
       { 
         id: 7, 
@@ -450,7 +394,7 @@
         school: "Escuela Neoclásica Moderna", 
         concept: "Administración por Objetivos (APO) y sociedad del conocimiento.",
         detail: "Considerado el padre de la administración moderna. Puso el foco estratégico en los objetivos, los colaboradores y la innovación orientada al cliente.",
-        videoSrc: null 
+        videoSrc: "peter.mp4"[cite: 1]
       },
       { 
         id: 8, 
@@ -458,62 +402,9 @@
         school: "Teoría General de Sistemas", 
         concept: "Sistemas abiertos integrados interactuando con el medio.",
         detail: "Biólogo que aportó el enfoque sistémico a las organizaciones, concibiéndolas como un todo interconectado que intercambia materia e información con su entorno.",
-        videoSrc: null 
+        videoSrc: "bertt.mp4"[cite: 1]
       }
     ];
-
-    // BASE DE DATOS LOCAL EN EL NAVEGADOR (INDEXEDDB)
-    let db;
-    const dbRequest = indexedDB.open("AdminGalleryDB", 1);
-
-    dbRequest.onupgradeneeded = function(e) {
-      db = e.target.result;
-      if (!db.objectStoreNames.contains("videos")) {
-        db.createObjectStore("videos");
-      }
-    };
-
-    dbRequest.onsuccess = function(e) {
-      db = e.target.result;
-      loadStoredVideos();
-    };
-
-    dbRequest.onerror = function(e) {
-      console.error("Error al abrir IndexedDB", e);
-      renderBoard();
-    };
-
-    function saveVideoToDB(index, blob) {
-      const transaction = db.transaction(["videos"], "readwrite");
-      const store = transaction.objectStore("videos");
-      store.put(blob, index);
-    }
-
-    function loadStoredVideos() {
-      if (!db) { renderBoard(); return; }
-      const transaction = db.transaction(["videos"], "readonly");
-      const store = transaction.objectStore("videos");
-      
-      let loadedCount = 0;
-      authors.forEach((author, index) => {
-        const getReq = store.get(index);
-        getReq.onsuccess = function() {
-          if (getReq.result) {
-            author.videoSrc = URL.createObjectURL(getReq.result);
-          }
-          loadedCount++;
-          if (loadedCount === authors.length) {
-            renderBoard();
-          }
-        };
-        getReq.onerror = function() {
-          loadedCount++;
-          if (loadedCount === authors.length) {
-            renderBoard();
-          }
-        };
-      });
-    }
 
     const board = document.getElementById('collageBoard');
 
@@ -540,44 +431,10 @@
             ${thumbnailHTML}
             <div class="play-icon-overlay">▶</div>
           </div>
-          
-          <div class="admin-upload-section" onclick="event.stopPropagation();">
-            <label class="custom-upload-btn" for="file-${index}">
-              📁 Cargar Video
-            </label>
-            <input id="file-${index}" type="file" accept="video/*" onchange="handleFileUpload(event, ${index})"/>
-          </div>
         `;
         
         board.appendChild(card);
       });
-    }
-
-    // ACTIVAR / DESACTIVAR MODO CREADORA
-    function toggleAdminMode() {
-      document.body.classList.toggle('admin-mode');
-      const btn = document.getElementById('adminBtn');
-      if (document.body.classList.contains('admin-mode')) {
-        btn.innerHTML = '🔓 Modo Creadora';
-        btn.style.background = '#2b2522';
-        btn.style.color = '#fff';
-        btn.style.opacity = '1';
-      } else {
-        btn.innerHTML = '🔒 Admin';
-        btn.style.background = 'rgba(56, 49, 45, 0.15)';
-        btn.style.color = 'rgba(56, 49, 45, 0.4)';
-      }
-    }
-
-    // CARGAR ARCHIVO DE VIDEO LOCAL Y GUARDAR EN NAVEGADOR
-    function handleFileUpload(event, index) {
-      const file = event.target.files[0];
-      if (file) {
-        saveVideoToDB(index, file);
-        const fileURL = URL.createObjectURL(file);
-        authors[index].videoSrc = fileURL;
-        renderBoard();
-      }
     }
 
     // ABRIR Y REPRODUCIR EL VIDEO
@@ -594,8 +451,7 @@
       } else {
         container.innerHTML = `
           <div class="no-video-msg">
-            🎥 El video interactivo de este autor aún no ha sido cargado.<br>
-            <small style="opacity: 0.75; margin-top:6px; display:block;">Activa el "Modo Creadora" en la esquina superior derecha para subir el video correspondiente.</small>
+            🎥 El video interactivo de este autor aún no ha sido cargado.
           </div>`;
       }
 
@@ -607,6 +463,9 @@
       document.getElementById('videoOverlay').classList.remove('active');
       document.getElementById('videoContainer').innerHTML = '';
     }
+
+    // Inicializar la galería
+    renderBoard();
   </script>
 </body>
 </html>
