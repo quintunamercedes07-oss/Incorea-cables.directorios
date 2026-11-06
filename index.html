@@ -1,6 +1,7 @@
 ```html
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,365 +11,663 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-:root{
-    --bg:#f4f0e8;
-    --text:#2c2927;
-    --c1:#d8c3b0;
-    --c2:#b5c0ad;
-    --c3:#e2d4c9;
-    --c4:#a8b5b2;
-    --c5:#c9b09a;
-    --c6:#d4caa3;
-    --c7:#b3a598;
-    --c8:#c2b6a6;
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
+
+:root {
+    --bg-color: #f4f0e8;
+    --card-text: #2c2927;
+
+    --c1: #d8c3b0;
+    --c2: #b5c0ad;
+    --c3: #e2d4c9;
+    --c4: #a8b5b2;
+    --c5: #c9b09a;
+    --c6: #d4caa3;
+    --c7: #b3a598;
+    --c8: #c2b6a6;
 }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-body{
-    font-family:'Plus Jakarta Sans',sans-serif;
-    color:var(--text);
-    min-height:100vh;
-    padding:40px 20px;
-    background-color:var(--bg);
-    background-image:radial-gradient(#ccbfae 1.2px,transparent 1.2px);
-    background-size:24px 24px;
+body {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+
+    background-color: var(--bg-color);
+
+    background-image:
+        radial-gradient(#ccbfae 1.2px, transparent 1.2px);
+
+    background-size: 24px 24px;
+
+    color: var(--card-text);
+
+    min-height: 100vh;
+
+    padding: 40px 20px;
 }
 
-header{
-    max-width:850px;
-    margin:0 auto 40px;
-    text-align:center;
+
+/* =========================================================
+   ENCABEZADO
+========================================================= */
+
+header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px auto;
 }
 
-.author-credit{
-    display:inline-block;
-    padding:7px 16px;
-    margin-bottom:12px;
-    border-radius:20px;
-    background:rgba(255,255,255,.65);
-    border:1px solid rgba(140,127,118,.3);
-    color:#6e625a;
-    font-size:.82rem;
-    font-weight:700;
-    letter-spacing:2px;
-    text-transform:uppercase;
+.author-credit {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2.5px;
+    font-weight: 700;
+
+    color: #6e625a;
+
+    margin-bottom: 12px;
+
+    display: inline-block;
+
+    background: rgba(255,255,255,0.6);
+
+    padding: 6px 16px;
+
+    border-radius: 20px;
+
+    border: 1px solid rgba(140,127,118,0.3);
 }
 
-header h1{
-    font-family:'Playfair Display',serif;
-    color:#2b2522;
-    font-size:3rem;
-    line-height:1.15;
-    animation:flotar 4s ease-in-out infinite;
+header h1 {
+    font-family: 'Playfair Display', serif;
+
+    font-size: 3rem;
+
+    font-weight: 700;
+
+    color: #2b2522;
+
+    line-height: 1.15;
+
+    animation: floatTitle 4s ease-in-out infinite;
+
+    display: inline-block;
 }
 
-@keyframes flotar{
-    0%,100%{transform:translateY(0)}
-    50%{transform:translateY(-6px)}
-}
+@keyframes floatTitle {
 
-.intro-box{
-    margin-top:18px;
-    padding:16px 24px;
-    border-radius:16px;
-    background:rgba(255,255,255,.58);
-    border:1px solid rgba(216,195,176,.5);
-    color:#5c524c;
-    line-height:1.6;
-}
-
-.collage-board{
-    max-width:1200px;
-    margin:auto;
-    display:flex;
-    flex-wrap:wrap;
-    justify-content:center;
-    align-items:stretch;
-    gap:28px;
-    padding:10px;
-}
-
-.author-card{
-    position:relative;
-    padding:18px;
-    cursor:pointer;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    color:#332d29;
-    border:2px solid rgba(255,255,255,.7);
-    box-shadow:0 10px 25px rgba(70,60,50,.08);
-    transition:.35s cubic-bezier(.25,1,.5,1);
-}
-
-.author-card:hover{
-    transform:translateY(-8px) scale(1.04) rotate(0deg)!important;
-    z-index:10;
-    box-shadow:0 20px 35px rgba(70,60,50,.16);
-}
-
-.card-header-info{
-    text-align:center;
-}
-
-.author-card h3{
-    font-family:'Playfair Display',serif;
-    font-size:1.25rem;
-    line-height:1.2;
-    margin-bottom:8px;
-    color:#241f1d;
-}
-
-.school-tag{
-    display:inline-block;
-    padding:4px 10px;
-    border-radius:12px;
-    background:rgba(255,255,255,.65);
-    color:#3d3530;
-    font-size:.68rem;
-    font-weight:700;
-    letter-spacing:.5px;
-    text-transform:uppercase;
-}
-
-.concept-summary{
-    margin-top:7px;
-    font-size:.78rem;
-    color:#4a423d;
-    line-height:1.35;
-    font-style:italic;
-}
-
-.video-thumbnail-box{
-    position:relative;
-    width:100%;
-    height:120px;
-    margin:12px 0;
-    overflow:hidden;
-    border-radius:14px;
-    background:rgba(0,0,0,.07);
-    border:1px solid rgba(255,255,255,.5);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-}
-
-.video-thumbnail-box video{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    background:#222;
-}
-
-.video-thumbnail-box video:not([data-ok="true"]){
-    visibility:hidden;
-}
-
-.play-icon-overlay{
-    position:absolute;
-    width:40px;
-    height:40px;
-    border-radius:50%;
-    background:rgba(255,255,255,.92);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#38312d;
-    font-size:.95rem;
-    box-shadow:0 4px 12px rgba(0,0,0,.18);
-}
-
-.card-1{
-    background:var(--c1);
-    width:250px;
-    transform:rotate(-3deg);
-    border-radius:28px 15px 25px 20px;
-}
-.card-2{
-    background:var(--c2);
-    width:245px;
-    transform:rotate(2deg);
-    border-radius:15px 32px 20px 28px;
-}
-.card-3{
-    background:var(--c3);
-    width:255px;
-    transform:rotate(-2deg);
-    border-radius:25px 18px 30px 15px;
-}
-.card-4{
-    background:var(--c4);
-    width:245px;
-    transform:rotate(4deg);
-    border-radius:18px 25px 15px 30px;
-}
-.card-5{
-    background:var(--c5);
-    width:250px;
-    transform:rotate(-4deg);
-    border-radius:30px 20px 18px 25px;
-}
-.card-6{
-    background:var(--c6);
-    width:255px;
-    transform:rotate(3deg);
-    border-radius:20px 28px 25px 15px;
-}
-.card-7{
-    background:var(--c7);
-    width:245px;
-    transform:rotate(-2deg);
-    border-radius:25px 15px 28px 20px;
-}
-.card-8{
-    background:var(--c8);
-    width:260px;
-    transform:rotate(3deg);
-    border-radius:18px 30px 15px 25px;
-}
-
-.overlay{
-    position:fixed;
-    inset:0;
-    width:100vw;
-    height:100vh;
-    background:rgba(30,26,24,.65);
-    backdrop-filter:blur(8px);
-    display:none;
-    justify-content:center;
-    align-items:center;
-    z-index:1000;
-    opacity:0;
-    transition:.3s;
-}
-
-.overlay.active{
-    display:flex;
-    opacity:1;
-}
-
-.expanded-card{
-    position:relative;
-    width:92%;
-    max-width:720px;
-    max-height:90vh;
-    overflow-y:auto;
-    padding:30px;
-    background:#faf8f5;
-    border-radius:24px;
-    border:1px solid #e8e2d8;
-    box-shadow:0 25px 50px rgba(0,0,0,.25);
-    transform:scale(.85);
-    transition:.35s cubic-bezier(.175,.885,.32,1.275);
-}
-
-.overlay.active .expanded-card{
-    transform:scale(1);
-}
-
-.close-btn{
-    position:absolute;
-    top:15px;
-    right:20px;
-    border:0;
-    background:none;
-    color:#756a63;
-    font-size:1.6rem;
-    cursor:pointer;
-}
-
-.close-btn:hover{
-    color:#000;
-}
-
-.expanded-title{
-    font-family:'Playfair Display',serif;
-    font-size:2rem;
-    color:#38312d;
-    padding-right:40px;
-}
-
-.expanded-school{
-    margin-top:3px;
-    color:#756a63;
-    font-size:.85rem;
-    font-weight:700;
-    letter-spacing:1px;
-    text-transform:uppercase;
-}
-
-.expanded-desc{
-    margin:10px 0 18px;
-    color:#4a423d;
-    font-size:.9rem;
-    line-height:1.5;
-}
-
-.video-player-box{
-    width:100%;
-    min-height:180px;
-    overflow:hidden;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    background:#111;
-    border-radius:16px;
-}
-
-.video-player-box video{
-    width:100%;
-    max-height:500px;
-    display:block;
-    background:#000;
-}
-
-.video-error{
-    width:100%;
-    padding:35px 20px;
-    text-align:center;
-    color:#e8d5c8;
-    line-height:1.6;
-}
-
-.video-error strong{
-    display:block;
-    margin-bottom:10px;
-    color:white;
-}
-
-@media(max-width:600px){
-    body{
-        padding:25px 10px;
+    0%, 100% {
+        transform: translateY(0);
     }
 
-    header h1{
-        font-size:2.2rem;
-    }
-
-    .author-card{
-        width:90%!important;
-        max-width:320px;
-    }
-
-    .expanded-card{
-        width:95%;
-        padding:22px;
-    }
-
-    .expanded-title{
-        font-size:1.6rem;
+    50% {
+        transform: translateY(-7px);
     }
 }
+
+.intro-box {
+    margin-top: 18px;
+
+    font-size: 1rem;
+
+    color: #5c524c;
+
+    line-height: 1.6;
+
+    background: rgba(255,255,255,0.55);
+
+    padding: 16px 24px;
+
+    border-radius: 16px;
+
+    border: 1px solid rgba(216,195,176,0.5);
+
+    backdrop-filter: blur(4px);
+}
+
+
+/* =========================================================
+   TABLERO
+========================================================= */
+
+.collage-board {
+    max-width: 1200px;
+
+    margin: 0 auto;
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    align-items: stretch;
+
+    gap: 28px;
+
+    padding: 10px;
+}
+
+
+/* =========================================================
+   TARJETAS
+========================================================= */
+
+.author-card {
+    position: relative;
+
+    padding: 18px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 10px 25px rgba(70,60,50,0.08);
+
+    transition:
+        all 0.35s cubic-bezier(0.25,1,0.5,1);
+
+    display: flex;
+
+    flex-direction: column;
+
+    justify-content: space-between;
+
+    border: 2px solid rgba(255,255,255,0.7);
+
+    color: #332d29;
+}
+
+.author-card:hover {
+    transform:
+        translateY(-8px)
+        scale(1.04)
+        rotate(0deg) !important;
+
+    z-index: 10;
+
+    box-shadow:
+        0 20px 35px rgba(70,60,50,0.16);
+}
+
+
+/* =========================================================
+   INFORMACIÓN
+========================================================= */
+
+.card-header-info {
+    text-align: center;
+    width: 100%;
+}
+
+.author-card h3 {
+    font-family: 'Playfair Display', serif;
+
+    font-size: 1.25rem;
+
+    text-align: center;
+
+    line-height: 1.2;
+
+    margin-bottom: 8px;
+
+    color: #241f1d;
+
+    transition:
+        transform 0.3s,
+        color 0.3s;
+
+    display: inline-block;
+
+    width: 100%;
+}
+
+.author-card:hover h3 {
+    transform: scale(1.15);
+    color: #000;
+}
+
+.school-tag {
+    background:
+        rgba(255,255,255,0.65);
+
+    color: #3d3530;
+
+    font-size: 0.68rem;
+
+    padding: 4px 10px;
+
+    border-radius: 12px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+
+    display: inline-block;
+
+    margin-bottom: 4px;
+}
+
+.concept-summary {
+    font-size: 0.78rem;
+
+    color: #4a423d;
+
+    line-height: 1.35;
+
+    margin-top: 6px;
+
+    font-style: italic;
+}
+
+
+/* =========================================================
+   MINIATURA
+========================================================= */
+
+.video-thumbnail-box {
+    width: 100%;
+
+    height: 120px;
+
+    border-radius: 14px;
+
+    background: rgba(0,0,0,0.07);
+
+    margin: 12px 0;
+
+    overflow: hidden;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    position: relative;
+
+    border:
+        1px solid rgba(255,255,255,0.5);
+}
+
+.video-thumbnail-box video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* =========================================================
+   PLAY
+========================================================= */
+
+.play-icon-overlay {
+    position: absolute;
+
+    width: 40px;
+    height: 40px;
+
+    background:
+        rgba(255,255,255,0.9);
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 0.95rem;
+
+    color: #38312d;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.18);
+
+    transition: all 0.25s ease;
+}
+
+.author-card:hover .play-icon-overlay {
+    transform: scale(1.15);
+
+    background: white;
+
+    color: #000;
+}
+
+
+/* =========================================================
+   TARJETAS
+========================================================= */
+
+.card-1 {
+    background: var(--c1);
+    width: 250px;
+    transform: rotate(-3deg);
+    border-radius: 28px 15px 25px 20px;
+}
+
+.card-2 {
+    background: var(--c2);
+    width: 245px;
+    transform: rotate(2deg);
+    border-radius: 15px 32px 20px 28px;
+}
+
+.card-3 {
+    background: var(--c3);
+    width: 255px;
+    transform: rotate(-2deg);
+    border-radius: 25px 18px 30px 15px;
+}
+
+.card-4 {
+    background: var(--c4);
+    width: 245px;
+    transform: rotate(4deg);
+    border-radius: 18px 25px 15px 30px;
+}
+
+.card-5 {
+    background: var(--c5);
+    width: 250px;
+    transform: rotate(-4deg);
+    border-radius: 30px 20px 18px 25px;
+}
+
+.card-6 {
+    background: var(--c6);
+    width: 255px;
+    transform: rotate(3deg);
+    border-radius: 20px 28px 25px 15px;
+}
+
+.card-7 {
+    background: var(--c7);
+    width: 245px;
+    transform: rotate(-2deg);
+    border-radius: 25px 15px 28px 20px;
+}
+
+.card-8 {
+    background: var(--c8);
+    width: 260px;
+    transform: rotate(3deg);
+    border-radius: 18px 30px 15px 25px;
+}
+
+
+/* =========================================================
+   VENTANA
+========================================================= */
+
+.overlay {
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    width: 100vw;
+    height: 100vh;
+
+    background:
+        rgba(30,26,24,0.65);
+
+    backdrop-filter: blur(8px);
+
+    display: none;
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 1000;
+
+    opacity: 0;
+
+    transition:
+        opacity 0.3s ease;
+}
+
+.overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+
+/* =========================================================
+   CAJA
+========================================================= */
+
+.expanded-card {
+    background: #faf8f5;
+
+    width: 92%;
+
+    max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
+    border-radius: 24px;
+
+    padding: 30px;
+
+    position: relative;
+
+    transform: scale(0.85);
+
+    transition:
+        transform 0.35s
+        cubic-bezier(0.175,0.885,0.32,1.275);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,0.25);
+
+    border:
+        1px solid #e8e2d8;
+}
+
+.overlay.active .expanded-card {
+    transform: scale(1);
+}
+
+
+/* =========================================================
+   CERRAR
+========================================================= */
+
+.close-btn {
+    position: absolute;
+
+    top: 18px;
+    right: 22px;
+
+    font-size: 1.6rem;
+
+    background: none;
+
+    border: none;
+
+    cursor: pointer;
+
+    color: #756a63;
+
+    transition: color 0.2s;
+}
+
+.close-btn:hover {
+    color: #2b2522;
+}
+
+
+/* =========================================================
+   TEXTO
+========================================================= */
+
+.expanded-title {
+    font-family:
+        'Playfair Display',
+        serif;
+
+    font-size: 2rem;
+
+    color: #38312d;
+
+    padding-right: 40px;
+}
+
+.expanded-school {
+    font-size: 0.85rem;
+
+    font-weight: 700;
+
+    color: #756a63;
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+
+    margin-top: 2px;
+}
+
+.expanded-desc {
+    font-size: 0.9rem;
+
+    color: #4a423d;
+
+    margin: 10px 0 18px 0;
+
+    line-height: 1.5;
+}
+
+
+/* =========================================================
+   VIDEO
+========================================================= */
+
+.video-player-box {
+    width: 100%;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+    background: #1f1c1a;
+
+    max-height: 500px;
+
+    min-height: 180px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    box-shadow:
+        inset 0 0 10px rgba(0,0,0,0.5);
+}
+
+.video-player-box video {
+    display: block;
+
+    width: 100%;
+
+    max-height: 500px;
+
+    background: #000;
+}
+
+
+/* =========================================================
+   ERROR
+========================================================= */
+
+.video-error {
+    color: #e8d5c8;
+
+    text-align: center;
+
+    padding: 35px 20px;
+
+    line-height: 1.6;
+
+    font-size: 0.9rem;
+}
+
+.video-error strong {
+    display: block;
+
+    font-size: 1rem;
+
+    margin-bottom: 8px;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    body {
+        padding: 25px 10px;
+    }
+
+    header h1 {
+        font-size: 2.2rem;
+    }
+
+    .intro-box {
+        font-size: 0.9rem;
+    }
+
+    .collage-board {
+        gap: 20px;
+    }
+
+    .author-card {
+        width: 90% !important;
+        max-width: 320px;
+    }
+
+    .expanded-card {
+        width: 95%;
+        padding: 22px;
+    }
+
+    .expanded-title {
+        font-size: 1.6rem;
+    }
+
+    .video-player-box {
+        max-height: 300px;
+    }
+
+    .video-player-box video {
+        max-height: 300px;
+    }
+}
+
 </style>
+
 </head>
 
+
 <body>
+
 
 <header>
 
@@ -381,160 +680,239 @@ header h1{
     </h1>
 
     <div class="intro-box">
+
         Esta plataforma explora la evolución de la administración
         a través de sus autores más influyentes. Haz clic en la tarjeta
         de cada teórico para conocer su síntesis doctrinaria y reproducir
-        su video explicativo.
+        su video explicativo en inteligencia artificial.
+
     </div>
 
 </header>
 
-<main class="collage-board" id="collageBoard"></main>
 
-<div class="overlay" id="videoOverlay">
+
+<main
+    class="collage-board"
+    id="collageBoard">
+</main>
+
+
+
+<div
+    class="overlay"
+    id="videoOverlay">
 
     <div class="expanded-card">
 
-        <button class="close-btn" onclick="closeVideo()">
+        <button
+            class="close-btn"
+            onclick="closeVideo()">
             ✕
         </button>
 
-        <h2 class="expanded-title" id="expTitle">
+        <h2
+            class="expanded-title"
+            id="expTitle">
             Autor
         </h2>
 
-        <p class="expanded-school" id="expSchool">
-            Escuela
+        <p
+            class="expanded-school"
+            id="expSchool">
+            Escuela / Corriente
         </p>
 
-        <p class="expanded-desc" id="expDesc">
-            Descripción
+        <p
+            class="expanded-desc"
+            id="expDesc">
+            Descripción.
         </p>
 
-        <div class="video-player-box" id="videoContainer"></div>
+        <div
+            class="video-player-box"
+            id="videoContainer">
+        </div>
 
     </div>
 
 </div>
 
+
+
 <script>
 
 /* =========================================================
-   RUTA DE LOS VIDEOS
+   VIDEOS
+=========================================================
+
+   IMPORTANTE:
+
+   "./" significa:
+   LA MISMA CARPETA DONDE ESTÁ ESTE index.html
+
+   Como tus MP4 están en la raíz del repositorio,
+   esta es la ruta correcta para GitHub Pages.
+
 ========================================================= */
 
 const VIDEO_BASE = "./";
 
 
 /* =========================================================
-   AUTORES
-   NOMBRES EXACTOS DE TU REPOSITORIO
+   AUTORES Y NOMBRES EXACTOS
 ========================================================= */
 
 const authors = [
 
     {
-        name:"Frederick Winslow Taylor",
-        school:"Escuela Científica",
-        concept:"Estandarización de tareas y estudio de tiempos y movimientos.",
-        detail:"Padre de la Administración Científica. Enfocado en incrementar la eficiencia de la producción mediante la racionalización del trabajo operario.",
-        video:"tylor.mp4"
+        name: "Frederick Winslow Taylor",
+
+        school: "Escuela Científica",
+
+        concept:
+        "Estandarización de tareas y estudio de tiempos y movimientos.",
+
+        detail:
+        "Padre de la Administración Científica. Enfocado en incrementar la eficiencia de la producción mediante la racionalización del trabajo operario.",
+
+        video: "tylor.mp4"
     },
 
-    {
-        name:"Henri Fayol",
-        school:"Escuela Clásica / Operacional",
-        concept:"Principios de gestión y funciones directivas (PODCO).",
-        detail:"Fundador de la Teoría Clásica. Concibió la organización desde la alta dirección y sistematizó las 5 funciones administrativas esenciales.",
-        video:"henri.mp4"
-    },
 
     {
-        name:"Henry Ford",
-        school:"Escuela de la Producción en Masa",
-        concept:"Línea de ensamblaje móvil y altos salarios para consumo.",
-        detail:"Revolucionó el sector industrial al aplicar la cadena de montaje automatizada, reduciendo costos y masificando el acceso al automóvil.",
-        video:"henrry.mp4"
+        name: "Henri Fayol",
+
+        school: "Escuela Clásica / Operacional",
+
+        concept:
+        "Principios de gestión y funciones directivas (PODCO).",
+
+        detail:
+        "Fundador de la Teoría Clásica. Concibió la organización desde la alta dirección y sistematizó las 5 funciones administrativas esenciales.",
+
+        video: "henri.mp4"
     },
 
-    {
-        name:"Max Weber",
-        school:"Escuela Burocrática",
-        concept:"Estructura formal racional, jerarquía y reglas impersonales.",
-        detail:"Sociólogo que definió el modelo de burocracia ideal como una forma racional y objetiva de organizar la gestión.",
-        video:"max.mp4"
-    },
 
     {
-        name:"Herbert Simon",
-        school:"Escuela Neoclásica / Comportamiento",
-        concept:"Teoría de la Racionalidad Limitada y toma de decisiones.",
-        detail:"Premio Nobel de Economía. Demostró que las personas toman decisiones con información y capacidad cognitiva limitadas.",
-        video:"herbete.mp4"
+        name: "Henry Ford",
+
+        school: "Escuela de la Producción en Masa",
+
+        concept:
+        "Línea de ensamblaje móvil y altos salarios para consumo.",
+
+        detail:
+        "Revolucionó el sector industrial al aplicar la cadena de montaje automatizada, reduciendo costos y masificando el acceso al automóvil.",
+
+        video: "henrry.mp4"
     },
 
-    {
-        name:"George B. Dantzig",
-        school:"Escuela Cuantitativa / Inv. Operativa",
-        concept:"Método Simplex y Programación Lineal para optimizar.",
-        detail:"Matemático clave de la investigación operativa. Formuló el método Simplex para resolver problemas de optimización.",
-        video:"George Dantzig Retrato Educativo.mp4"
-    },
 
     {
-        name:"Peter Drucker",
-        school:"Escuela Neoclásica Moderna",
-        concept:"Administración por Objetivos (APO) y sociedad del conocimiento.",
-        detail:"Considerado el padre de la administración moderna. Puso el foco estratégico en los objetivos, los colaboradores y la innovación.",
-        video:"Peter.mp4"
+        name: "Max Weber",
+
+        school: "Escuela Burocrática",
+
+        concept:
+        "Estructura formal racional, jerarquía y reglas impersonales.",
+
+        detail:
+        "Sociólogo que definió el modelo de burocracia ideal como la forma más racional y objetiva de organizar la gestión organizativa.",
+
+        video: "max.mp4"
     },
 
+
     {
-        name:"Ludwig von Bertalanffy",
-        school:"Teoría General de Sistemas",
-        concept:"Sistemas abiertos integrados interactuando con el medio.",
-        detail:"Biólogo que aportó el enfoque sistémico a las organizaciones, concibiéndolas como un todo interconectado.",
-        video:"bert.mp4"
+        name: "Herbert Simon",
+
+        school: "Escuela Neoclásica / Comportamiento",
+
+        concept:
+        "Teoría de la Racionalidad Limitada y toma de decisiones.",
+
+        detail:
+        "Premio Nobel de Economía. Demostró que el ser humano toma decisiones satisfactorias y no perfectamente óptimas debido a sus límites cognitivos.",
+
+        video: "herbete.mp4"
+    },
+
+
+    {
+        name: "George B. Dantzig",
+
+        school: "Escuela Cuantitativa / Inv. Operativa",
+
+        concept:
+        "Método Simplex y Programación Lineal para optimizar.",
+
+        detail:
+        "Matemático clave de la investigación operativa. Formuló el método Simplex para resolver modelos complejos de optimización de recursos.",
+
+        video: "George Dantzig Retrato Educativo.mp4"
+    },
+
+
+    {
+        name: "Peter Drucker",
+
+        school: "Escuela Neoclásica Moderna",
+
+        concept:
+        "Administración por Objetivos (APO) y sociedad del conocimiento.",
+
+        detail:
+        "Considerado el padre de la administración moderna. Puso el foco estratégico en los objetivos, los colaboradores y la innovación orientada al cliente.",
+
+        video: "Peter.mp4"
+    },
+
+
+    {
+        name: "Ludwig von Bertalanffy",
+
+        school: "Teoría General de Sistemas",
+
+        concept:
+        "Sistemas abiertos integrados interactuando con el medio.",
+
+        detail:
+        "Biólogo que aportó el enfoque sistémico a las organizaciones, concibiéndolas como un todo interconectado que intercambia materia e información con su entorno.",
+
+        video: "bert.mp4"
     }
 
 ];
 
-
-/* =========================================================
-   CONVERTIR NOMBRE A RUTA URL
-========================================================= */
-
-function videoURL(nombre){
-
-    return VIDEO_BASE +
-           encodeURIComponent(nombre);
-
-}
 
 
 /* =========================================================
    CREAR TARJETAS
 ========================================================= */
 
-function renderBoard(){
+const board =
+document.getElementById("collageBoard");
 
-    const board =
-        document.getElementById("collageBoard");
+
+function renderBoard() {
 
     board.innerHTML = "";
 
-    authors.forEach(function(author,index){
+    authors.forEach(function(author, index) {
 
         const card =
-            document.createElement("div");
+        document.createElement("div");
 
         card.className =
-            "author-card card-" + (index + 1);
+        "author-card card-" + (index + 1);
 
         card.onclick =
-            function(){
-                playAuthorVideo(index);
-            };
+        function() {
+            playAuthorVideo(index);
+        };
+
 
         card.innerHTML = `
 
@@ -554,10 +932,11 @@ function renderBoard(){
 
             </div>
 
+
             <div class="video-thumbnail-box">
 
                 <video
-                    src="${videoURL(author.video)}"
+                    src="${VIDEO_BASE + encodeURIComponent(author.video)}"
                     preload="metadata"
                     muted
                     playsinline>
@@ -571,6 +950,7 @@ function renderBoard(){
 
         `;
 
+
         board.appendChild(card);
 
     });
@@ -578,41 +958,36 @@ function renderBoard(){
 }
 
 
+
 /* =========================================================
    ABRIR VIDEO
 ========================================================= */
 
-function playAuthorVideo(index){
+function playAuthorVideo(index) {
 
     const author =
-        authors[index];
+    authors[index];
 
-    const overlay =
-        document.getElementById("videoOverlay");
 
-    const title =
-        document.getElementById("expTitle");
+    const videoURL =
+    VIDEO_BASE + encodeURIComponent(author.video);
 
-    const school =
-        document.getElementById("expSchool");
 
-    const desc =
-        document.getElementById("expDesc");
+    document.getElementById("expTitle").textContent =
+    author.name;
+
+
+    document.getElementById("expSchool").textContent =
+    author.school;
+
+
+    document.getElementById("expDesc").textContent =
+    author.detail;
+
 
     const container =
-        document.getElementById("videoContainer");
+    document.getElementById("videoContainer");
 
-    title.textContent =
-        author.name;
-
-    school.textContent =
-        author.school;
-
-    desc.textContent =
-        author.detail;
-
-    const ruta =
-        videoURL(author.video);
 
     container.innerHTML = `
 
@@ -621,68 +996,70 @@ function playAuthorVideo(index){
             controls
             autoplay
             playsinline
-            preload="metadata">
+            preload="auto">
 
             <source
-                src="${ruta}"
+                src="${videoURL}"
                 type="video/mp4">
+
+            Tu navegador no puede reproducir este video.
 
         </video>
 
     `;
 
+
     const video =
-        document.getElementById("mainVideo");
+    document.getElementById("mainVideo");
 
 
-    /* Si el navegador no puede reproducirlo */
-    video.addEventListener("error",function(){
+    /* =====================================================
+       SI EL VIDEO NO CARGA
+    ===================================================== */
 
-        container.innerHTML = `
+    video.addEventListener(
+        "error",
+        function() {
 
-            <div class="video-error">
+            container.innerHTML = `
 
-                <strong>
-                    ⚠️ No se pudo reproducir este video
-                </strong>
+                <div class="video-error">
 
-                Archivo:
+                    <strong>
+                        ⚠️ No se pudo cargar este video
+                    </strong>
 
-                <br>
+                    Archivo:
+                    <b>${author.video}</b>
 
-                <b>${author.video}</b>
+                    <br><br>
 
-                <br><br>
+                    Comprueba que ese nombre sea exactamente
+                    igual al que aparece en GitHub.
 
-                El archivo sí está configurado en el código,
-                pero el navegador no puede reproducirlo.
-                
-                Si los demás videos funcionan, este MP4
-                probablemente necesita convertirse a
-                MP4 H.264 para navegador.
+                </div>
 
-            </div>
+            `;
 
-        `;
-
-    });
+        }
+    );
 
 
-    overlay.classList.add("active");
+    document
+        .getElementById("videoOverlay")
+        .classList.add("active");
 
 }
 
 
+
 /* =========================================================
-   CERRAR VIDEO
+   CERRAR
 ========================================================= */
 
-function closeVideo(){
+function closeVideo() {
 
-    const container =
-        document.getElementById("videoContainer");
-
-    container.innerHTML = "";
+    document.getElementById("videoContainer").innerHTML = "";
 
     document
         .getElementById("videoOverlay")
@@ -691,32 +1068,41 @@ function closeVideo(){
 }
 
 
+
 /* =========================================================
    CERRAR AL HACER CLIC FUERA
 ========================================================= */
 
 document
 .getElementById("videoOverlay")
-.addEventListener("click",function(event){
+.addEventListener(
+    "click",
+    function(event) {
 
-    if(event.target === this){
-        closeVideo();
+        if (event.target === this) {
+            closeVideo();
+        }
+
     }
+);
 
-});
 
 
 /* =========================================================
-   ESC PARA CERRAR
+   ESC
 ========================================================= */
 
-document.addEventListener("keydown",function(event){
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if(event.key === "Escape"){
-        closeVideo();
+        if (event.key === "Escape") {
+            closeVideo();
+        }
+
     }
+);
 
-});
 
 
 /* =========================================================
