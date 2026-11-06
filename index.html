@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Voces Literarias - Galería de Videos</title>
+  <title>Teóricos de la Administración - Galería de Videos</title>
   <!-- Fuentes elegantes -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   
@@ -12,7 +12,7 @@
       --bg-color: #f5f2eb;
       --card-text: #2c2927;
       
-      /* 11 Colores neutros elegantes */
+      /* Colores neutros elegantes para 8 tarjetas */
       --c1: #d8c3b0;
       --c2: #b5c0ad;
       --c3: #e2d4c9;
@@ -21,9 +21,6 @@
       --c6: #d4caa3;
       --c7: #b3a598;
       --c8: #c2b6a6;
-      --c9: #d1bfa7;
-      --c10: #9eab9f;
-      --c11: #c7b2a5;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,7 +43,7 @@
 
     header h1 {
       font-family: 'Playfair Display', serif;
-      font-size: 3rem;
+      font-size: 2.8rem;
       font-weight: 600;
       color: #38312d;
     }
@@ -57,7 +54,7 @@
       margin-top: 5px;
     }
 
-    /* BOTÓN SECRETO MODO CREADORA */
+    /* BOTÓN MODO CREADORA */
     .admin-toggle-btn {
       position: absolute;
       top: 0;
@@ -111,7 +108,7 @@
       box-shadow: 0 16px 32px rgba(70, 60, 50, 0.15);
     }
 
-    /* CONTENEDOR DE LA VISTA PREVIA (IMAGEN/THUMBNAIL) */
+    /* CONTENEDOR DE LA VISTA PREVIA */
     .video-thumbnail-box {
       width: 100%;
       height: 110px;
@@ -132,7 +129,7 @@
       object-fit: cover;
     }
 
-    /* BOTÓN PLAY SUPERPUESTO EN LA IMAGEN */
+    /* BOTÓN PLAY SUPERPUESTO */
     .play-icon-overlay {
       position: absolute;
       width: 36px;
@@ -155,7 +152,7 @@
 
     .author-card h3 {
       font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
       text-align: center;
       line-height: 1.2;
     }
@@ -164,25 +161,23 @@
       background: rgba(255, 255, 255, 0.5);
       color: #4a423d;
       font-size: 0.65rem;
-      padding: 3px 8px;
+      padding: 4px 8px;
       border-radius: 10px;
       font-weight: 600;
       text-transform: uppercase;
-      margin-top: 4px;
+      margin-top: 5px;
+      display: inline-block;
     }
 
-    /* TAMAÑOS Y ROTACIONES DESORGANIZADAS */
-    .card-1  { background: var(--c1);  width: 220px; transform: rotate(-4deg);  border-radius: 28px 15px 25px 20px; }
-    .card-2  { background: var(--c2);  width: 200px; transform: rotate(3deg);   border-radius: 15px 32px 20px 28px; }
-    .card-3  { background: var(--c3);  width: 230px; transform: rotate(-2deg);  border-radius: 25px 18px 30px 15px; }
-    .card-4  { background: var(--c4);  width: 210px; transform: rotate(5deg);   border-radius: 18px 25px 15px 30px; }
-    .card-5  { background: var(--c5);  width: 215px; transform: rotate(-5deg);  border-radius: 30px 20px 18px 25px; }
-    .card-6  { background: var(--c6);  width: 225px; transform: rotate(4deg);   border-radius: 20px 28px 25px 15px; }
-    .card-7  { background: var(--c7);  width: 205px; transform: rotate(-3deg);  border-radius: 25px 15px 28px 20px; }
-    .card-8  { background: var(--c8);  width: 220px; transform: rotate(4deg);   border-radius: 18px 30px 15px 25px; }
-    .card-9  { background: var(--c9);  width: 210px; transform: rotate(-6deg);  border-radius: 28px 18px 25px 20px; }
-    .card-10 { background: var(--c10); width: 230px; transform: rotate(2deg);   border-radius: 15px 25px 20px 30px; }
-    .card-11 { background: var(--c11); width: 215px; transform: rotate(-3deg);  border-radius: 25px 28px 18px 18px; }
+    /* TAMAÑOS Y ROTACIONES PARA LOS 8 AUTORES */
+    .card-1 { background: var(--c1); width: 220px; transform: rotate(-4deg); border-radius: 28px 15px 25px 20px; }
+    .card-2 { background: var(--c2); width: 210px; transform: rotate(3deg);  border-radius: 15px 32px 20px 28px; }
+    .card-3 { background: var(--c3); width: 225px; transform: rotate(-2deg); border-radius: 25px 18px 30px 15px; }
+    .card-4 { background: var(--c4); width: 215px; transform: rotate(5deg);  border-radius: 18px 25px 15px 30px; }
+    .card-5 { background: var(--c5); width: 220px; transform: rotate(-5deg); border-radius: 30px 20px 18px 25px; }
+    .card-6 { background: var(--c6); width: 225px; transform: rotate(4deg);  border-radius: 20px 28px 25px 15px; }
+    .card-7 { background: var(--c7); width: 210px; transform: rotate(-3deg); border-radius: 25px 15px 28px 20px; }
+    .card-8 { background: var(--c8); width: 230px; transform: rotate(3deg);  border-radius: 18px 30px 15px 25px; }
 
     /* MODO CREADORA: SUBIDA DE ARCHIVOS */
     .admin-upload-section {
@@ -258,7 +253,7 @@
 
     .expanded-title {
       font-family: 'Playfair Display', serif;
-      font-size: 2rem;
+      font-size: 1.8rem;
       color: #38312d;
     }
 
@@ -298,11 +293,11 @@
 
   <header>
     <button class="admin-toggle-btn" onclick="toggleAdminMode()" id="adminBtn">🔒 Modo Creadora</button>
-    <h1>Voces Literarias</h1>
+    <h1>Teóricos de la Administración</h1>
     <p>Haz clic en cualquier tarjeta para reproducir el video del autor.</p>
   </header>
 
-  <!-- COLLAGE CON VISTAS PREVIAS DE VIDEO -->
+  <!-- COLLAGE DE 8 AUTORES -->
   <main class="collage-board" id="collageBoard"></main>
 
   <!-- VENTANA DINÁMICA DE REPRODUCCIÓN -->
@@ -310,26 +305,23 @@
     <div class="expanded-card">
       <button class="close-btn" onclick="closeVideo()">✕</button>
       <h2 class="expanded-title" id="expTitle">Autor</h2>
-      <p class="expanded-genre" id="expGenre">Género</p>
+      <p class="expanded-genre" id="expGenre">Pensamiento</p>
       
       <div class="video-player-box" id="videoContainer"></div>
     </div>
   </div>
 
   <script>
-    // DATOS DE LOS 11 AUTORES
+    // DATOS DE LOS 8 AUTORES
     const authors = [
-      { id: 1, name: "Gabriel García Márquez", genre: "Realismo Mágico", videoSrc: null },
-      { id: 2, name: "Isabel Allende", genre: "Novela Contemporánea", videoSrc: null },
-      { id: 3, name: "Jorge Luis Borges", genre: "Ficción & Filosofía", videoSrc: null },
-      { id: 4, name: "Julio Cortázar", genre: "Cuento Fantástico", videoSrc: null },
-      { id: 5, name: "Mario Vargas Llosa", genre: "Narrativa Moderna", videoSrc: null },
-      { id: 6, name: "Laura Esquivel", genre: "Literatura Romántica", videoSrc: null },
-      { id: 7, name: "Octavio Paz", genre: "Poesía & Ensayo", videoSrc: null },
-      { id: 8, name: "Pablo Neruda", genre: "Poesía Lírica", videoSrc: null },
-      { id: 9, name: "Gabriela Mistral", genre: "Poesía Educativa", videoSrc: null },
-      { id: 10, name: "Juan Rulfo", genre: "Ficción Mexicana", videoSrc: null },
-      { id: 11, name: "Carlos Fuentes", genre: "Ensayo & Novela", videoSrc: null }
+      { id: 1, name: "Frederick Winslow Taylor", genre: "Administración Científica", videoSrc: null },
+      { id: 2, name: "Henri Fayol", genre: "Teoría Clásica de la Adm.", videoSrc: null },
+      { id: 3, name: "Henry Ford", genre: "Producción en Masa", videoSrc: null },
+      { id: 4, name: "Max Weber", genre: "Modelo Burocrático", videoSrc: null },
+      { id: 5, name: "Herbert Simon", genre: "Racionalidad Limitada", videoSrc: null },
+      { id: 6, name: "George B. Dantzig", genre: "Programación Lineal", videoSrc: null },
+      { id: 7, name: "Peter Drucker", genre: "Administración Moderna", videoSrc: null },
+      { id: 8, name: "Ludwig von Bertalanffy", genre: "Teoría General de Sistemas", videoSrc: null }
     ];
 
     const board = document.getElementById('collageBoard');
@@ -342,7 +334,6 @@
         card.className = `author-card card-${index + 1}`;
         card.onclick = () => playAuthorVideo(index);
         
-        // Si hay video, genera la carátula automática (primer fotograma del video)
         const thumbnailHTML = author.videoSrc 
           ? `<video src="${author.videoSrc}#t=0.5" preload="metadata"></video>`
           : `<span style="font-size: 1.8rem; opacity: 0.5;">🎬</span>`;
@@ -370,7 +361,7 @@
       });
     }
 
-    // ACTIVAR / DESACTIVAR MODO CREADORA (BOTÓN SECRETO)
+    // ACTIVAR / DESACTIVAR MODO CREADORA
     function toggleAdminMode() {
       document.body.classList.toggle('admin-mode');
       const btn = document.getElementById('adminBtn');
@@ -391,11 +382,11 @@
       if (file) {
         const fileURL = URL.createObjectURL(file);
         authors[index].videoSrc = fileURL;
-        renderBoard(); // Re-renderiza para mostrar la vista previa en el cuadro
+        renderBoard();
       }
     }
 
-    // ABRIR Y REPRODUCIR EL VIDEO AL PRESIONAR LA TARJETA
+    // ABRIR Y REPRODUCIR EL VIDEO
     function playAuthorVideo(index) {
       const author = authors[index];
       document.getElementById('expTitle').innerText = author.name;
