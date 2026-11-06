@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 
@@ -10,6 +11,10 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
+
+/* =========================================================
+   CONFIGURACIÓN GENERAL
+========================================================= */
 
 :root {
     --bg-color: #f4f0e8;
@@ -33,6 +38,7 @@
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
+
     background-color: var(--bg-color);
 
     background-image:
@@ -48,9 +54,9 @@ body {
 }
 
 
-/* =====================================================
+/* =========================================================
    ENCABEZADO
-===================================================== */
+========================================================= */
 
 header {
     text-align: center;
@@ -97,18 +103,16 @@ header h1 {
 
 @keyframes floatTitle {
 
-    0%,100% {
+    0%, 100% {
         transform: translateY(0);
     }
 
     50% {
         transform: translateY(-7px);
     }
-
 }
 
 .intro-box {
-
     margin-top: 18px;
 
     font-size: 1rem;
@@ -129,12 +133,11 @@ header h1 {
 }
 
 
-/* =====================================================
+/* =========================================================
    TABLERO
-===================================================== */
+========================================================= */
 
 .collage-board {
-
     max-width: 1200px;
 
     margin: 0 auto;
@@ -153,12 +156,11 @@ header h1 {
 }
 
 
-/* =====================================================
+/* =========================================================
    TARJETAS
-===================================================== */
+========================================================= */
 
 .author-card {
-
     position: relative;
 
     padding: 18px;
@@ -183,7 +185,6 @@ header h1 {
 }
 
 .author-card:hover {
-
     transform:
         translateY(-8px)
         scale(1.04)
@@ -196,9 +197,9 @@ header h1 {
 }
 
 
-/* =====================================================
+/* =========================================================
    INFORMACIÓN
-===================================================== */
+========================================================= */
 
 .card-header-info {
     text-align: center;
@@ -206,7 +207,6 @@ header h1 {
 }
 
 .author-card h3 {
-
     font-family: 'Playfair Display', serif;
 
     font-size: 1.25rem;
@@ -229,14 +229,11 @@ header h1 {
 }
 
 .author-card:hover h3 {
-
     transform: scale(1.15);
-
     color: #000;
 }
 
 .school-tag {
-
     background:
         rgba(255,255,255,0.65);
 
@@ -260,7 +257,6 @@ header h1 {
 }
 
 .concept-summary {
-
     font-size: 0.78rem;
 
     color: #4a423d;
@@ -273,12 +269,11 @@ header h1 {
 }
 
 
-/* =====================================================
-   MINIATURA VIDEO
-===================================================== */
+/* =========================================================
+   MINIATURA
+========================================================= */
 
 .video-thumbnail-box {
-
     width: 100%;
 
     height: 120px;
@@ -304,27 +299,21 @@ header h1 {
 }
 
 .video-thumbnail-box video {
-
     width: 100%;
-
     height: 100%;
-
     object-fit: cover;
-
     display: block;
 }
 
 
-/* =====================================================
-   BOTÓN PLAY
-===================================================== */
+/* =========================================================
+   PLAY
+========================================================= */
 
 .play-icon-overlay {
-
     position: absolute;
 
     width: 40px;
-
     height: 40px;
 
     background:
@@ -345,12 +334,10 @@ header h1 {
     box-shadow:
         0 4px 12px rgba(0,0,0,0.18);
 
-    transition:
-        all 0.25s ease;
+    transition: all 0.25s ease;
 }
 
 .author-card:hover .play-icon-overlay {
-
     transform: scale(1.15);
 
     background: white;
@@ -359,9 +346,9 @@ header h1 {
 }
 
 
-/* =====================================================
-   DISEÑO DE LAS TARJETAS
-===================================================== */
+/* =========================================================
+   TARJETAS
+========================================================= */
 
 .card-1 {
     background: var(--c1);
@@ -420,12 +407,11 @@ header h1 {
 }
 
 
-/* =====================================================
-   VENTANA DEL VIDEO
-===================================================== */
+/* =========================================================
+   VENTANA
+========================================================= */
 
 .overlay {
-
     position: fixed;
 
     top: 0;
@@ -454,19 +440,16 @@ header h1 {
 }
 
 .overlay.active {
-
     display: flex;
-
     opacity: 1;
 }
 
 
-/* =====================================================
-   CAJA GRANDE
-===================================================== */
+/* =========================================================
+   CAJA
+========================================================= */
 
 .expanded-card {
-
     background: #faf8f5;
 
     width: 92%;
@@ -497,21 +480,18 @@ header h1 {
 }
 
 .overlay.active .expanded-card {
-
     transform: scale(1);
 }
 
 
-/* =====================================================
+/* =========================================================
    CERRAR
-===================================================== */
+========================================================= */
 
 .close-btn {
-
     position: absolute;
 
     top: 18px;
-
     right: 22px;
 
     font-size: 1.6rem;
@@ -528,17 +508,15 @@ header h1 {
 }
 
 .close-btn:hover {
-
     color: #2b2522;
 }
 
 
-/* =====================================================
-   TÍTULOS DEL VIDEO
-===================================================== */
+/* =========================================================
+   TEXTO
+========================================================= */
 
 .expanded-title {
-
     font-family:
         'Playfair Display',
         serif;
@@ -551,7 +529,6 @@ header h1 {
 }
 
 .expanded-school {
-
     font-size: 0.85rem;
 
     font-weight: 700;
@@ -566,24 +543,21 @@ header h1 {
 }
 
 .expanded-desc {
-
     font-size: 0.9rem;
 
     color: #4a423d;
 
-    margin:
-        10px 0 18px 0;
+    margin: 10px 0 18px 0;
 
     line-height: 1.5;
 }
 
 
-/* =====================================================
-   REPRODUCTOR
-===================================================== */
+/* =========================================================
+   VIDEO
+========================================================= */
 
 .video-player-box {
-
     width: 100%;
 
     border-radius: 16px;
@@ -607,23 +581,21 @@ header h1 {
 }
 
 .video-player-box video {
+    display: block;
 
     width: 100%;
 
     max-height: 500px;
 
-    display: block;
-
     background: #000;
 }
 
 
-/* =====================================================
-   MENSAJE DE ERROR
-===================================================== */
+/* =========================================================
+   ERROR
+========================================================= */
 
 .video-error {
-
     color: #e8d5c8;
 
     text-align: center;
@@ -636,7 +608,6 @@ header h1 {
 }
 
 .video-error strong {
-
     display: block;
 
     font-size: 1rem;
@@ -645,9 +616,9 @@ header h1 {
 }
 
 
-/* =====================================================
+/* =========================================================
    RESPONSIVE
-===================================================== */
+========================================================= */
 
 @media (max-width: 600px) {
 
@@ -698,21 +669,15 @@ header h1 {
 <body>
 
 
-<!-- =====================================================
-     ENCABEZADO
-===================================================== -->
-
 <header>
 
     <span class="author-credit">
         Por: Jessica Nohemi Olivo Quintuña
     </span>
 
-
     <h1>
         Escuelas del Pensamiento Administrativo
     </h1>
-
 
     <div class="intro-box">
 
@@ -727,20 +692,12 @@ header h1 {
 
 
 
-<!-- =====================================================
-     TARJETAS
-===================================================== -->
-
 <main
     class="collage-board"
     id="collageBoard">
 </main>
 
 
-
-<!-- =====================================================
-     VENTANA DEL VIDEO
-===================================================== -->
 
 <div
     class="overlay"
@@ -751,43 +708,30 @@ header h1 {
         <button
             class="close-btn"
             onclick="closeVideo()">
-
             ✕
-
         </button>
-
 
         <h2
             class="expanded-title"
             id="expTitle">
-
             Autor
-
         </h2>
-
 
         <p
             class="expanded-school"
             id="expSchool">
-
             Escuela / Corriente
-
         </p>
-
 
         <p
             class="expanded-desc"
             id="expDesc">
-
-            Descripción amplia del aporte conceptual.
-
+            Descripción.
         </p>
-
 
         <div
             class="video-player-box"
             id="videoContainer">
-
         </div>
 
     </div>
@@ -798,52 +742,33 @@ header h1 {
 
 <script>
 
-/* =====================================================
-   UBICACIÓN DE LOS VIDEOS
-=====================================================
+/* =========================================================
+   VIDEOS
+=========================================================
 
    IMPORTANTE:
 
-   Los videos se cargan desde tu sitio de GitHub Pages.
+   "./" significa:
+   LA MISMA CARPETA DONDE ESTÁ ESTE index.html
 
-   NO se guardan en el navegador.
+   Como tus MP4 están en la raíz del repositorio,
+   esta es la ruta correcta para GitHub Pages.
 
-   Por eso pueden verse desde otros dispositivos.
+========================================================= */
 
-===================================================== */
-
-const VIDEO_BASE =
-"https://quintumamercedes07-oss.github.io/Incorea-cables.directorios/";
-
+const VIDEO_BASE = "./";
 
 
-/* =====================================================
-   FUNCIÓN PARA CONSTRUIR LA RUTA
-===================================================== */
-
-function obtenerVideo(nombre) {
-
-    return VIDEO_BASE +
-           encodeURIComponent(nombre);
-
-}
-
-
-
-/* =====================================================
-   DATOS DE LOS AUTORES
-===================================================== */
+/* =========================================================
+   AUTORES Y NOMBRES EXACTOS
+========================================================= */
 
 const authors = [
 
     {
-        id: 1,
+        name: "Frederick Winslow Taylor",
 
-        name:
-        "Frederick Winslow Taylor",
-
-        school:
-        "Escuela Científica",
+        school: "Escuela Científica",
 
         concept:
         "Estandarización de tareas y estudio de tiempos y movimientos.",
@@ -851,19 +776,14 @@ const authors = [
         detail:
         "Padre de la Administración Científica. Enfocado en incrementar la eficiencia de la producción mediante la racionalización del trabajo operario.",
 
-        video:
-        "tylor.mp4"
+        video: "tylor.mp4"
     },
 
 
     {
-        id: 2,
+        name: "Henri Fayol",
 
-        name:
-        "Henri Fayol",
-
-        school:
-        "Escuela Clásica / Operacional",
+        school: "Escuela Clásica / Operacional",
 
         concept:
         "Principios de gestión y funciones directivas (PODCO).",
@@ -871,19 +791,14 @@ const authors = [
         detail:
         "Fundador de la Teoría Clásica. Concibió la organización desde la alta dirección y sistematizó las 5 funciones administrativas esenciales.",
 
-        video:
-        "henri.mp4"
+        video: "henri.mp4"
     },
 
 
     {
-        id: 3,
+        name: "Henry Ford",
 
-        name:
-        "Henry Ford",
-
-        school:
-        "Escuela de la Producción en Masa",
+        school: "Escuela de la Producción en Masa",
 
         concept:
         "Línea de ensamblaje móvil y altos salarios para consumo.",
@@ -891,19 +806,14 @@ const authors = [
         detail:
         "Revolucionó el sector industrial al aplicar la cadena de montaje automatizada, reduciendo costos y masificando el acceso al automóvil.",
 
-        video:
-        "henrry.mp4"
+        video: "henrry.mp4"
     },
 
 
     {
-        id: 4,
+        name: "Max Weber",
 
-        name:
-        "Max Weber",
-
-        school:
-        "Escuela Burocrática",
+        school: "Escuela Burocrática",
 
         concept:
         "Estructura formal racional, jerarquía y reglas impersonales.",
@@ -911,39 +821,29 @@ const authors = [
         detail:
         "Sociólogo que definió el modelo de burocracia ideal como la forma más racional y objetiva de organizar la gestión organizativa.",
 
-        video:
-        "max.mp4"
+        video: "max.mp4"
     },
 
 
     {
-        id: 5,
+        name: "Herbert Simon",
 
-        name:
-        "Herbert Simon",
-
-        school:
-        "Escuela Neoclásica / Comportamiento",
+        school: "Escuela Neoclásica / Comportamiento",
 
         concept:
         "Teoría de la Racionalidad Limitada y toma de decisiones.",
 
         detail:
-        "Premio Nobel de Economía. Demostró que el ser humano toma decisiones 'satisfactorias' y no perfectamente 'óptimas' debido a sus límites cognitivos.",
+        "Premio Nobel de Economía. Demostró que el ser humano toma decisiones satisfactorias y no perfectamente óptimas debido a sus límites cognitivos.",
 
-        video:
-        "herbete.mp4"
+        video: "herbete.mp4"
     },
 
 
     {
-        id: 6,
+        name: "George B. Dantzig",
 
-        name:
-        "George B. Dantzig",
-
-        school:
-        "Escuela Cuantitativa / Inv. Operativa",
+        school: "Escuela Cuantitativa / Inv. Operativa",
 
         concept:
         "Método Simplex y Programación Lineal para optimizar.",
@@ -951,19 +851,14 @@ const authors = [
         detail:
         "Matemático clave de la investigación operativa. Formuló el método Simplex para resolver modelos complejos de optimización de recursos.",
 
-        video:
-        "George Dantzig Retrato Educativo.mp4"
+        video: "George Dantzig Retrato Educativo.mp4"
     },
 
 
     {
-        id: 7,
+        name: "Peter Drucker",
 
-        name:
-        "Peter Drucker",
-
-        school:
-        "Escuela Neoclásica Moderna",
+        school: "Escuela Neoclásica Moderna",
 
         concept:
         "Administración por Objetivos (APO) y sociedad del conocimiento.",
@@ -971,19 +866,14 @@ const authors = [
         detail:
         "Considerado el padre de la administración moderna. Puso el foco estratégico en los objetivos, los colaboradores y la innovación orientada al cliente.",
 
-        video:
-        "peter.mp4"
+        video: "Peter.mp4"
     },
 
 
     {
-        id: 8,
+        name: "Ludwig von Bertalanffy",
 
-        name:
-        "Ludwig von Bertalanffy",
-
-        school:
-        "Teoría General de Sistemas",
+        school: "Teoría General de Sistemas",
 
         concept:
         "Sistemas abiertos integrados interactuando con el medio.",
@@ -991,17 +881,16 @@ const authors = [
         detail:
         "Biólogo que aportó el enfoque sistémico a las organizaciones, concibiéndolas como un todo interconectado que intercambia materia e información con su entorno.",
 
-        video:
-        "bertt.mp4"
+        video: "bert.mp4"
     }
 
 ];
 
 
 
-/* =====================================================
-   CREAR LAS TARJETAS
-===================================================== */
+/* =========================================================
+   CREAR TARJETAS
+========================================================= */
 
 const board =
 document.getElementById("collageBoard");
@@ -1011,28 +900,18 @@ function renderBoard() {
 
     board.innerHTML = "";
 
-
     authors.forEach(function(author, index) {
 
         const card =
         document.createElement("div");
 
-
         card.className =
-        "author-card card-" +
-        (index + 1);
-
+        "author-card card-" + (index + 1);
 
         card.onclick =
         function() {
-
             playAuthorVideo(index);
-
         };
-
-
-        const url =
-        obtenerVideo(author.video);
 
 
         card.innerHTML = `
@@ -1043,11 +922,9 @@ function renderBoard() {
                     ${author.name}
                 </h3>
 
-
                 <span class="school-tag">
                     ${author.school}
                 </span>
-
 
                 <p class="concept-summary">
                     "${author.concept}"
@@ -1059,18 +936,14 @@ function renderBoard() {
             <div class="video-thumbnail-box">
 
                 <video
-                    src="${url}"
+                    src="${VIDEO_BASE + encodeURIComponent(author.video)}"
                     preload="metadata"
                     muted
                     playsinline>
-
                 </video>
 
-
                 <div class="play-icon-overlay">
-
                     ▶
-
                 </div>
 
             </div>
@@ -1086,9 +959,9 @@ function renderBoard() {
 
 
 
-/* =====================================================
+/* =========================================================
    ABRIR VIDEO
-===================================================== */
+========================================================= */
 
 function playAuthorVideo(index) {
 
@@ -1096,19 +969,19 @@ function playAuthorVideo(index) {
     authors[index];
 
 
-    const url =
-    obtenerVideo(author.video);
+    const videoURL =
+    VIDEO_BASE + encodeURIComponent(author.video);
 
 
-    document.getElementById("expTitle").innerText =
+    document.getElementById("expTitle").textContent =
     author.name;
 
 
-    document.getElementById("expSchool").innerText =
+    document.getElementById("expSchool").textContent =
     author.school;
 
 
-    document.getElementById("expDesc").innerText =
+    document.getElementById("expDesc").textContent =
     author.detail;
 
 
@@ -1123,10 +996,10 @@ function playAuthorVideo(index) {
             controls
             autoplay
             playsinline
-            preload="metadata">
+            preload="auto">
 
             <source
-                src="${url}"
+                src="${videoURL}"
                 type="video/mp4">
 
             Tu navegador no puede reproducir este video.
@@ -1140,9 +1013,9 @@ function playAuthorVideo(index) {
     document.getElementById("mainVideo");
 
 
-    /* =================================================
-       COMPROBAR SI EL VIDEO FALLÓ
-    ================================================= */
+    /* =====================================================
+       SI EL VIDEO NO CARGA
+    ===================================================== */
 
     video.addEventListener(
         "error",
@@ -1153,17 +1026,16 @@ function playAuthorVideo(index) {
                 <div class="video-error">
 
                     <strong>
-                        ⚠️ No se pudo cargar el video
+                        ⚠️ No se pudo cargar este video
                     </strong>
 
-                    El archivo
+                    Archivo:
                     <b>${author.video}</b>
-                    no fue encontrado.
 
                     <br><br>
 
-                    Revisa que el nombre del archivo
-                    en GitHub sea exactamente igual.
+                    Comprueba que ese nombre sea exactamente
+                    igual al que aparece en GitHub.
 
                 </div>
 
@@ -1181,18 +1053,13 @@ function playAuthorVideo(index) {
 
 
 
-/* =====================================================
-   CERRAR VIDEO
-===================================================== */
+/* =========================================================
+   CERRAR
+========================================================= */
 
 function closeVideo() {
 
-    const container =
-    document.getElementById("videoContainer");
-
-
-    container.innerHTML = "";
-
+    document.getElementById("videoContainer").innerHTML = "";
 
     document
         .getElementById("videoOverlay")
@@ -1202,9 +1069,9 @@ function closeVideo() {
 
 
 
-/* =====================================================
-   CERRAR HACIENDO CLIC FUERA
-===================================================== */
+/* =========================================================
+   CERRAR AL HACER CLIC FUERA
+========================================================= */
 
 document
 .getElementById("videoOverlay")
@@ -1213,9 +1080,7 @@ document
     function(event) {
 
         if (event.target === this) {
-
             closeVideo();
-
         }
 
     }
@@ -1223,18 +1088,16 @@ document
 
 
 
-/* =====================================================
-   CERRAR CON ESC
-===================================================== */
+/* =========================================================
+   ESC
+========================================================= */
 
 document.addEventListener(
     "keydown",
     function(event) {
 
         if (event.key === "Escape") {
-
             closeVideo();
-
         }
 
     }
@@ -1242,14 +1105,14 @@ document.addEventListener(
 
 
 
-/* =====================================================
-   INICIAR LA PÁGINA
-===================================================== */
+/* =========================================================
+   INICIAR
+========================================================= */
 
 renderBoard();
 
 </script>
 
 </body>
-
 </html>
+```
