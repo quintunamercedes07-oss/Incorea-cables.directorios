@@ -34,128 +34,171 @@
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
     background-color: var(--bg-color);
-    background-image: radial-gradient(#ccbfae 1.2px, transparent 1.2px);
+
+    background-image:
+        radial-gradient(#ccbfae 1.2px, transparent 1.2px);
+
     background-size: 24px 24px;
+
     color: var(--card-text);
+
     min-height: 100vh;
+
     padding: 40px 20px;
 }
 
-/* ENCABEZADO */
+
+/* =====================================================
+   ENCABEZADO
+===================================================== */
 
 header {
     text-align: center;
     max-width: 800px;
     margin: 0 auto 40px auto;
-    position: relative;
 }
 
-header .author-credit {
+.author-credit {
     font-size: 0.85rem;
     text-transform: uppercase;
     letter-spacing: 2.5px;
     font-weight: 700;
+
     color: #6e625a;
+
     margin-bottom: 12px;
+
     display: inline-block;
-    background: rgba(255, 255, 255, 0.6);
+
+    background: rgba(255,255,255,0.6);
+
     padding: 6px 16px;
+
     border-radius: 20px;
-    border: 1px solid rgba(140, 127, 118, 0.3);
+
+    border: 1px solid rgba(140,127,118,0.3);
 }
 
 header h1 {
     font-family: 'Playfair Display', serif;
+
     font-size: 3rem;
+
     font-weight: 700;
+
     color: #2b2522;
+
     line-height: 1.15;
+
     animation: floatTitle 4s ease-in-out infinite;
+
     display: inline-block;
 }
 
 @keyframes floatTitle {
 
-    0%, 100% {
+    0%,100% {
         transform: translateY(0);
     }
 
     50% {
         transform: translateY(-7px);
     }
+
 }
 
 .intro-box {
+
     margin-top: 18px;
+
     font-size: 1rem;
+
     color: #5c524c;
+
     line-height: 1.6;
-    background: rgba(255, 255, 255, 0.55);
+
+    background: rgba(255,255,255,0.55);
+
     padding: 16px 24px;
+
     border-radius: 16px;
-    border: 1px solid rgba(216, 195, 176, 0.5);
+
+    border: 1px solid rgba(216,195,176,0.5);
+
     backdrop-filter: blur(4px);
 }
 
-/* BOTÓN ADMIN */
 
-.admin-toggle-btn {
-    position: fixed;
-    top: 12px;
-    right: 12px;
-    background: rgba(56, 49, 45, 0.15);
-    color: rgba(56, 49, 45, 0.4);
-    border: 1px solid rgba(201, 190, 175, 0.3);
-    padding: 4px 8px;
-    border-radius: 50px;
-    font-size: 0.7rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.3s ease;
-    z-index: 100;
-    backdrop-filter: blur(2px);
-}
-
-.admin-toggle-btn:hover {
-    background: #38312d;
-    color: #fff;
-    opacity: 1;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-}
-
-/* TABLERO */
+/* =====================================================
+   TABLERO
+===================================================== */
 
 .collage-board {
+
     max-width: 1200px;
+
     margin: 0 auto;
+
     display: flex;
+
     flex-wrap: wrap;
+
     justify-content: center;
+
     align-items: stretch;
+
     gap: 28px;
+
     padding: 10px;
 }
 
-/* TARJETAS */
+
+/* =====================================================
+   TARJETAS
+===================================================== */
 
 .author-card {
+
     position: relative;
+
     padding: 18px;
+
     cursor: pointer;
-    box-shadow: 0 10px 25px rgba(70, 60, 50, 0.08);
-    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
+
+    box-shadow:
+        0 10px 25px rgba(70,60,50,0.08);
+
+    transition:
+        all 0.35s cubic-bezier(0.25,1,0.5,1);
+
     display: flex;
+
     flex-direction: column;
+
     justify-content: space-between;
-    border: 2px solid rgba(255, 255, 255, 0.7);
+
+    border: 2px solid rgba(255,255,255,0.7);
+
     color: #332d29;
 }
 
 .author-card:hover {
-    transform: translateY(-8px) scale(1.04) rotate(0deg) !important;
+
+    transform:
+        translateY(-8px)
+        scale(1.04)
+        rotate(0deg) !important;
+
     z-index: 10;
-    box-shadow: 0 20px 35px rgba(70, 60, 50, 0.16);
+
+    box-shadow:
+        0 20px 35px rgba(70,60,50,0.16);
 }
+
+
+/* =====================================================
+   INFORMACIÓN
+===================================================== */
 
 .card-header-info {
     text-align: center;
@@ -163,88 +206,162 @@ header h1 {
 }
 
 .author-card h3 {
+
     font-family: 'Playfair Display', serif;
+
     font-size: 1.25rem;
+
     text-align: center;
+
     line-height: 1.2;
+
     margin-bottom: 8px;
+
     color: #241f1d;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275),
-                color 0.3s ease;
+
+    transition:
+        transform 0.3s,
+        color 0.3s;
+
     display: inline-block;
+
     width: 100%;
 }
 
 .author-card:hover h3 {
+
     transform: scale(1.15);
+
     color: #000;
 }
 
 .school-tag {
-    background: rgba(255, 255, 255, 0.65);
+
+    background:
+        rgba(255,255,255,0.65);
+
     color: #3d3530;
+
     font-size: 0.68rem;
+
     padding: 4px 10px;
+
     border-radius: 12px;
+
     font-weight: 700;
+
     text-transform: uppercase;
+
     letter-spacing: 0.5px;
+
     display: inline-block;
+
     margin-bottom: 4px;
 }
 
 .concept-summary {
+
     font-size: 0.78rem;
+
     color: #4a423d;
+
     line-height: 1.35;
+
     margin-top: 6px;
+
     font-style: italic;
 }
 
-/* MINIATURA DEL VIDEO */
+
+/* =====================================================
+   MINIATURA VIDEO
+===================================================== */
 
 .video-thumbnail-box {
+
     width: 100%;
+
     height: 120px;
+
     border-radius: 14px;
-    background: rgba(0, 0, 0, 0.07);
+
+    background: rgba(0,0,0,0.07);
+
     margin: 12px 0;
+
     overflow: hidden;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
+
     position: relative;
-    border: 1px solid rgba(255, 255, 255, 0.5);
+
+    border:
+        1px solid rgba(255,255,255,0.5);
 }
 
 .video-thumbnail-box video {
+
     width: 100%;
+
     height: 100%;
+
     object-fit: cover;
+
+    display: block;
 }
 
+
+/* =====================================================
+   BOTÓN PLAY
+===================================================== */
+
 .play-icon-overlay {
+
     position: absolute;
+
     width: 40px;
+
     height: 40px;
-    background: rgba(255, 255, 255, 0.9);
+
+    background:
+        rgba(255,255,255,0.9);
+
     border-radius: 50%;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
+
     font-size: 0.95rem;
+
     color: #38312d;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.18);
-    transition: all 0.25s ease;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,0.18);
+
+    transition:
+        all 0.25s ease;
 }
 
 .author-card:hover .play-icon-overlay {
+
     transform: scale(1.15);
-    background: #ffffff;
+
+    background: white;
+
     color: #000;
 }
 
-/* COLORES Y FORMAS */
+
+/* =====================================================
+   DISEÑO DE LAS TARJETAS
+===================================================== */
 
 .card-1 {
     background: var(--c1);
@@ -302,144 +419,235 @@ header h1 {
     border-radius: 18px 30px 15px 25px;
 }
 
-/* MODO ADMIN */
 
-.admin-upload-section {
-    display: none;
-    margin-top: 8px;
-    width: 100%;
-}
-
-body.admin-mode .admin-upload-section {
-    display: block;
-}
-
-.admin-upload-section input[type=file] {
-    display: none;
-}
-
-.custom-upload-btn {
-    display: block;
-    background: #38312d;
-    color: #fff;
-    text-align: center;
-    padding: 6px 10px;
-    border-radius: 8px;
-    font-size: 0.72rem;
-    font-weight: 600;
-    cursor: pointer;
-    transition: background 0.2s;
-}
-
-.custom-upload-btn:hover {
-    background: #524741;
-}
-
-/* VENTANA DEL VIDEO */
+/* =====================================================
+   VENTANA DEL VIDEO
+===================================================== */
 
 .overlay {
+
     position: fixed;
+
     top: 0;
     left: 0;
+
     width: 100vw;
     height: 100vh;
-    background: rgba(30, 26, 24, 0.65);
+
+    background:
+        rgba(30,26,24,0.65);
+
     backdrop-filter: blur(8px);
+
     display: none;
+
     justify-content: center;
+
     align-items: center;
+
     z-index: 1000;
+
     opacity: 0;
-    transition: opacity 0.3s ease;
+
+    transition:
+        opacity 0.3s ease;
 }
 
 .overlay.active {
+
     display: flex;
+
     opacity: 1;
 }
 
+
+/* =====================================================
+   CAJA GRANDE
+===================================================== */
+
 .expanded-card {
+
     background: #faf8f5;
+
     width: 92%;
+
     max-width: 720px;
+
+    max-height: 90vh;
+
+    overflow-y: auto;
+
     border-radius: 24px;
+
     padding: 30px;
+
     position: relative;
+
     transform: scale(0.85);
-    transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    box-shadow: 0 25px 50px rgba(0,0,0,0.25);
-    border: 1px solid #e8e2d8;
+
+    transition:
+        transform 0.35s
+        cubic-bezier(0.175,0.885,0.32,1.275);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,0.25);
+
+    border:
+        1px solid #e8e2d8;
 }
 
 .overlay.active .expanded-card {
+
     transform: scale(1);
 }
 
+
+/* =====================================================
+   CERRAR
+===================================================== */
+
 .close-btn {
+
     position: absolute;
+
     top: 18px;
+
     right: 22px;
+
     font-size: 1.6rem;
+
     background: none;
+
     border: none;
+
     cursor: pointer;
+
     color: #756a63;
+
     transition: color 0.2s;
 }
 
 .close-btn:hover {
+
     color: #2b2522;
 }
 
+
+/* =====================================================
+   TÍTULOS DEL VIDEO
+===================================================== */
+
 .expanded-title {
-    font-family: 'Playfair Display', serif;
+
+    font-family:
+        'Playfair Display',
+        serif;
+
     font-size: 2rem;
+
     color: #38312d;
+
+    padding-right: 40px;
 }
 
 .expanded-school {
+
     font-size: 0.85rem;
+
     font-weight: 700;
+
     color: #756a63;
+
     text-transform: uppercase;
+
     letter-spacing: 1px;
+
     margin-top: 2px;
 }
 
 .expanded-desc {
+
     font-size: 0.9rem;
+
     color: #4a423d;
-    margin: 10px 0 18px 0;
+
+    margin:
+        10px 0 18px 0;
+
     line-height: 1.5;
 }
 
-/* REPRODUCTOR */
+
+/* =====================================================
+   REPRODUCTOR
+===================================================== */
 
 .video-player-box {
+
     width: 100%;
+
     border-radius: 16px;
+
     overflow: hidden;
+
     background: #1f1c1a;
-    max-height: 420px;
+
+    max-height: 500px;
+
+    min-height: 180px;
+
     display: flex;
+
     justify-content: center;
+
     align-items: center;
-    box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+
+    box-shadow:
+        inset 0 0 10px rgba(0,0,0,0.5);
 }
 
 .video-player-box video {
+
     width: 100%;
-    max-height: 420px;
+
+    max-height: 500px;
+
+    display: block;
+
+    background: #000;
 }
 
-.no-video-msg {
-    color: #d8c3b0;
-    padding: 40px;
+
+/* =====================================================
+   MENSAJE DE ERROR
+===================================================== */
+
+.video-error {
+
+    color: #e8d5c8;
+
     text-align: center;
-    font-size: 0.95rem;
+
+    padding: 35px 20px;
+
+    line-height: 1.6;
+
+    font-size: 0.9rem;
 }
 
-/* RESPONSIVE */
+.video-error strong {
+
+    display: block;
+
+    font-size: 1rem;
+
+    margin-bottom: 8px;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
 
 @media (max-width: 600px) {
 
@@ -465,12 +673,20 @@ body.admin-mode .admin-upload-section {
     }
 
     .expanded-card {
+        width: 95%;
         padding: 22px;
     }
 
     .expanded-title {
         font-size: 1.6rem;
-        padding-right: 30px;
+    }
+
+    .video-player-box {
+        max-height: 300px;
+    }
+
+    .video-player-box video {
+        max-height: 300px;
     }
 }
 
@@ -478,17 +694,13 @@ body.admin-mode .admin-upload-section {
 
 </head>
 
+
 <body>
 
-<!-- BOTÓN ADMIN -->
-<button
-    class="admin-toggle-btn"
-    onclick="toggleAdminMode()"
-    id="adminBtn"
-    title="Modo Creadora">
-    🔒 Admin
-</button>
 
+<!-- =====================================================
+     ENCABEZADO
+===================================================== -->
 
 <header>
 
@@ -496,9 +708,11 @@ body.admin-mode .admin-upload-section {
         Por: Jessica Nohemi Olivo Quintuña
     </span>
 
+
     <h1>
         Escuelas del Pensamiento Administrativo
     </h1>
+
 
     <div class="intro-box">
 
@@ -512,46 +726,68 @@ body.admin-mode .admin-upload-section {
 </header>
 
 
-<!-- TARJETAS -->
+
+<!-- =====================================================
+     TARJETAS
+===================================================== -->
+
 <main
     class="collage-board"
     id="collageBoard">
 </main>
 
 
-<!-- VENTANA DEL VIDEO -->
 
-<div class="overlay" id="videoOverlay">
+<!-- =====================================================
+     VENTANA DEL VIDEO
+===================================================== -->
+
+<div
+    class="overlay"
+    id="videoOverlay">
 
     <div class="expanded-card">
 
         <button
             class="close-btn"
             onclick="closeVideo()">
+
             ✕
+
         </button>
+
 
         <h2
             class="expanded-title"
             id="expTitle">
+
             Autor
+
         </h2>
+
 
         <p
             class="expanded-school"
             id="expSchool">
+
             Escuela / Corriente
+
         </p>
+
 
         <p
             class="expanded-desc"
             id="expDesc">
+
             Descripción amplia del aporte conceptual.
+
         </p>
+
 
         <div
             class="video-player-box"
             id="videoContainer">
+
         </div>
 
     </div>
@@ -559,42 +795,55 @@ body.admin-mode .admin-upload-section {
 </div>
 
 
+
 <script>
 
-/* =========================================================
-   VIDEOS EN GITHUB
-   =========================================================
+/* =====================================================
+   UBICACIÓN DE LOS VIDEOS
+=====================================================
 
-   Estos videos ya no se guardan en el navegador.
+   IMPORTANTE:
 
-   Ahora se cargan directamente desde GitHub.
+   Los videos se cargan desde tu sitio de GitHub Pages.
 
-   Esto permite que:
-   ✔ Se vean desde otros computadores
-   ✔ Se vean desde celulares
-   ✔ Se mantengan aunque borres caché
-   ✔ No dependan de IndexedDB
-   ✔ Todos los usuarios reciban los mismos videos
+   NO se guardan en el navegador.
 
-========================================================= */
+   Por eso pueden verse desde otros dispositivos.
 
+===================================================== */
 
-const GITHUB_VIDEO_URL =
-"https://raw.githubusercontent.com/quintumamercedes07-oss/Incorea-cables.directorios/main/";
+const VIDEO_BASE =
+"https://quintumamercedes07-oss.github.io/Incorea-cables.directorios/";
 
 
-/* =========================================================
-   DATOS DE LOS 8 AUTORES
-========================================================= */
+
+/* =====================================================
+   FUNCIÓN PARA CONSTRUIR LA RUTA
+===================================================== */
+
+function obtenerVideo(nombre) {
+
+    return VIDEO_BASE +
+           encodeURIComponent(nombre);
+
+}
+
+
+
+/* =====================================================
+   DATOS DE LOS AUTORES
+===================================================== */
 
 const authors = [
 
     {
         id: 1,
 
-        name: "Frederick Winslow Taylor",
+        name:
+        "Frederick Winslow Taylor",
 
-        school: "Escuela Científica",
+        school:
+        "Escuela Científica",
 
         concept:
         "Estandarización de tareas y estudio de tiempos y movimientos.",
@@ -602,18 +851,19 @@ const authors = [
         detail:
         "Padre de la Administración Científica. Enfocado en incrementar la eficiencia de la producción mediante la racionalización del trabajo operario.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "tylor.mp4"
+        video:
+        "tylor.mp4"
     },
 
 
     {
         id: 2,
 
-        name: "Henri Fayol",
+        name:
+        "Henri Fayol",
 
-        school: "Escuela Clásica / Operacional",
+        school:
+        "Escuela Clásica / Operacional",
 
         concept:
         "Principios de gestión y funciones directivas (PODCO).",
@@ -621,18 +871,19 @@ const authors = [
         detail:
         "Fundador de la Teoría Clásica. Concibió la organización desde la alta dirección y sistematizó las 5 funciones administrativas esenciales.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "henri.mp4"
+        video:
+        "henri.mp4"
     },
 
 
     {
         id: 3,
 
-        name: "Henry Ford",
+        name:
+        "Henry Ford",
 
-        school: "Escuela de la Producción en Masa",
+        school:
+        "Escuela de la Producción en Masa",
 
         concept:
         "Línea de ensamblaje móvil y altos salarios para consumo.",
@@ -640,18 +891,19 @@ const authors = [
         detail:
         "Revolucionó el sector industrial al aplicar la cadena de montaje automatizada, reduciendo costos y masificando el acceso al automóvil.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "henrry.mp4"
+        video:
+        "henrry.mp4"
     },
 
 
     {
         id: 4,
 
-        name: "Max Weber",
+        name:
+        "Max Weber",
 
-        school: "Escuela Burocrática",
+        school:
+        "Escuela Burocrática",
 
         concept:
         "Estructura formal racional, jerarquía y reglas impersonales.",
@@ -659,18 +911,19 @@ const authors = [
         detail:
         "Sociólogo que definió el modelo de burocracia ideal como la forma más racional y objetiva de organizar la gestión organizativa.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "max.mp4"
+        video:
+        "max.mp4"
     },
 
 
     {
         id: 5,
 
-        name: "Herbert Simon",
+        name:
+        "Herbert Simon",
 
-        school: "Escuela Neoclásica / Comportamiento",
+        school:
+        "Escuela Neoclásica / Comportamiento",
 
         concept:
         "Teoría de la Racionalidad Limitada y toma de decisiones.",
@@ -678,18 +931,19 @@ const authors = [
         detail:
         "Premio Nobel de Economía. Demostró que el ser humano toma decisiones 'satisfactorias' y no perfectamente 'óptimas' debido a sus límites cognitivos.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "herbete.mp4"
+        video:
+        "herbete.mp4"
     },
 
 
     {
         id: 6,
 
-        name: "George B. Dantzig",
+        name:
+        "George B. Dantzig",
 
-        school: "Escuela Cuantitativa / Inv. Operativa",
+        school:
+        "Escuela Cuantitativa / Inv. Operativa",
 
         concept:
         "Método Simplex y Programación Lineal para optimizar.",
@@ -697,18 +951,19 @@ const authors = [
         detail:
         "Matemático clave de la investigación operativa. Formuló el método Simplex para resolver modelos complejos de optimización de recursos.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "George%20Dantzig%20Retrato%20Educativo.mp4"
+        video:
+        "George Dantzig Retrato Educativo.mp4"
     },
 
 
     {
         id: 7,
 
-        name: "Peter Drucker",
+        name:
+        "Peter Drucker",
 
-        school: "Escuela Neoclásica Moderna",
+        school:
+        "Escuela Neoclásica Moderna",
 
         concept:
         "Administración por Objetivos (APO) y sociedad del conocimiento.",
@@ -716,18 +971,19 @@ const authors = [
         detail:
         "Considerado el padre de la administración moderna. Puso el foco estratégico en los objetivos, los colaboradores y la innovación orientada al cliente.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "peter.mp4"
+        video:
+        "peter.mp4"
     },
 
 
     {
         id: 8,
 
-        name: "Ludwig von Bertalanffy",
+        name:
+        "Ludwig von Bertalanffy",
 
-        school: "Teoría General de Sistemas",
+        school:
+        "Teoría General de Sistemas",
 
         concept:
         "Sistemas abiertos integrados interactuando con el medio.",
@@ -735,17 +991,17 @@ const authors = [
         detail:
         "Biólogo que aportó el enfoque sistémico a las organizaciones, concibiéndolas como un todo interconectado que intercambia materia e información con su entorno.",
 
-        /* ARCHIVO DE GITHUB */
-        videoSrc:
-        GITHUB_VIDEO_URL + "bertt.mp4"
+        video:
+        "bertt.mp4"
     }
 
 ];
 
 
-/* =========================================================
-   CREAR TARJETAS
-========================================================= */
+
+/* =====================================================
+   CREAR LAS TARJETAS
+===================================================== */
 
 const board =
 document.getElementById("collageBoard");
@@ -761,8 +1017,10 @@ function renderBoard() {
         const card =
         document.createElement("div");
 
+
         card.className =
-        "author-card card-" + (index + 1);
+        "author-card card-" +
+        (index + 1);
 
 
         card.onclick =
@@ -773,6 +1031,10 @@ function renderBoard() {
         };
 
 
+        const url =
+        obtenerVideo(author.video);
+
+
         card.innerHTML = `
 
             <div class="card-header-info">
@@ -781,9 +1043,11 @@ function renderBoard() {
                     ${author.name}
                 </h3>
 
+
                 <span class="school-tag">
                     ${author.school}
                 </span>
+
 
                 <p class="concept-summary">
                     "${author.concept}"
@@ -795,29 +1059,19 @@ function renderBoard() {
             <div class="video-thumbnail-box">
 
                 <video
-                    src="${author.videoSrc}"
+                    src="${url}"
                     preload="metadata"
-                    muted>
+                    muted
+                    playsinline>
+
                 </video>
 
+
                 <div class="play-icon-overlay">
+
                     ▶
+
                 </div>
-
-            </div>
-
-
-            <div
-                class="admin-upload-section"
-                onclick="event.stopPropagation();">
-
-                <p style="
-                    font-size:0.68rem;
-                    text-align:center;
-                    color:#5b514b;
-                    margin-bottom:5px;">
-                    Video alojado en GitHub
-                </p>
 
             </div>
 
@@ -831,60 +1085,19 @@ function renderBoard() {
 }
 
 
-/* =========================================================
-   MODO ADMIN
-========================================================= */
 
-function toggleAdminMode() {
-
-    document.body.classList.toggle("admin-mode");
-
-    const btn =
-    document.getElementById("adminBtn");
-
-
-    if (
-        document.body.classList.contains("admin-mode")
-    ) {
-
-        btn.innerHTML =
-        "🔓 Modo Creadora";
-
-        btn.style.background =
-        "#2b2522";
-
-        btn.style.color =
-        "#fff";
-
-        btn.style.opacity =
-        "1";
-
-    }
-
-    else {
-
-        btn.innerHTML =
-        "🔒 Admin";
-
-        btn.style.background =
-        "rgba(56, 49, 45, 0.15)";
-
-        btn.style.color =
-        "rgba(56, 49, 45, 0.4)";
-
-    }
-
-}
-
-
-/* =========================================================
-   REPRODUCIR VIDEO
-========================================================= */
+/* =====================================================
+   ABRIR VIDEO
+===================================================== */
 
 function playAuthorVideo(index) {
 
     const author =
     authors[index];
+
+
+    const url =
+    obtenerVideo(author.video);
 
 
     document.getElementById("expTitle").innerText =
@@ -906,11 +1119,15 @@ function playAuthorVideo(index) {
     container.innerHTML = `
 
         <video
-            src="${author.videoSrc}"
+            id="mainVideo"
             controls
             autoplay
             playsinline
             preload="metadata">
+
+            <source
+                src="${url}"
+                type="video/mp4">
 
             Tu navegador no puede reproducir este video.
 
@@ -919,23 +1136,56 @@ function playAuthorVideo(index) {
     `;
 
 
+    const video =
+    document.getElementById("mainVideo");
+
+
+    /* =================================================
+       COMPROBAR SI EL VIDEO FALLÓ
+    ================================================= */
+
+    video.addEventListener(
+        "error",
+        function() {
+
+            container.innerHTML = `
+
+                <div class="video-error">
+
+                    <strong>
+                        ⚠️ No se pudo cargar el video
+                    </strong>
+
+                    El archivo
+                    <b>${author.video}</b>
+                    no fue encontrado.
+
+                    <br><br>
+
+                    Revisa que el nombre del archivo
+                    en GitHub sea exactamente igual.
+
+                </div>
+
+            `;
+
+        }
+    );
+
+
     document
-    .getElementById("videoOverlay")
-    .classList.add("active");
+        .getElementById("videoOverlay")
+        .classList.add("active");
 
 }
 
 
-/* =========================================================
+
+/* =====================================================
    CERRAR VIDEO
-========================================================= */
+===================================================== */
 
 function closeVideo() {
-
-    document
-    .getElementById("videoOverlay")
-    .classList.remove("active");
-
 
     const container =
     document.getElementById("videoContainer");
@@ -943,48 +1193,58 @@ function closeVideo() {
 
     container.innerHTML = "";
 
+
+    document
+        .getElementById("videoOverlay")
+        .classList.remove("active");
+
 }
 
 
-/* =========================================================
-   CERRAR AL HACER CLIC FUERA
-========================================================= */
+
+/* =====================================================
+   CERRAR HACIENDO CLIC FUERA
+===================================================== */
 
 document
 .getElementById("videoOverlay")
-.addEventListener("click", function(event) {
+.addEventListener(
+    "click",
+    function(event) {
 
-    if (
-        event.target === this
-    ) {
+        if (event.target === this) {
 
-        closeVideo();
+            closeVideo();
+
+        }
 
     }
+);
 
-});
 
 
-/* =========================================================
+/* =====================================================
    CERRAR CON ESC
-========================================================= */
+===================================================== */
 
-document.addEventListener("keydown", function(event) {
+document.addEventListener(
+    "keydown",
+    function(event) {
 
-    if (
-        event.key === "Escape"
-    ) {
+        if (event.key === "Escape") {
 
-        closeVideo();
+            closeVideo();
+
+        }
 
     }
+);
 
-});
 
 
-/* =========================================================
+/* =====================================================
    INICIAR LA PÁGINA
-========================================================= */
+===================================================== */
 
 renderBoard();
 
